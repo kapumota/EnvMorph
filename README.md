@@ -86,3 +86,19 @@ envmorph capabilities experiments/f1/literature-pipeline-plan.toml
 ```
 
 La resolución distingue una capacidad disponible de una no disponible. Una herramienta, locale o zona horaria ausente no se interpreta como fallo conductual del workflow.
+
+#### F2: ejecución ambiental end-to-end
+
+F2 está cerrado como cadena de ejecución ambiental end-to-end.
+
+```text
+envmorph explore EXPERIMENT.toml --output DIR --workdir DIR -- CMD [ARGS...]
+```
+
+`explore` planifica variantes, resuelve capacidades, ejecuta únicamente las variantes disponibles y conserva un bundle por campaña.
+
+Una capacidad ausente se registra como `unavailable`. Una ejecución iniciada que termina con código distinto de cero se registra como `execution_failed`. Estas categorías no se mezclan.
+
+El bundle contiene `experiment.json`, un directorio por variante, `manifest.json`, `stdout.txt`, `stderr.txt`, una copia de trabajo y `hashes.sha256`.
+
+F2 todavía no decide si dos ejecuciones son equivalentes. Esa responsabilidad comienza en F3.

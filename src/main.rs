@@ -26,6 +26,8 @@ USO
   envmorph inspect RUN                                    resume una ejecución
   envmorph plan    EXPERIMENT.toml                        genera un plan ambiental determinista
   envmorph capabilities EXPERIMENT.toml                  inspecciona capacidades ambientales
+  envmorph explore EXPERIMENT.toml [--output DIR] [--workdir DIR] -- CMD [ARGS...]
+                                                          ejecuta variantes y crea un bundle
   envmorph diff    A B [--json]                           localiza la primera divergencia
   envmorph isolate A B                                    repite etapas cuyo ejecutable difiere
   envmorph graph   RUN [--diff OTHER]                     genera el grafo de procedencia (DOT)
@@ -113,6 +115,64 @@ fn load(arg: &str) -> model::Manifest {
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
 }
 
+fn cmd_explore(args: &[String]) {
+    if args.is_empty() {
+        fail("explore requiere un archivo TOML experimental");
+    }
+
+    let spec_path = std::path::PathBuf::from(&args[0]);
+    let mut output_dir: Option<std::path::PathBuf> = None;
+    let mut workdir = std::env::current_dir()
+        .unwrap_or_else(|e| fail(&format!("no se pudo obtener el directorio actual: {}", e)));
+    let mut command = Vec::new();
+    let mut i = 1;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--" => {
+                command = args[i + 1..].to_vec();
+                break;
+            }
+            "--output" => {
+                output_dir = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )));
+            }
+            "--workdir" => {
+                workdir = std::path::PathBuf::from(take_value(args, &mut i, "--workdir"));
+            }
+            other => fail(&format!("opción desconocida '{}' para explore", other)),
+        }
+        i += 1;
+    }
+
+    if command.is_empty() {
+        fail("explore requiere una orden después de --");
+    }
+
+    let spec = experiment::ExperimentSpec::from_toml_path(&spec_path).unwrap_or_else(|e| fail(&e));
+    let variants = experiment::plan_variants(&spec).unwrap_or_else(|e| fail(&e));
+
+    let output_dir = output_dir.unwrap_or_else(|| {
+        std::path::PathBuf::from(".envmorph")
+            .join("experiments")
+            .join(spec.name())
+    });
+
+    let options = executor::ExploreOptions {
+        output_dir,
+        workdir,
+        command,
+    };
+
+    let bundle = executor::explore(&spec, &variants, &options).unwrap_or_else(|e| fail(&e));
+    print!("{}", executor::render_explore(&spec, &bundle));
+
+    if bundle.has_failures() {
+        std::process::exit(1);
+    }
+}
+
 fn cmd_capabilities(args: &[String]) {
     if args.len() != 1 {
         fail("capabilities requiere exactamente un archivo TOML experimental");
@@ -174,6 +234,7 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "explore" => cmd_explore(rest),
         "capabilities" => cmd_capabilities(rest),
         "plan" => cmd_plan(rest),
         "diff" => {
@@ -249,4 +310,5 @@ fn main() {
 }
 
 mod capability;
+mod executor;
 mod experiment;

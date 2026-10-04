@@ -34,24 +34,22 @@ El plan debe ser determinista y todavía no necesita ejecutar la matriz.
 
 #### F2. Exploración end-to-end
 
-Estado: siguiente fase.
+Estado: cerrado.
 
-Estado: F2.1 cerrado.
+F2 resuelve disponibilidad real de locale, timezone e implementación AWK, ejecuta variantes disponibles en workspaces separados y conserva un bundle reproducible por campaña.
 
-F2.1 resuelve disponibilidad real de locale, timezone e implementación AWK sin ejecutar el workflow.
-
-Objetivo: ejecutar variantes ambientales controladas sobre un workflow real.
-
-Entregable:
+Entregables:
 
 ```text
-envmorph baseline -- ./pipeline.sh
-envmorph explore experiment.toml -- ./pipeline.sh
+envmorph capabilities EXPERIMENT.toml
+envmorph explore EXPERIMENT.toml --output DIR --workdir DIR -- CMD [ARGS...]
 ```
 
-Cada ejecución debe conservar asignación de factores, entorno, herramientas, artefactos, estado de salida y observaciones por etapa.
+Una variante no disponible y una ejecución fallida son estados diferentes.
 
 #### F3. Oráculos de equivalencia
+
+Estado: siguiente fase.
 
 Objetivo: distinguir igualdad de bytes, igualdad estructural y equivalencia semántica configurable.
 
