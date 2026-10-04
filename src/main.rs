@@ -25,6 +25,7 @@ USO
   envmorph list                                           lista las ejecuciones registradas
   envmorph inspect RUN                                    resume una ejecución
   envmorph plan    EXPERIMENT.toml                        genera un plan ambiental determinista
+  envmorph capabilities EXPERIMENT.toml                  inspecciona capacidades ambientales
   envmorph diff    A B [--json]                           localiza la primera divergencia
   envmorph isolate A B                                    repite etapas cuyo ejecutable difiere
   envmorph graph   RUN [--diff OTHER]                     genera el grafo de procedencia (DOT)
@@ -112,6 +113,17 @@ fn load(arg: &str) -> model::Manifest {
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
 }
 
+fn cmd_capabilities(args: &[String]) {
+    if args.len() != 1 {
+        fail("capabilities requiere exactamente un archivo TOML experimental");
+    }
+
+    let path = std::path::Path::new(&args[0]);
+    let spec = experiment::ExperimentSpec::from_toml_path(path).unwrap_or_else(|e| fail(&e));
+    let capabilities = capability::probe_spec(&spec).unwrap_or_else(|e| fail(&e));
+    print!("{}", capability::render_capabilities(&spec, &capabilities));
+}
+
 fn cmd_plan(args: &[String]) {
     if args.len() != 1 {
         fail("plan requiere exactamente un archivo TOML experimental");
@@ -162,6 +174,7 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "capabilities" => cmd_capabilities(rest),
         "plan" => cmd_plan(rest),
         "diff" => {
             let mut as_json = false;
@@ -235,4 +248,5 @@ fn main() {
     }
 }
 
+mod capability;
 mod experiment;

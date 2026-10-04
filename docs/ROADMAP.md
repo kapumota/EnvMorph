@@ -36,6 +36,10 @@ El plan debe ser determinista y todavía no necesita ejecutar la matriz.
 
 Estado: siguiente fase.
 
+Estado: F2.1 cerrado.
+
+F2.1 resuelve disponibilidad real de locale, timezone e implementación AWK sin ejecutar el workflow.
+
 Objetivo: ejecutar variantes ambientales controladas sobre un workflow real.
 
 Entregable:

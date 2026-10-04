@@ -76,3 +76,13 @@ Los resultados experimentales anteriores de FlowAttest se preservan como materia
 El plan técnico y científico está en `docs/ROADMAP.md`.
 
 Las líneas de publicación y sus gates de evidencia están en `docs/PUBLICATIONS.md`.
+
+#### F2.1: capacidades ambientales
+
+F2.1 incorpora resolución de capacidades ambientales sin ejecutar el workflow.
+
+```text
+envmorph capabilities experiments/f1/literature-pipeline-plan.toml
+```
+
+La resolución distingue una capacidad disponible de una no disponible. Una herramienta, locale o zona horaria ausente no se interpreta como fallo conductual del workflow.
