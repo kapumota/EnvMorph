@@ -14,6 +14,8 @@ Incluye migración desde FlowAttest, workload heredado, replay endurecido, gates
 
 #### F1. Modelo ambiental
 
+Estado: cerrado en F1.3.
+
 Objetivo: representar factores, valores y variantes ambientales de forma explícita.
 
 Primer alcance:
@@ -31,6 +33,8 @@ envmorph plan experiment.toml
 El plan debe ser determinista y todavía no necesita ejecutar la matriz.
 
 #### F2. Exploración end-to-end
+
+Estado: siguiente fase.
 
 Objetivo: ejecutar variantes ambientales controladas sobre un workflow real.
 

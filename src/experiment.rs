@@ -208,6 +208,73 @@ struct RawFactor {
     values: Vec<String>,
 }
 
+pub const MAX_PLAN_VARIANTS: usize = 4096;
+
+pub fn plan_variants(spec: &ExperimentSpec) -> Result<Vec<EnvironmentVariant>, String> {
+    let count = variant_count(spec)?;
+    let mut variants = Vec::with_capacity(count);
+    let mut assignments = Vec::with_capacity(spec.factors().len());
+    expand_variants(spec.factors(), 0, &mut assignments, &mut variants)?;
+    Ok(variants)
+}
+
+pub fn render_plan(spec: &ExperimentSpec, variants: &[EnvironmentVariant]) -> String {
+    let mut out = String::new();
+    out.push_str(&format!("Experimento: {}\n", spec.name()));
+    out.push_str(&format!("Versión de esquema: {}\n", spec.schema_version()));
+    out.push_str(&format!("Factores: {}\n", spec.factors().len()));
+    out.push_str(&format!("Variantes: {}\n\n", variants.len()));
+
+    for variant in variants {
+        out.push_str(variant.id());
+        for (name, value) in variant.assignments() {
+            out.push_str(&format!("  {}={}", name, value));
+        }
+        out.push('\n');
+    }
+
+    out
+}
+
+fn variant_count(spec: &ExperimentSpec) -> Result<usize, String> {
+    let mut count = 1usize;
+    for factor in spec.factors() {
+        count = count
+            .checked_mul(factor.values().len())
+            .ok_or_else(|| "la cantidad de variantes excede el límite numérico".to_string())?;
+        if count > MAX_PLAN_VARIANTS {
+            return Err(format!(
+                "el plan contiene {} variantes y excede el límite de {}",
+                count, MAX_PLAN_VARIANTS
+            ));
+        }
+    }
+    Ok(count)
+}
+
+fn expand_variants(
+    factors: &[EnvironmentalFactor],
+    factor_index: usize,
+    assignments: &mut Vec<(String, FactorValue)>,
+    variants: &mut Vec<EnvironmentVariant>,
+) -> Result<(), String> {
+    if factor_index == factors.len() {
+        variants.push(EnvironmentVariant::new(
+            variants.len() + 1,
+            assignments.clone(),
+        )?);
+        return Ok(());
+    }
+
+    let factor = &factors[factor_index];
+    for value in factor.values() {
+        assignments.push((factor.name().to_string(), value.clone()));
+        expand_variants(factors, factor_index + 1, assignments, variants)?;
+        assignments.pop();
+    }
+
+    Ok(())
+}
 fn validate_factor_name(name: &str) -> Result<(), String> {
     let mut chars = name.chars();
     let Some(first) = chars.next() else {
@@ -371,5 +438,112 @@ values = ["C", "POSIX"]
     #[test]
     fn experiment_spec_rejects_malformed_toml() {
         assert!(ExperimentSpec::from_toml_str("[experiment\nname = 1").is_err());
+    }
+
+    #[test]
+    fn plan_variants_uses_cartesian_product() {
+        let spec = ExperimentSpec::from_toml_str(
+            r#"
+[experiment]
+name = "cartesian"
+schema_version = 1
+
+[[factor]]
+name = "locale"
+values = ["C", "POSIX"]
+
+[[factor]]
+name = "timezone"
+values = ["UTC", "America/Lima"]
+"#,
+        )
+        .unwrap();
+
+        let variants = plan_variants(&spec).unwrap();
+        assert_eq!(variants.len(), 4);
+        assert_eq!(variants[0].id(), "variant-0001");
+        assert_eq!(variants[0].value("locale").unwrap().as_str(), "C");
+        assert_eq!(variants[0].value("timezone").unwrap().as_str(), "UTC");
+        assert_eq!(variants[3].value("locale").unwrap().as_str(), "POSIX");
+        assert_eq!(
+            variants[3].value("timezone").unwrap().as_str(),
+            "America/Lima"
+        );
+    }
+
+    #[test]
+    fn plan_variants_preserves_factor_and_value_order() {
+        let spec = ExperimentSpec::from_toml_str(
+            r#"
+[experiment]
+name = "order"
+schema_version = 1
+
+[[factor]]
+name = "locale"
+values = ["A", "B"]
+
+[[factor]]
+name = "timezone"
+values = ["X", "Y"]
+"#,
+        )
+        .unwrap();
+
+        let variants = plan_variants(&spec).unwrap();
+        let observed: Vec<String> = variants
+            .iter()
+            .map(|variant| {
+                format!(
+                    "{}:{}",
+                    variant.value("locale").unwrap(),
+                    variant.value("timezone").unwrap()
+                )
+            })
+            .collect();
+
+        assert_eq!(observed, vec!["A:X", "A:Y", "B:X", "B:Y"]);
+    }
+
+    #[test]
+    fn plan_variants_rejects_excessive_matrix() {
+        let factors = (0..13)
+            .map(|index| {
+                EnvironmentalFactor::new(format!("factor_{index}"), vec![value("a"), value("b")])
+                    .unwrap()
+            })
+            .collect();
+
+        let spec = ExperimentSpec {
+            name: "large".into(),
+            schema_version: 1,
+            factors,
+        };
+
+        assert!(plan_variants(&spec).is_err());
+    }
+
+    #[test]
+    fn render_plan_is_stable() {
+        let spec = ExperimentSpec::from_toml_str(
+            r#"
+[experiment]
+name = "stable"
+schema_version = 1
+
+[[factor]]
+name = "locale"
+values = ["C", "POSIX"]
+"#,
+        )
+        .unwrap();
+
+        let variants = plan_variants(&spec).unwrap();
+        let rendered = render_plan(&spec, &variants);
+
+        assert!(rendered.contains("Experimento: stable"));
+        assert!(rendered.contains("Variantes: 2"));
+        assert!(rendered.contains("variant-0001  locale=C"));
+        assert!(rendered.contains("variant-0002  locale=POSIX"));
     }
 }

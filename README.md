@@ -16,6 +16,8 @@ El baseline F0 tiene:
 - replay endurecido contra rutas absolutas no mapeadas y traversal con `..`
 - workload canónico preservado byte a byte
 
+F1 incorpora un modelo ambiental tipado, especificaciones experimentales TOML versionadas y `envmorph plan` para construir matrices deterministas de variantes. F1 todavía no ejecuta esas variantes.
+
 #### Objetivo end-to-end
 
 El producto final debe cubrir una cadena completa:
@@ -50,7 +52,7 @@ validación con envmorph check
 
 #### Alcance actual
 
-F0 todavía no implementa:
+Después de F1, todavía no se implementan:
 
 - environmental metamorphic testing
 - portability envelopes
