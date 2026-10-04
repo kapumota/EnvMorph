@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-native:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y gawk graphviz
+
+    - name: Run pipeline with sample data
+      run: |
+        ./pipeline.sh \
+          --elicit examples/sample_elicit.csv \
+          --researchrabbit examples/sample_researchrabbit.csv \
+          --scite examples/sample_scite.csv \
+          --output test_output \
+          --top-n 10
+
+    - name: Check all outputs exist
+      run: |
+        test -f test_output/RELATED_WORK_MATRIX.md
+        test -f test_output/READING_QUEUE.md
+        test -f test_output/ZOMBIE_REPORT.md
+        test -f test_output/NARRATIVE.md
+        test -f test_output/CONTRADICTION_MAP.md
+        test -f test_output/SERENDIPITY_REPORT.md
+        test -f test_output/BIAS_AUDIT.md
+        test -f test_output/provenance.dot
+        test -f test_output/RELATED_WORK.tex
+        test -f test_output/literature_pipeline.bib
+        test -d test_output/zettel
+
+    - name: Render provenance graph
+      run: dot -Tpng test_output/provenance.dot -o test_output/provenance.png
+
+    - name: Run integration tests
+      run: bash tests/test_pipeline.sh
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-outputs-v5
+        path: |
+          test_output/RELATED_WORK_MATRIX.md
+          test_output/READING_QUEUE.md
+          test_output/ZOMBIE_REPORT.md
+          test_output/NARRATIVE.md
+          test_output/CONTRADICTION_MAP.md
+          test_output/SERENDIPITY_REPORT.md
+          test_output/BIAS_AUDIT.md
+          test_output/provenance.png
+          test_output/RELATED_WORK.tex
+          test_output/literature_pipeline.bib
+          test_output/zettel/
+
+  test-docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t literature-pipeline .
+
+    - name: Run pipeline in Docker
+      run: |
+        docker run -v $(pwd)/examples:/app/data:ro -v $(pwd)/docker_output:/app/output literature-pipeline \
+          --elicit /app/data/sample_elicit.csv \
+          --researchrabbit /app/data/sample_researchrabbit.csv \
+          --scite /app/data/sample_scite.csv \
+          --output /app/output \
+          --top-n 10
+
+    - name: Check Docker outputs
+      run: |
+        test -f docker_output/RELATED_WORK_MATRIX.md
+        test -f docker_output/RELATED_WORK.tex
+        test -f docker_output/literature_pipeline.bib
+
+    - name: Upload Docker artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: docker-outputs-v5
+        path: docker_output/

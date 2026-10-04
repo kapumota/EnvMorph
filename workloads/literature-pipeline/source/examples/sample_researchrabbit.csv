@@ -1,0 +1,6 @@
+title,authors,doi,year,abstract
+"On the Dangers of Stochastic Parrots","Emily Bender et al.","10.1145/3442188.3445922",2021,"We survey the ethical and environmental risks of large language models."
+"Attention Is All You Need","Ashish Vaswani et al.","10.48550/arXiv.1706.03762",2017,"We propose a new simple network architecture, the Transformer."
+"BERT: Pre-training of Deep Bidirectional Transformers","Jacob Devlin et al.","10.18653/v1/n19-1423",2019,"We introduce a new language representation model called BERT."
+"An Image is Worth 16x16 Words","Alexey Dosovitskiy et al.","10.48550/arXiv.2010.11929",2020,"We show that pure transformers applied directly to image patches can perform very well on image classification tasks."
+"Training language models to follow instructions","Long Ouyang et al.","10.48550/arXiv.2203.02155",2022,"We show that fine-tuning with human feedback greatly improves the usefulness of language models."

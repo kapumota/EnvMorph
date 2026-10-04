@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  literature-pipeline:
+    build: .
+    volumes:
+      - ./data:/app/data:ro
+      - ./output:/app/output
+    command: >
+      --elicit /app/data/elicit.csv
+      --researchrabbit /app/data/researchrabbit.csv
+      --scite /app/data/scite.csv
+      --output /app/output
+      --top-n 20

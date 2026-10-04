@@ -1,0 +1,11 @@
+title,authors,doi,year,abstract
+"Attention Is All You Need","Ashish Vaswani et al.","10.48550/arXiv.1706.03762",2017,"We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely."
+"BERT: Pre-training of Deep Bidirectional Transformers","Jacob Devlin et al.","10.18653/v1/n19-1423",2019,"We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers."
+"Deep Residual Learning for Image Recognition","Kaiming He et al.","10.1109/cvpr.2016.90",2016,"We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously."
+"Generative Adversarial Networks","Ian Goodfellow et al.","10.1145/3422622",2020,"We propose a new framework for estimating generative models via an adversarial process."
+"Language Models are Few-Shot Learners","Tom Brown et al.","10.48550/arXiv.2005.14165",2020,"We demonstrate that scaling up language models greatly improves task-agnostic, few-shot performance."
+"Chain-of-Thought Prompting Elicits Reasoning","Jason Wei et al.","10.48550/arXiv.2201.11903",2022,"We explore generating a chain of thought to significantly improve the ability of large language models to perform complex reasoning."
+"Llama 2: Open Foundation and Fine-Tuned Chat Models","Hugo Touvron et al.","10.48550/arXiv.2307.09288",2023,"We develop and release Llama 2, a collection of pretrained and fine-tuned large language models ranging in scale from 7 billion to 70 billion parameters."
+"Retrieval-Augmented Generation for Knowledge-Intensive NLP","Patrick Lewis et al.","10.48550/arXiv.2005.11401",2020,"We propose a general-purpose fine-tuning recipe for retrieval-augmented generation."
+"A Survey on Large Language Models","Wayne Xin Zhao et al.","10.48550/arXiv.2303.18223",2023,"This survey reviews the recent advances of LLMs by introducing the background, key findings, and mainstream techniques."
+"The Pile: An 800GB Dataset of Diverse Text for Language Modeling","Leo Gao et al.","10.48550/arXiv.2101.00027",2020,"We present the Pile, a large and diverse dataset suitable for training large language models."

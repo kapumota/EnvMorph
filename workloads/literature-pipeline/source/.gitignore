@@ -1,0 +1,19 @@
+# Output files
+output/
+test_output/
+pipeline_out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
