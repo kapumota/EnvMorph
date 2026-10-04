@@ -2,7 +2,7 @@
 name = "envmorph"
 version = "0.1.0"
 edition = "2021"
-description = "Experimental infrastructure for environmental metamorphic testing of Unix workflows"
+description = "Infraestructura experimental para pruebas metamórficas ambientales de workflows Unix"
 license = "MIT"
 
 [dependencies]

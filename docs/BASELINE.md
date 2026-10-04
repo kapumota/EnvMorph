@@ -1,17 +1,30 @@
-### Baseline de EnvMorph
+### Baseline F0 de EnvMorph
 
 #### Estado
 
-F0.2 endurece replay, normaliza la interfaz activa y vuelve a ejecutar todos los gates locales antes de iniciar Git.
+F0 está cerrado como baseline técnico verificable.
 
-#### Gates esperados
+#### Gates cerrados
 
-- compilación release del núcleo Rust
-- tests unitarios Rust
-- integración del núcleo
-- tests del literature-pipeline
-- validación sintáctica de scripts Bash
-- rechazo de rutas no confinables durante la materialización de replay
-- auditoría de identidad residual, idioma y Markdown del núcleo activo
+- 25 tests unitarios Rust aprobados
+- 37 checks de integración aprobados
+- 19 tests del `literature-pipeline` aprobados
+- `cargo fmt --check` aprobado
+- build release aprobado
+- sintaxis Bash aprobada
+- identidad activa de EnvMorph verificada
+- workload canónico preservado byte a byte
+- secret scan de alta confianza aprobado
+- auditoría de archivos grandes y symlinks aprobada
 
-Este documento no declara resultados científicos.
+#### Hardening de replay
+
+F0 rechaza rutas lógicas absolutas no mapeadas y traversal con componentes `..` durante la materialización de replay.
+
+Esta protección no equivale a un sandbox de sistema operativo.
+
+#### Evidencia
+
+F0 demuestra estabilidad técnica del baseline.
+
+No declara resultados científicos sobre portabilidad, causalidad ambiental, contratos o hermeticidad conductual.
