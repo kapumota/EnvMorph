@@ -1,5 +1,9 @@
 use std::collections::HashSet;
 use std::fmt;
+use std::fs;
+use std::path::Path;
+
+use serde::Deserialize;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct FactorValue(String);
@@ -111,6 +115,99 @@ impl EnvironmentVariant {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ExperimentSpec {
+    name: String,
+    schema_version: u32,
+    factors: Vec<EnvironmentalFactor>,
+}
+
+impl ExperimentSpec {
+    pub fn from_toml_str(input: &str) -> Result<Self, String> {
+        let raw: RawExperimentDocument =
+            toml::from_str(input).map_err(|e| format!("TOML experimental inválido: {e}"))?;
+        Self::from_raw(raw)
+    }
+
+    pub fn from_toml_path(path: &Path) -> Result<Self, String> {
+        let input = fs::read_to_string(path)
+            .map_err(|e| format!("no se pudo leer '{}': {e}", path.display()))?;
+        Self::from_toml_str(&input)
+    }
+
+    fn from_raw(raw: RawExperimentDocument) -> Result<Self, String> {
+        let name = raw.experiment.name;
+        if name.is_empty() || name.trim() != name {
+            return Err(
+                "el nombre del experimento no puede estar vacío ni tener espacios externos".into(),
+            );
+        }
+        if raw.experiment.schema_version != 1 {
+            return Err(format!(
+                "versión de esquema experimental no soportada: {}",
+                raw.experiment.schema_version
+            ));
+        }
+        if raw.factor.is_empty() {
+            return Err("el experimento debe declarar al menos un factor".into());
+        }
+
+        let mut factors = Vec::with_capacity(raw.factor.len());
+        let mut names = HashSet::new();
+        for factor in raw.factor {
+            if !names.insert(factor.name.clone()) {
+                return Err(format!("el experimento repite el factor '{}'", factor.name));
+            }
+            let values = factor
+                .values
+                .into_iter()
+                .map(FactorValue::new)
+                .collect::<Result<Vec<_>, _>>()?;
+            factors.push(EnvironmentalFactor::new(factor.name, values)?);
+        }
+
+        Ok(Self {
+            name,
+            schema_version: raw.experiment.schema_version,
+            factors,
+        })
+    }
+
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn schema_version(&self) -> u32 {
+        self.schema_version
+    }
+
+    pub fn factors(&self) -> &[EnvironmentalFactor] {
+        &self.factors
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawExperimentDocument {
+    experiment: RawExperiment,
+    #[serde(default)]
+    factor: Vec<RawFactor>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawExperiment {
+    name: String,
+    schema_version: u32,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawFactor {
+    name: String,
+    values: Vec<String>,
+}
+
 fn validate_factor_name(name: &str) -> Result<(), String> {
     let mut chars = name.chars();
     let Some(first) = chars.next() else {
@@ -197,5 +294,82 @@ mod tests {
             ],
         );
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn experiment_spec_parses_valid_toml() {
+        let spec = ExperimentSpec::from_toml_str(
+            r#"
+[experiment]
+name = "smoke"
+schema_version = 1
+
+[[factor]]
+name = "locale"
+values = ["C", "en_US.UTF-8"]
+
+[[factor]]
+name = "timezone"
+values = ["UTC", "America/Lima"]
+"#,
+        )
+        .unwrap();
+
+        assert_eq!(spec.name(), "smoke");
+        assert_eq!(spec.schema_version(), 1);
+        assert_eq!(spec.factors().len(), 2);
+        assert_eq!(spec.factors()[0].name(), "locale");
+    }
+
+    #[test]
+    fn experiment_spec_rejects_duplicate_factor_names() {
+        let input = r#"
+[experiment]
+name = "duplicates"
+schema_version = 1
+
+[[factor]]
+name = "locale"
+values = ["C", "POSIX"]
+
+[[factor]]
+name = "locale"
+values = ["C", "en_US.UTF-8"]
+"#;
+        assert!(ExperimentSpec::from_toml_str(input).is_err());
+    }
+
+    #[test]
+    fn experiment_spec_rejects_unsupported_schema_version() {
+        let input = r#"
+[experiment]
+name = "future"
+schema_version = 2
+
+[[factor]]
+name = "locale"
+values = ["C", "POSIX"]
+"#;
+        assert!(ExperimentSpec::from_toml_str(input).is_err());
+    }
+
+    #[test]
+    fn experiment_spec_rejects_unknown_fields() {
+        let input = r#"
+[experiment]
+name = "typo"
+schema_version = 1
+unexpected = true
+
+[[factor]]
+name = "locale"
+values = ["C", "POSIX"]
+"#;
+        assert!(ExperimentSpec::from_toml_str(input).is_err());
+    }
+
+    #[test]
+    fn experiment_spec_rejects_malformed_toml() {
+        assert!(ExperimentSpec::from_toml_str("[experiment\nname = 1").is_err());
     }
 }

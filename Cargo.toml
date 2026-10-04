@@ -6,6 +6,8 @@ description = "Infraestructura experimental para pruebas metamórficas ambiental
 license = "MIT"
 
 [dependencies]
+serde = { version = "1.0", features = ["derive"] }
+toml = "1.1"
 
 [profile.release]
 opt-level = 3
