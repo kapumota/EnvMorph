@@ -1,0 +1,14 @@
+*~
+.demo/
+/.demo
+.DS_Store
+.env
+.env.*
+!.env.example
+.envmorph/
+/.envmorph
+/results
+*.swp
+/target
+target/
+*.tmp
