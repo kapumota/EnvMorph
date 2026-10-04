@@ -1,0 +1,34 @@
+.PHONY: build test integration check demo experiments clean
+
+FA ?= target/release/flowattest
+
+build:
+	cargo build --release
+
+test:
+	cargo test
+
+integration: build
+	FLOWATTEST_BIN=$(abspath $(FA)) bash tests/integration.sh
+
+check: test integration
+
+# Records the literature-pipeline twice (identical), prints the diff and a DOT graph.
+demo: build
+	@rm -rf .demo && mkdir -p .demo
+	@cd benchmarks/literature-pipeline && for i in 1 2; do \
+	  FLOWATTEST_HOME=$(abspath .demo)/store FLOWATTEST_BIN=$(abspath $(FA)) \
+	  bash pipeline_flowattest.sh --elicit examples/sample_elicit.csv \
+	    --researchrabbit examples/sample_researchrabbit.csv --scite examples/sample_scite.csv \
+	    --output $(abspath .demo)/out$$i --top-n 20 --min-year 2020 >/dev/null; done
+	FLOWATTEST_HOME=$(abspath .demo)/store $(FA) inspect run-001
+	FLOWATTEST_HOME=$(abspath .demo)/store $(FA) diff run-001 run-002
+	FLOWATTEST_HOME=$(abspath .demo)/store $(FA) graph run-001 > .demo/provenance.dot
+	@echo "graph written to .demo/provenance.dot (dot -Tsvg .demo/provenance.dot > provenance.svg)"
+
+experiments: build
+	FLOWATTEST_BIN=$(abspath $(FA)) bash experiments/run_mutations.sh $(or $(REPEATS),3)
+
+clean:
+	cargo clean
+	rm -rf .demo results

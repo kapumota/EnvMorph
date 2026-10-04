@@ -1,0 +1,24 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install awk implementations
+        run: sudo apt-get update && sudo apt-get install -y gawk mawk graphviz
+      - name: Unit tests
+        run: cargo test --locked || cargo test
+      - name: Build
+        run: cargo build --release
+      - name: Integration tests
+        run: FLOWATTEST_BIN=$PWD/target/release/flowattest bash tests/integration.sh
+      - name: Mutation experiment (1 repeat)
+        run: FLOWATTEST_BIN=$PWD/target/release/flowattest bash experiments/run_mutations.sh 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: results/
