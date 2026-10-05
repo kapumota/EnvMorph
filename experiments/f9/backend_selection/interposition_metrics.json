@@ -1,0 +1,38 @@
+{
+  "behavior_preserved": true,
+  "cases": {
+    "baseline_environ": {
+      "log": "",
+      "log_exists": false,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "environ:alpha\n"
+    },
+    "baseline_getenv": {
+      "log": "",
+      "log_exists": false,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "getenv:alpha\n"
+    },
+    "hooked_environ": {
+      "log": "",
+      "log_exists": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "environ:alpha\n"
+    },
+    "hooked_getenv": {
+      "log": "{\"kind\":\"getenv\",\"name\":\"F9_GROUND_TRUTH\",\"present\":true}\n",
+      "log_exists": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "getenv:alpha\n"
+    }
+  },
+  "direct_environ_blind_spot_preserved": true,
+  "f8_corpus_executed": false,
+  "getenv_interposition_detected": true,
+  "phase": "F9.1B",
+  "schema_version": 1
+}

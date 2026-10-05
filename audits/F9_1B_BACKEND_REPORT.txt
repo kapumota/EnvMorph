@@ -1,0 +1,37 @@
+ENVMORPH F9.1B BACKEND REPORT
+
+Estado: PASS
+Parent: 11ac804
+
+Ptrace candidate:
+validated
+
+LD_PRELOAD getenv complement:
+validated
+
+eBPF build ready:
+false
+
+eBPF unprivileged probe ok:
+true
+
+Backend decision status:
+selected_for_current_host_constraints
+
+Final selection:
+true
+
+Next gate:
+F9.2
+
+Host configuration changed:
+no
+
+Packages installed:
+no
+
+sudo used:
+no
+
+F8 corpus executed:
+no

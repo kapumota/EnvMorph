@@ -1,0 +1,24 @@
+{
+  "bpftool": true,
+  "bpftool_feature_unprivileged": {
+    "returncode": 0,
+    "stderr_tail": "",
+    "stdout_tail": "event_array is NOT available\neBPF map_type percpu_hash is NOT available\neBPF map_type percpu_array is NOT available\neBPF map_type stack_trace is NOT available\neBPF map_type cgroup_array is NOT available\neBPF map_type lru_hash is NOT available\neBPF map_type lru_percpu_hash is NOT available\neBPF map_type lpm_trie is NOT available\neBPF map_type array_of_maps is NOT available\neBPF map_type hash_of_maps is NOT available\neBPF map_type devmap is NOT available\neBPF map_type sockmap is NOT available\neBPF map_type cpumap is NOT available\neBPF map_type xskmap is NOT available\neBPF map_type sockhash is NOT available\neBPF map_type cgroup_storage is NOT available\neBPF map_type reuseport_sockarray is NOT available\neBPF map_type percpu_cgroup_storage is NOT available\neBPF map_type queue is NOT available\neBPF map_type stack is NOT available\neBPF map_type sk_storage is NOT available\neBPF map_type devmap_hash is NOT available\neBPF map_type struct_ops is NOT available\neBPF map_type ringbuf is NOT available\neBPF map_type inode_storage is NOT available\neBPF map_type task_storage is NOT available\neBPF map_type bloom_filter is NOT available\neBPF map_type user_ringbuf is NOT available\neBPF map_type cgrp_storage is NOT available\n\nScanning eBPF helper functions...\neBPF helpers supported for program type socket_filter:\n\tProgram type not supported\neBPF helpers supported for program type kprobe:\n\tProgram type not supported\neBPF helpers supported for program type sched_cls:\n\tProgram type not supported\neBPF helpers supported for program type sched_act:\n\tProgram type not supported\neBPF helpers supported for program type tracepoint:\n\tProgram type not supported\neBPF helpers supported for program type xdp:\n\tProgram type not supported\neBPF helpers supported for program type perf_event:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_skb:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_sock:\n\tProgram type not supported\neBPF helpers supported for program type lwt_in:\n\tProgram type not supported\neBPF helpers supported for program type lwt_out:\n\tProgram type not supported\neBPF helpers supported for program type lwt_xmit:\n\tProgram type not supported\neBPF helpers supported for program type sock_ops:\n\tProgram type not supported\neBPF helpers supported for program type sk_skb:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_device:\n\tProgram type not supported\neBPF helpers supported for program type sk_msg:\n\tProgram type not supported\neBPF helpers supported for program type raw_tracepoint:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_sock_addr:\n\tProgram type not supported\neBPF helpers supported for program type lwt_seg6local:\n\tProgram type not supported\neBPF helpers supported for program type lirc_mode2:\n\tProgram type not supported\neBPF helpers supported for program type sk_reuseport:\n\tProgram type not supported\neBPF helpers supported for program type flow_dissector:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_sysctl:\n\tProgram type not supported\neBPF helpers supported for program type raw_tracepoint_writable:\n\tProgram type not supported\neBPF helpers supported for program type cgroup_sockopt:\n\tProgram type not supported\neBPF helpers supported for program type tracing:\n\tProgram type not supported\neBPF helpers supported for program type struct_ops:\n\tProgram type not supported\neBPF helpers supported for program type ext:\n\tProgram type not supported\neBPF helpers supported for program type lsm:\n\tProgram type not supported\neBPF helpers supported for program type sk_lookup:\n\tProgram type not supported\neBPF helpers supported for program type syscall:\n\tProgram type not supported\neBPF helpers supported for program type netfilter:\n\tProgram type not supported\n\nScanning miscellaneous eBPF features...\nLarge program size limit is NOT available\nBounded loop support is NOT available\nISA extension v2 is NOT available\nISA extension v3 is NOT available\n\n"
+  },
+  "bpftool_version": "bpftool v7.4.0",
+  "btf_vmlinux": true,
+  "clang": true,
+  "clang_version": "Ubuntu clang version 14.0.0-1ubuntu1.1",
+  "ebpf_build_ready": false,
+  "ebpf_unprivileged_probe_ok": true,
+  "euid": 1000,
+  "host_configuration_changed": false,
+  "kernel": "6.8.0-101-generic",
+  "kernel_headers": true,
+  "libbpf_pkgconfig": false,
+  "machine": "x86_64",
+  "phase": "F9.1B",
+  "pkg_config": true,
+  "schema_version": 1,
+  "tracefs_present": true
+}

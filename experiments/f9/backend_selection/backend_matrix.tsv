@@ -1,0 +1,5 @@
+backend	role	file_exec	process_tree	getenv	known_blind_spot	status
+agentguard-derived-ptrace-observer	primary_candidate	pass	pass	no	in_memory_and_vdso	validated
+strace-ff	reference	pass	pass	no	in_memory_and_vdso	reference_only
+ld_preload_getenv_observer	complement_candidate	no	no	pass	direct_environ_access	validated
+ebpf	future_candidate	unknown	unknown	no	probe_specific	not_build_ready_without_host_changes

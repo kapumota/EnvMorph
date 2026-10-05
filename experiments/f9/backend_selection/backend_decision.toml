@@ -1,0 +1,35 @@
+schema_version = 1
+phase = "F9.1B"
+status = "selected_for_current_host_constraints"
+final_backend_selection = true
+primary_backend = "agentguard-derived-ptrace-observer"
+complementary_backend = "ld_preload_getenv_observer"
+ebpf_status = "not_build_ready_without_host_changes"
+next_gate = "F9.2"
+f8_corpus_executed = false
+host_configuration_changed = false
+backend_selection_rule = "validated_ground_truth_then_minimal_host_change_then_complementary_coverage"
+
+[ptrace]
+validated_ground_truth = true
+cases_passed = 5
+reference = "strace-ff"
+primary_candidate = true
+
+[interposition]
+getenv_detected = true
+direct_environ_is_blind_spot = true
+behavior_preserved = true
+complement_candidate = true
+
+[ebpf]
+build_ready = false
+unprivileged_probe_ok = true
+prototype_required_if_ready = true
+selected_without_prototype = false
+
+[claims]
+complete_dependency_observation = false
+ptrace_observes_getenv = false
+interposition_observes_direct_environ_access = false
+ebpf_selected_without_prototype = false
