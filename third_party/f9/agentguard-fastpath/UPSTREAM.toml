@@ -1,0 +1,7 @@
+schema_version = 1
+project = "AgentGuard-FastPath"
+repository = "https://github.com/kapumota/AgentGuard-FastPath.git"
+commit = "2891a512e265cce07c64fc6a0367bd8a78bba3cb"
+license = "MIT"
+selection = "files_relevant_to_ptrace_observer_audit"
+copied_for = "EnvMorph F9.1A"

@@ -1,0 +1,111 @@
+{
+  "candidate": "agentguard-derived-ptrace-observer",
+  "cases": [
+    {
+      "case": "absolute",
+      "exit_code_equivalent": true,
+      "expected_total": 1,
+      "observer_events_total": 4,
+      "observer_expectations": 1,
+      "observer_no_enforcement": true,
+      "status": "pass",
+      "stdout_equivalent": true,
+      "strace_expectations": 1
+    },
+    {
+      "case": "relative",
+      "exit_code_equivalent": true,
+      "expected_total": 1,
+      "observer_events_total": 4,
+      "observer_expectations": 1,
+      "observer_no_enforcement": true,
+      "status": "pass",
+      "stdout_equivalent": true,
+      "strace_expectations": 1
+    },
+    {
+      "case": "dirfd",
+      "exit_code_equivalent": true,
+      "expected_total": 1,
+      "observer_events_total": 5,
+      "observer_expectations": 1,
+      "observer_no_enforcement": true,
+      "status": "pass",
+      "stdout_equivalent": true,
+      "strace_expectations": 1
+    },
+    {
+      "case": "missing",
+      "exit_code_equivalent": true,
+      "expected_total": 1,
+      "observer_events_total": 4,
+      "observer_expectations": 1,
+      "observer_no_enforcement": true,
+      "status": "pass",
+      "stdout_equivalent": true,
+      "strace_expectations": 1
+    },
+    {
+      "case": "forkexec",
+      "exit_code_equivalent": true,
+      "expected_total": 2,
+      "observer_events_total": 8,
+      "observer_expectations": 2,
+      "observer_no_enforcement": true,
+      "status": "pass",
+      "stdout_equivalent": true,
+      "strace_expectations": 2
+    }
+  ],
+  "f8_corpus_executed": false,
+  "limitations": [
+    "candidate captures only open/openat/creat and execve/execveat",
+    "environment variables consumed in memory are not observable by syscall tracing",
+    "vDSO accesses are outside this candidate",
+    "path resolution is lexical and does not claim complete symlink identity",
+    "overhead values are engineering microbenchmarks, not paper-level performance claims",
+    "eBPF feasibility remains pending before final backend selection"
+  ],
+  "overhead_microbenchmark": {
+    "baseline_median_ms": 1.211247,
+    "baseline_ms": [
+      1.207395,
+      1.177732,
+      1.249003,
+      1.237394,
+      1.211247
+    ],
+    "observer_median_ms": 7.398042,
+    "observer_ms": [
+      7.322368,
+      7.398042,
+      7.357302,
+      7.410686,
+      7.438551
+    ],
+    "observer_ratio_to_baseline": 6.107789740655705,
+    "repetitions": 5,
+    "strace_median_ms": 3.385707,
+    "strace_ms": [
+      3.391481,
+      3.385707,
+      3.331433,
+      3.402496,
+      3.375435
+    ],
+    "strace_ratio_to_baseline": 2.795224260617364
+  },
+  "phase": "F9.1A",
+  "reference": "strace-ff",
+  "schema_version": 1,
+  "status": "validated_candidate_not_final_backend",
+  "summary": {
+    "cases_passed": 5,
+    "cases_total": 5,
+    "exit_code_equivalent_cases": 5,
+    "observer_expectations_matched": 6,
+    "observer_expectations_total": 6,
+    "stdout_equivalent_cases": 5,
+    "strace_expectations_matched": 6
+  }
+}

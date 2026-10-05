@@ -1,0 +1,6 @@
+case	expectation
+absolute	open absoluto exitoso
+relative	open relativo resuelto contra cwd
+dirfd	openat relativo resuelto contra dirfd
+missing	open inexistente con ENOENT
+forkexec	fork seguido de exec y acceso a archivo del hijo

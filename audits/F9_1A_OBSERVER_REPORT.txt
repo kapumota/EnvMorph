@@ -1,0 +1,46 @@
+ENVMORPH F9.1A OBSERVER REPORT
+
+Estado: PASS
+Parent F9.0: d2e0b41
+AgentGuard-FastPath commit: 2891a512e265cce07c64fc6a0367bd8a78bba3cb
+Fuente seleccionada congelada: sí
+Licencia preservada: MIT
+
+Candidato:
+agentguard-derived-ptrace-observer
+
+Enforcement:
+- política: eliminado
+- PTRACE_SETREGS: eliminado
+- sustitución de syscall: eliminada
+- sandbox/risk scoring: no incorporados
+
+Ground truth:
+- casos: 5
+- expectativas: 6
+- comparación: strace -ff
+- equivalencia stdout: requerida
+- equivalencia exit code: requerida
+
+Resultado detallado:
+case	observer	strace	stdout	exit	status
+absolute	1/1	1/1	equal	equal	pass
+relative	1/1	1/1	equal	equal	pass
+dirfd	1/1	1/1	equal	equal	pass
+missing	1/1	1/1	equal	equal	pass
+forkexec	2/2	2/2	equal	equal	pass
+
+Estado del backend:
+validated_candidate_not_final_backend
+
+Corpus F8 ejecutado: no
+eBPF: pendiente F9.1B
+interposición de biblioteca: pendiente F9.1B
+
+Evidencia cruda local:
+.envmorph/f9-1a-evidence
+Manifest evidencia cruda SHA-256:
+c28892df70b780402b5574b897caeaef16040471018bdf75aeabecefa3517a0d
+
+Siguiente gate:
+F9.1B factibilidad eBPF y decisión de backend antes de cualquier ejecución F9 sobre el corpus F8.

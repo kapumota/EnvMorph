@@ -1,0 +1,5 @@
+kernel=Linux 6.8.0-101-generic x86_64 GNU/Linux
+gcc=gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+strace=strace -- version 5.16
+python=Python 3.10.12
+agentguard_commit=2891a512e265cce07c64fc6a0367bd8a78bba3cb

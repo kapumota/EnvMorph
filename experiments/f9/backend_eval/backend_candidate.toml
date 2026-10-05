@@ -1,0 +1,10 @@
+schema_version = 1
+phase = "F9.1A"
+candidate = "agentguard-derived-ptrace-observer"
+source_project = "AgentGuard-FastPath"
+source_commit = "2891a512e265cce07c64fc6a0367bd8a78bba3cb"
+reference = "strace-ff"
+status = "candidate_not_final_backend"
+f8_corpus_executed = false
+ebpf_feasibility_pending = true
+library_interposition_pending = true

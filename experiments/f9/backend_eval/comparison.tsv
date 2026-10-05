@@ -1,0 +1,6 @@
+case	observer	strace	stdout	exit	status
+absolute	1/1	1/1	equal	equal	pass
+relative	1/1	1/1	equal	equal	pass
+dirfd	1/1	1/1	equal	equal	pass
+missing	1/1	1/1	equal	equal	pass
+forkexec	2/2	2/2	equal	equal	pass
