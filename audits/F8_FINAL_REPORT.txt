@@ -1,0 +1,52 @@
+ENVMORPH F8 FINAL REPORT
+
+Estado: CLOSED, SCIENTIFICALLY NEGATIVE
+Workloads seleccionados: 4
+Workloads F2-F7 evaluables: 3/4
+Workloads estables: 3
+Workloads con diferencia observable: 0
+Workloads no completamente evaluables: ['csvkit-realdata']
+Distribución F4: {'not_evaluable': 1, 'stable': 3}
+Distribución F5: {'no_observable_effect': 3, 'not_evaluable': 1}
+Distribución F7: {'complete': 2, 'not_evaluable': 1, 'partial': 1}
+Cardinalidades MCE: []
+Held-out intentados: 1
+Held-out decididos: 0
+Held-out abstenciones: 1
+Held-out accuracy decidida: None
+Interpretación held-out: no estimable, única ejecución en abstención out_of_scope
+Resultados negativos retenidos: sí
+Sustitución de workloads por resultado: no
+Reajuste post-hoc: no
+Universal portability claim: no
+Physical causality claim: no
+
+Interpretación científica:
+- resultado F8 predominantemente negativo
+- 0 divergencias observables entre los 3 workloads evaluables
+- no se demuestra prevalencia de sensibilidad ambiental
+- no se demuestra generalización predictiva held-out
+- se demuestra preservación de resultados negativos y abstención conservadora
+
+Gates:
+- cargo fmt --check: PASS
+- cargo test: PASS
+- cargo build --release: PASS
+- tests/integration.sh: PASS
+- integration scripts adicionales: 9 PASS
+- literature-pipeline: 19 PASS, ejecutado en copia temporal fuera de Git
+- literature-pipeline side effects sobre ramas: ninguno
+- snapshot canónico: PASS
+- preregistro F8: intacto
+- corpus upstream: intacto por SHA-256
+
+Artefactos principales:
+- experiments/f8/results/results_manifest.json
+- experiments/f8/aggregate_summary.json
+- docs/F8_RESULTS.md
+- docs/F8_THREATS_TO_VALIDITY.md
+- docs/F8_NOVELTY_POSITIONING.md
+- provenance/F8_RESULT_FILES.sha256
+- provenance/F8_FINAL_FILES.sha256
+
+F9 no se implementó y permanece fuera del camino crítico de Paper 1.

@@ -1,0 +1,49 @@
+{
+  "causal_status_distribution": {
+    "no_observable_effect": 3,
+    "not_evaluable": 1
+  },
+  "claims": {
+    "contractual_abstention": "observed",
+    "environmental_sensitivity_in_frozen_contrasts": "not_observed_in_evaluable_workloads",
+    "external_execution_of_f2_f7": "supported_for_three_of_four_selected_workloads",
+    "negative_result_preservation": "demonstrated",
+    "physical_causality": "not_claimed",
+    "predictive_generalization_of_f6": "not_demonstrated_heldout_abstained",
+    "universal_portability": "not_claimed"
+  },
+  "deviation_from_target_four": true,
+  "deviation_reason": "un workload seleccionado no complet\u00f3 la cadena F2-F7 y se conserva sin sustituci\u00f3n",
+  "envelope_status_distribution": {
+    "complete": 2,
+    "not_evaluable": 1,
+    "partial": 1
+  },
+  "full_chain_evaluable": 3,
+  "heldout_abstentions": 1,
+  "heldout_accuracy": null,
+  "heldout_attempted": 1,
+  "heldout_correct": 0,
+  "heldout_decided": 0,
+  "mce_cardinalities": [],
+  "negative_results_retained": true,
+  "not_fully_evaluable_workloads": [
+    "csvkit-realdata"
+  ],
+  "observable_difference_workloads": [],
+  "phase": "F8.7-F8.10",
+  "posthoc_retuning": false,
+  "schema_version": 1,
+  "selected_workloads": 4,
+  "stable_workloads": [
+    "fd-build-completions",
+    "inih-meson-tests",
+    "jq-build-check"
+  ],
+  "status": "closed_scientifically_negative",
+  "trace_status_distribution": {
+    "not_evaluable": 1,
+    "stable": 3
+  },
+  "workload_substitution_after_results": false
+}

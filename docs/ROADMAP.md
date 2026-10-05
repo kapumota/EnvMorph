@@ -54,11 +54,14 @@ Enumera el producto cartesiano baseline/treatment de F6, registra cobertura deci
 
 #### F8. External Corpus and Validation
 
-Estado: siguiente fase y bloqueante para Paper 1.
+Estado: cerrado.
 
 Debe validar F2 a F7 sobre entre tres y cinco workloads externos, independientes de EnvMorph, seleccionados mediante `docs/F8_PROTOCOL.md` antes de observar resultados. F8 debe conservar casos positivos, negativos, indisponibles y fuera de alcance.
 
 La extensión de factores y oráculos solo se permite cuando una necesidad del corpus seleccionado la justifique y quede registrada antes de ejecutar la matriz experimental afectada.
+
+
+Validación externa: corpus seleccionado y congelado antes de ejecutar, adapters separados de upstream, matriz preregistrada, evidencia F2-F7 materializada, resultados negativos preservados y held-out evaluado sin reajuste post-hoc.
 
 #### F9. Behavioral Hermeticity
 

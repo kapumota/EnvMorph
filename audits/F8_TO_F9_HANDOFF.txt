@@ -1,0 +1,41 @@
+CONTINUAR DESDE ENVMORPH F8 CERRADO.
+
+Repositorio local:
+/home/c-lara/EnvMorph
+
+Rama:
+fase8/validacion-externa
+
+Estado científico:
+F0-F8 cerradas.
+F8 cerró validación externa sobre corpus congelado.
+Workloads seleccionados: 4.
+Workloads F2-F7 evaluables: 3/4.
+Resultados negativos y abstenciones preservados.
+No hubo sustitución de workloads ni reajuste post-hoc.
+
+Preregistro que debe permanecer intacto:
+docs/F8_PROTOCOL.md
+experiments/f8/protocol.toml
+docs/PRIOR_ART.md
+docs/PAPER_SCOPE.md
+provenance/F8_PROTOCOL_FILES.sha256
+
+Evidencia F8:
+experiments/f8/results/
+experiments/f8/aggregate_summary.json
+docs/F8_RESULTS.md
+docs/F8_THREATS_TO_VALIDITY.md
+docs/F8_NOVELTY_POSITIONING.md
+audits/F8_FINAL_REPORT.txt
+
+Siguiente camino crítico editorial:
+realizar el gate editorial de Paper 1 usando F8 como evidencia externa científicamente negativa.
+
+F9:
+el usuario solicitó continuar con F9 después de cerrar F8.
+F9 debe comenzar en una rama nueva desde el commit final F8.
+Objetivo: distinguir dependencia ambiental observada de dependencia conductualmente relevante.
+No modificar ni reinterpretar la evidencia F8.
+Antes de implementar ptrace, realizar F9.0 de revisión de prior art y diseño, incluyendo Bazel/Nix, RepTrace y una auditoría de cualquier reutilización de AgentGuard-FastPath.
+Ptrace es una opción de instrumentación, no un requisito asumido.

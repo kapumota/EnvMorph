@@ -59,3 +59,7 @@ Los gates de fase verifican además integración, workloads y hashes de proceden
 #### Próximo objetivo
 
 F8 debe intentar falsar, no confirmar por construcción, los claims de F1 a F7 mediante workloads externos, resultados positivos y negativos, factores activados por necesidad del corpus y validación held-out de contratos.
+
+#### F8: validación externa
+
+F8 valida externamente la cadena F2-F7 sobre un corpus congelado antes de la ejecución. Tres de cuatro workloads completaron la cadena y los tres resultaron estables bajo los contrastes congelados. El único held-out produjo una abstención `out_of_scope`. La evidencia conserva resultados negativos y estados no evaluables sin sustituir workloads ni reajustar la matriz. Los detalles están en `docs/F8_RESULTS.md` y `audits/F8_FINAL_REPORT.txt`.

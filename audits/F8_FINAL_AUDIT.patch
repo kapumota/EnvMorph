@@ -1,0 +1,314 @@
+diff --git a/README.md b/README.md
+index 6e8b43e..83556a0 100644
+--- a/README.md
++++ b/README.md
+@@ -59,3 +59,7 @@ Los gates de fase verifican además integración, workloads y hashes de proceden
+ #### Próximo objetivo
+ 
+ F8 debe intentar falsar, no confirmar por construcción, los claims de F1 a F7 mediante workloads externos, resultados positivos y negativos, factores activados por necesidad del corpus y validación held-out de contratos.
++
++#### F8: validación externa
++
++F8 valida externamente la cadena F2-F7 sobre un corpus congelado antes de la ejecución. Tres de cuatro workloads completaron la cadena y los tres resultaron estables bajo los contrastes congelados. El único held-out produjo una abstención `out_of_scope`. La evidencia conserva resultados negativos y estados no evaluables sin sustituir workloads ni reajustar la matriz. Los detalles están en `docs/F8_RESULTS.md` y `audits/F8_FINAL_REPORT.txt`.
+diff --git a/audits/F8_FINAL_REPORT.txt b/audits/F8_FINAL_REPORT.txt
+new file mode 100644
+index 0000000..106b28d
+--- /dev/null
++++ b/audits/F8_FINAL_REPORT.txt
+@@ -0,0 +1,52 @@
++ENVMORPH F8 FINAL REPORT
++
++Estado: CLOSED, SCIENTIFICALLY NEGATIVE
++Workloads seleccionados: 4
++Workloads F2-F7 evaluables: 3/4
++Workloads estables: 3
++Workloads con diferencia observable: 0
++Workloads no completamente evaluables: ['csvkit-realdata']
++Distribución F4: {'not_evaluable': 1, 'stable': 3}
++Distribución F5: {'no_observable_effect': 3, 'not_evaluable': 1}
++Distribución F7: {'complete': 2, 'not_evaluable': 1, 'partial': 1}
++Cardinalidades MCE: []
++Held-out intentados: 1
++Held-out decididos: 0
++Held-out abstenciones: 1
++Held-out accuracy decidida: None
++Interpretación held-out: no estimable, única ejecución en abstención out_of_scope
++Resultados negativos retenidos: sí
++Sustitución de workloads por resultado: no
++Reajuste post-hoc: no
++Universal portability claim: no
++Physical causality claim: no
++
++Interpretación científica:
++- resultado F8 predominantemente negativo
++- 0 divergencias observables entre los 3 workloads evaluables
++- no se demuestra prevalencia de sensibilidad ambiental
++- no se demuestra generalización predictiva held-out
++- se demuestra preservación de resultados negativos y abstención conservadora
++
++Gates:
++- cargo fmt --check: PASS
++- cargo test: PASS
++- cargo build --release: PASS
++- tests/integration.sh: PASS
++- integration scripts adicionales: 9 PASS
++- literature-pipeline: 19 PASS, ejecutado en copia temporal fuera de Git
++- literature-pipeline side effects sobre ramas: ninguno
++- snapshot canónico: PASS
++- preregistro F8: intacto
++- corpus upstream: intacto por SHA-256
++
++Artefactos principales:
++- experiments/f8/results/results_manifest.json
++- experiments/f8/aggregate_summary.json
++- docs/F8_RESULTS.md
++- docs/F8_THREATS_TO_VALIDITY.md
++- docs/F8_NOVELTY_POSITIONING.md
++- provenance/F8_RESULT_FILES.sha256
++- provenance/F8_FINAL_FILES.sha256
++
++F9 no se implementó y permanece fuera del camino crítico de Paper 1.
+diff --git a/audits/F8_TO_F9_HANDOFF.txt b/audits/F8_TO_F9_HANDOFF.txt
+new file mode 100644
+index 0000000..479e869
+--- /dev/null
++++ b/audits/F8_TO_F9_HANDOFF.txt
+@@ -0,0 +1,41 @@
++CONTINUAR DESDE ENVMORPH F8 CERRADO.
++
++Repositorio local:
++/home/c-lara/EnvMorph
++
++Rama:
++fase8/validacion-externa
++
++Estado científico:
++F0-F8 cerradas.
++F8 cerró validación externa sobre corpus congelado.
++Workloads seleccionados: 4.
++Workloads F2-F7 evaluables: 3/4.
++Resultados negativos y abstenciones preservados.
++No hubo sustitución de workloads ni reajuste post-hoc.
++
++Preregistro que debe permanecer intacto:
++docs/F8_PROTOCOL.md
++experiments/f8/protocol.toml
++docs/PRIOR_ART.md
++docs/PAPER_SCOPE.md
++provenance/F8_PROTOCOL_FILES.sha256
++
++Evidencia F8:
++experiments/f8/results/
++experiments/f8/aggregate_summary.json
++docs/F8_RESULTS.md
++docs/F8_THREATS_TO_VALIDITY.md
++docs/F8_NOVELTY_POSITIONING.md
++audits/F8_FINAL_REPORT.txt
++
++Siguiente camino crítico editorial:
++realizar el gate editorial de Paper 1 usando F8 como evidencia externa científicamente negativa.
++
++F9:
++el usuario solicitó continuar con F9 después de cerrar F8.
++F9 debe comenzar en una rama nueva desde el commit final F8.
++Objetivo: distinguir dependencia ambiental observada de dependencia conductualmente relevante.
++No modificar ni reinterpretar la evidencia F8.
++Antes de implementar ptrace, realizar F9.0 de revisión de prior art y diseño, incluyendo Bazel/Nix, RepTrace y una auditoría de cualquier reutilización de AgentGuard-FastPath.
++Ptrace es una opción de instrumentación, no un requisito asumido.
+diff --git a/docs/F8_NOVELTY_POSITIONING.md b/docs/F8_NOVELTY_POSITIONING.md
+new file mode 100644
+index 0000000..ea38d28
+--- /dev/null
++++ b/docs/F8_NOVELTY_POSITIONING.md
+@@ -0,0 +1,23 @@
++### Posicionamiento de novedad después de F8
++
++#### Resultado científico de F8
++
++F8 no encontró sensibilidad ambiental observable en los tres workloads que completaron F2-F7 bajo la matriz congelada. El único held-out produjo abstención `out_of_scope`. Por tanto, F8 no valida una claim de alta prevalencia de sensibilidad ambiental ni una claim de generalización predictiva de F6.
++
++#### Qué sí queda demostrado
++
++La plataforma puede aplicar de extremo a extremo F2-F7 a workloads externos, conservar resultados estables, materializar estados no evaluables, derivar contratos conservadores y abstenerse fuera del alcance observado sin sustituir workloads ni reajustar la matriz después de ver resultados.
++
++#### Qué no se reclama
++
++No se reclama portabilidad universal, ausencia universal de dependencia ambiental, causalidad física, tracing de syscalls como contribución de F8, extrapolación de contratos ni exhaustividad del corpus.
++
++#### Diferenciación útil para Paper 1
++
++El argumento defendible de Paper 1 debe centrarse en el método y el sistema: equivalencia explícita por artefacto, localización ordenada, minimización causal operacional, contratos delimitados por evidencia, envelopes finitos, selección result-blind, resultados negativos preservados y abstención explícita.
++
++F8 debe presentarse como una validación externa conservadora con resultado predominantemente negativo, no como evidencia de sensibilidad ambiental positiva.
++
++#### Relación con F9
++
++F9 puede estudiar hermeticidad conductual y dependencias ambientales observadas de forma transparente, pero constituye una pregunta nueva. No debe reinterpretarse como una reparación de F8 ni modificar retrospectivamente sus factores, oráculos o resultados.
+diff --git a/docs/F8_RESULTS.md b/docs/F8_RESULTS.md
+new file mode 100644
+index 0000000..04ca779
+--- /dev/null
++++ b/docs/F8_RESULTS.md
+@@ -0,0 +1,41 @@
++### Validación externa F8
++
++#### Resultado principal
++
++F8 cerró con un resultado científicamente negativo bajo la matriz congelada. Tres de los cuatro workloads seleccionados completaron la cadena F2-F7 y, en los tres casos evaluables, no se observó una diferencia conductual bajo los contrastes ambientales declarados. El cuarto workload se conserva como no completamente evaluable y no fue sustituido.
++
++El único held-out ejecutado terminó en abstención `out_of_scope`. Por tanto, F8 no demuestra sensibilidad ambiental positiva ni capacidad de extrapolación de F6 a valores ambientales no observados.
++
++#### Resumen por workload
++
++| Workload | Estado | F4 | F5 | MCE | F7 | Held-out |
++| --- | --- | --- | --- | ---: | --- | --- |
++| `csvkit-realdata` | `not_evaluable_f4` | `n/a` | `n/a` | n/a | `n/a` | `no` |
++| `fd-build-completions` | `full_chain_evaluable` | `stable` | `no_observable_effect` | n/a | `complete` | `no` |
++| `inih-meson-tests` | `full_chain_evaluable` | `stable` | `no_observable_effect` | n/a | `complete` | `no` |
++| `jq-build-check` | `full_chain_evaluable` | `stable` | `no_observable_effect` | n/a | `partial` | `out_of_scope / abstained` |
++
++#### Agregado
++
++Workloads con cadena F2-F7 evaluable: **3/4**.
++Workloads estables: **3**.
++Workloads con diferencia observable: **0**.
++Workloads no completamente evaluables: `['csvkit-realdata']`.
++Distribución F4: `{'not_evaluable': 1, 'stable': 3}`.
++Distribución F5: `{'no_observable_effect': 3, 'not_evaluable': 1}`.
++Distribución F7: `{'complete': 2, 'not_evaluable': 1, 'partial': 1}`.
++Held-out intentados: **1**, decididos por F6: **0**, abstenciones `out_of_scope`: **1**.
++
++No se reporta accuracy held-out porque no hubo predicciones decididas. La abstención `out_of_scope` se conserva como resultado y no se reinterpreta como acierto.
++
++#### Interpretación
++
++El resultado apoya la robustez metodológica de la infraestructura para ejecutar, conservar y auditar resultados externos negativos, pero no aporta evidencia de que los factores congelados produzcan sensibilidad observable en estos tres workloads. Tampoco justifica ampliar factores de manera post-hoc dentro de F8.
++
++#### Desviación antes de la interpretación agregada
++
++un workload seleccionado no completó la cadena F2-F7 y se conserva sin sustitución. El corpus seleccionado permanece en cuatro workloads y el caso no evaluable queda materializado en la evidencia.
++
++#### Límites de interpretación
++
++Los resultados solo cubren los contrastes finitos congelados antes de la campaña. No demuestran portabilidad universal, ausencia universal de dependencia ambiental, causalidad física ni una ley de escalabilidad. Un resultado estable significa únicamente que los oráculos declarados no detectaron diferencias bajo los contrastes ejecutados.
+diff --git a/docs/F8_THREATS_TO_VALIDITY.md b/docs/F8_THREATS_TO_VALIDITY.md
+new file mode 100644
+index 0000000..3513e3f
+--- /dev/null
++++ b/docs/F8_THREATS_TO_VALIDITY.md
+@@ -0,0 +1,25 @@
++### Amenazas a la validez de F8
++
++#### Validez interna
++
++La selección del corpus se congeló antes de ejecutar EnvMorph y la matriz se congeló antes de la campaña confirmatoria. Esto reduce selección por resultado y reajuste post-hoc. Los adapters permanecen separados de upstream y los resultados negativos se conservaron. Un intento de ejecución fue abortado manualmente antes de la campaña completada y quedó excluido de la evidencia confirmatoria.
++
++#### Validez de constructo
++
++F4 observa diferencias a través de los oráculos F3 declarados. Que un workload sea estable no demuestra ausencia de toda dependencia ambiental, solo ausencia de diferencia observable bajo los factores, valores y oráculos congelados. F5 define causalidad como suficiencia operacional dentro del espacio declarado, no como causalidad física.
++
++#### Validez externa
++
++Solo tres de cuatro workloads seleccionados completaron la cadena F2-F7. Los tres resultaron estables. Esto limita cualquier inferencia sobre prevalencia de sensibilidad ambiental. El corpus tampoco representa todo el ecosistema Unix/Linux y la campaña se ejecutó en una sola máquina.
++
++#### Held-out
++
++Solo se ejecutó un held-out y F6 respondió `out_of_scope`. Por ello no existe una estimación empírica de accuracy predictiva fuera de los valores usados para derivar el contrato. La abstención se conserva y no se cuenta como acierto.
++
++#### Reproducibilidad
++
++Revisiones upstream, licencias, manifests SHA-256, adapters, runtime, matriz y resultados compactos están congelados. La evidencia pesada permanece bajo `.envmorph/f8-evidence`. El intento abortado previo se conserva fuera de la evidencia confirmatoria bajo `.envmorph/f8-aborted-attempts`.
++
++#### Riesgo de conclusión
++
++El principal riesgo sería reinterpretar la ausencia de divergencias como evidencia de portabilidad general. F8 no permite esa conclusión. El resultado correcto es más estrecho: bajo la matriz congelada, los tres workloads evaluables no mostraron diferencias observables.
+diff --git a/docs/ROADMAP.md b/docs/ROADMAP.md
+index 91b5415..7cdd356 100644
+--- a/docs/ROADMAP.md
++++ b/docs/ROADMAP.md
+@@ -54,12 +54,15 @@ Enumera el producto cartesiano baseline/treatment de F6, registra cobertura deci
+ 
+ #### F8. External Corpus and Validation
+ 
+-Estado: siguiente fase y bloqueante para Paper 1.
++Estado: cerrado.
+ 
+ Debe validar F2 a F7 sobre entre tres y cinco workloads externos, independientes de EnvMorph, seleccionados mediante `docs/F8_PROTOCOL.md` antes de observar resultados. F8 debe conservar casos positivos, negativos, indisponibles y fuera de alcance.
+ 
+ La extensión de factores y oráculos solo se permite cuando una necesidad del corpus seleccionado la justifique y quede registrada antes de ejecutar la matriz experimental afectada.
+ 
++
++Validación externa: corpus seleccionado y congelado antes de ejecutar, adapters separados de upstream, matriz preregistrada, evidencia F2-F7 materializada, resultados negativos preservados y held-out evaluado sin reajuste post-hoc.
++
+ #### F9. Behavioral Hermeticity
+ 
+ Estado: extensión posterior, fuera del camino crítico de Paper 1.
+diff --git a/experiments/f8/aggregate_summary.json b/experiments/f8/aggregate_summary.json
+new file mode 100644
+index 0000000..59aadfd
+--- /dev/null
++++ b/experiments/f8/aggregate_summary.json
+@@ -0,0 +1,49 @@
++{
++  "causal_status_distribution": {
++    "no_observable_effect": 3,
++    "not_evaluable": 1
++  },
++  "claims": {
++    "contractual_abstention": "observed",
++    "environmental_sensitivity_in_frozen_contrasts": "not_observed_in_evaluable_workloads",
++    "external_execution_of_f2_f7": "supported_for_three_of_four_selected_workloads",
++    "negative_result_preservation": "demonstrated",
++    "physical_causality": "not_claimed",
++    "predictive_generalization_of_f6": "not_demonstrated_heldout_abstained",
++    "universal_portability": "not_claimed"
++  },
++  "deviation_from_target_four": true,
++  "deviation_reason": "un workload seleccionado no complet\u00f3 la cadena F2-F7 y se conserva sin sustituci\u00f3n",
++  "envelope_status_distribution": {
++    "complete": 2,
++    "not_evaluable": 1,
++    "partial": 1
++  },
++  "full_chain_evaluable": 3,
++  "heldout_abstentions": 1,
++  "heldout_accuracy": null,
++  "heldout_attempted": 1,
++  "heldout_correct": 0,
++  "heldout_decided": 0,
++  "mce_cardinalities": [],
++  "negative_results_retained": true,
++  "not_fully_evaluable_workloads": [
++    "csvkit-realdata"
++  ],
++  "observable_difference_workloads": [],
++  "phase": "F8.7-F8.10",
++  "posthoc_retuning": false,
++  "schema_version": 1,
++  "selected_workloads": 4,
++  "stable_workloads": [
++    "fd-build-completions",
++    "inih-meson-tests",
++    "jq-build-check"
++  ],
++  "status": "closed_scientifically_negative",
++  "trace_status_distribution": {
++    "not_evaluable": 1,
++    "stable": 3
++  },
++  "workload_substitution_after_results": false
++}
+diff --git a/provenance/F8_FINAL_FILES.sha256 b/provenance/F8_FINAL_FILES.sha256
+new file mode 100644
+index 0000000..17affb4
+--- /dev/null
++++ b/provenance/F8_FINAL_FILES.sha256
+@@ -0,0 +1,8 @@
++fdbcb8a15db04193b6d58d81a6992caf420067df2eca510ff92131dccf61c52a  experiments/f8/aggregate_summary.json
++0ed0aa85f663eccf7407bf963fcde6df4e27eb41aaee7d062db196eaba95f06b  docs/F8_RESULTS.md
++793ba83de68fc8d6814c694c9146151819f02d2235d3d50832f9db1c6e60f943  docs/F8_THREATS_TO_VALIDITY.md
++676e1a093ec7e526187dd424655a03482a0a4ef9436229a634ae32662bac9574  docs/F8_NOVELTY_POSITIONING.md
++6dcfe7f5dbcc35f6c7442d12a8ed5c486ff045425b29c133d6f701a2f437b52d  README.md
++07f53fe44fb19abe2473b4e66b6dfda47a1d50c663f36b929fdc55037c3b4794  docs/ROADMAP.md
++96ea7fd18043dd74ac7ad82dceeb3984feedabcd419ab7006ef5bb7cd4e70539  audits/F8_FINAL_REPORT.txt
++2d0492367c4758f67aef04e576075eda702ad8fa3aafbfc2223aa3eaeabc5322  audits/F8_TO_F9_HANDOFF.txt
