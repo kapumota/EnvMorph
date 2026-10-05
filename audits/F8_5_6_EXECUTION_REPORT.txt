@@ -1,0 +1,197 @@
+F8.5-F8.6 EXTERNAL VALIDATION EXECUTION REPORT
+
+Rama: fase8/validacion-externa
+Parent: ae16104
+Freeze F8.4 esperado: ae16104
+Driver de campaña: experiments/f8/results/execution_driver.sh
+Driver SHA-256: b3d43e02b3edf26628e3dd019f57e5d942dd125eb6f4b6d414b5cd658379b617
+Política de ejecución offline: PIP_NO_INDEX=1, CARGO_NET_OFFLINE=true
+Workloads seleccionados: 4
+Ejecución EnvMorph posterior al freeze: sí
+Matriz reajustada después de observar resultados: no
+Resultados negativos descartados: no
+Held-out ejecutado cuando estaba preregistrado: sí
+
+Resumen machine-readable:
+{
+  "full_chain_evaluable": 3,
+  "heldout_abstentions": 1,
+  "heldout_accuracy": null,
+  "heldout_attempted": 1,
+  "heldout_correct": 0,
+  "heldout_decided": 0,
+  "negative_results_retained": true,
+  "no_observable_effect": 3,
+  "phase": "F8.5-F8.6",
+  "positive_observable_difference": 0,
+  "posthoc_retuning_performed": false,
+  "schema_version": 1,
+  "selected_workloads": 4,
+  "workloads": [
+    {
+      "baseline_status": "execution_failed",
+      "baseline_variant": "variant-0001",
+      "explore_rc": 1,
+      "full_status": "execution_failed",
+      "full_variant": "variant-0002",
+      "state": "not_evaluable_f4",
+      "workload": "csvkit-realdata"
+    },
+    {
+      "absorption_boundaries": [],
+      "availability_rate": 1.0,
+      "baseline_variant": "variant-0001",
+      "boundary_count": 0,
+      "causal_status": "no_observable_effect",
+      "confirmations": 2,
+      "envelope_decided": 2,
+      "envelope_out_of_scope": 0,
+      "envelope_status": "complete",
+      "envelope_total": 2,
+      "essential_factors": [],
+      "explore_rc": 0,
+      "failed": 0,
+      "first_observed_divergence": null,
+      "full_variant": "variant-0002",
+      "heldout_attempted": false,
+      "heldout_contract_status": "not_applicable",
+      "heldout_correctness": "not_applicable",
+      "heldout_trace_status": "not_applicable",
+      "minimal_cardinality": null,
+      "minimal_sets": [],
+      "planned": 2,
+      "state": "full_chain_evaluable",
+      "succeeded": 2,
+      "target_signature": {
+        "absorption_boundaries": [],
+        "first_observed_divergence": null,
+        "observations": [
+          {
+            "equivalence": "identical",
+            "label": "test_status",
+            "propagation": "stable"
+          },
+          {
+            "equivalence": "identical",
+            "label": "bash_completion",
+            "propagation": "stable"
+          },
+          {
+            "equivalence": "identical",
+            "label": "zsh_completion",
+            "propagation": "stable"
+          }
+        ],
+        "trace_status": "stable"
+      },
+      "trace_status": "stable",
+      "unavailable": 0,
+      "workload": "fd-build-completions"
+    },
+    {
+      "absorption_boundaries": [],
+      "availability_rate": 1.0,
+      "baseline_variant": "variant-0001",
+      "boundary_count": 0,
+      "causal_status": "no_observable_effect",
+      "confirmations": 2,
+      "envelope_decided": 2,
+      "envelope_out_of_scope": 0,
+      "envelope_status": "complete",
+      "envelope_total": 2,
+      "essential_factors": [],
+      "explore_rc": 0,
+      "failed": 0,
+      "first_observed_divergence": null,
+      "full_variant": "variant-0002",
+      "heldout_attempted": false,
+      "heldout_contract_status": "not_applicable",
+      "heldout_correctness": "not_applicable",
+      "heldout_trace_status": "not_applicable",
+      "minimal_cardinality": null,
+      "minimal_sets": [],
+      "planned": 2,
+      "state": "full_chain_evaluable",
+      "succeeded": 2,
+      "target_signature": {
+        "absorption_boundaries": [],
+        "first_observed_divergence": null,
+        "observations": [
+          {
+            "equivalence": "identical",
+            "label": "test_status",
+            "propagation": "stable"
+          },
+          {
+            "equivalence": "identical",
+            "label": "upstream_unittest",
+            "propagation": "stable"
+          }
+        ],
+        "trace_status": "stable"
+      },
+      "trace_status": "stable",
+      "unavailable": 0,
+      "workload": "inih-meson-tests"
+    },
+    {
+      "absorption_boundaries": [],
+      "availability_rate": 1.0,
+      "baseline_variant": "variant-0001",
+      "boundary_count": 4,
+      "causal_status": "no_observable_effect",
+      "confirmations": 2,
+      "envelope_decided": 2,
+      "envelope_out_of_scope": 2,
+      "envelope_status": "partial",
+      "envelope_total": 4,
+      "essential_factors": [],
+      "explore_rc": 0,
+      "failed": 0,
+      "first_observed_divergence": null,
+      "full_variant": "variant-0004",
+      "heldout_attempted": true,
+      "heldout_contract_status": "out_of_scope",
+      "heldout_correctness": "abstained",
+      "heldout_trace_status": "stable",
+      "minimal_cardinality": null,
+      "minimal_sets": [],
+      "planned": 4,
+      "state": "full_chain_evaluable",
+      "succeeded": 4,
+      "target_signature": {
+        "absorption_boundaries": [],
+        "first_observed_divergence": null,
+        "observations": [
+          {
+            "equivalence": "identical",
+            "label": "version",
+            "propagation": "stable"
+          },
+          {
+            "equivalence": "identical",
+            "label": "json_transform",
+            "propagation": "stable"
+          },
+          {
+            "equivalence": "identical",
+            "label": "test_status",
+            "propagation": "stable"
+          }
+        ],
+        "trace_status": "stable"
+      },
+      "trace_status": "stable",
+      "unavailable": 0,
+      "workload": "jq-build-check"
+    }
+  ]
+}
+
+Evidencia pesada local:
+/home/c-lara/EnvMorph/.envmorph/f8-evidence
+
+Evidencia compacta versionable:
+/home/c-lara/EnvMorph/experiments/f8/results
+
+Siguiente gate: F8.7-F8.10, agregado, amenazas, posicionamiento y cierre condicionado a evidencia suficiente.

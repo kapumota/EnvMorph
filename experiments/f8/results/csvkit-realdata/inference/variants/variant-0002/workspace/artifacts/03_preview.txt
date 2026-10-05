@@ -1,0 +1,20 @@
+| county     | item_name                                                      | quantity |
+| ---------- | -------------------------------------------------------------- | -------- |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| ADAMS      | RIFLE,7.62 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BUFFALO    | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BURT       | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BURT       | RIFLE,5.56 MILLIMETER                                          |        1 |
+| BURT       | RIFLE,7.62 MILLIMETER                                          |        1 |
+| BURT       | RIFLE,5.56 MILLIMETER                                          |        1 |

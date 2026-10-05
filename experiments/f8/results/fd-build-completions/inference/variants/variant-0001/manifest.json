@@ -1,0 +1,1 @@
+{"variant_id":"variant-0001","status":"execution_succeeded","exit_code":0,"duration_ms":16664,"assignments":[{"factor":"tmpdir","value":"/tmp"}],"variables":[{"name":"TMPDIR","value":"/tmp"}],"tools":[],"command":["bash","adapter/run.sh"]}

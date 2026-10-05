@@ -1,0 +1,51 @@
+{
+  "absorption_boundaries": [],
+  "availability_rate": 1.0,
+  "baseline_variant": "variant-0001",
+  "boundary_count": 4,
+  "causal_status": "no_observable_effect",
+  "confirmations": 2,
+  "envelope_decided": 2,
+  "envelope_out_of_scope": 2,
+  "envelope_status": "partial",
+  "envelope_total": 4,
+  "essential_factors": [],
+  "explore_rc": 0,
+  "failed": 0,
+  "first_observed_divergence": null,
+  "full_variant": "variant-0004",
+  "heldout_attempted": true,
+  "heldout_contract_status": "out_of_scope",
+  "heldout_correctness": "abstained",
+  "heldout_trace_status": "stable",
+  "minimal_cardinality": null,
+  "minimal_sets": [],
+  "planned": 4,
+  "state": "full_chain_evaluable",
+  "succeeded": 4,
+  "target_signature": {
+    "absorption_boundaries": [],
+    "first_observed_divergence": null,
+    "observations": [
+      {
+        "equivalence": "identical",
+        "label": "version",
+        "propagation": "stable"
+      },
+      {
+        "equivalence": "identical",
+        "label": "json_transform",
+        "propagation": "stable"
+      },
+      {
+        "equivalence": "identical",
+        "label": "test_status",
+        "propagation": "stable"
+      }
+    ],
+    "trace_status": "stable"
+  },
+  "trace_status": "stable",
+  "unavailable": 0,
+  "workload": "jq-build-check"
+}

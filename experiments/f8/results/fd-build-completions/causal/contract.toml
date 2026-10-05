@@ -1,0 +1,19 @@
+[contract]
+name = "f8-fd-environmental-contract"
+schema_version = 1
+policy = "preserve_reference_behavior"
+source_causal_name = "f8-fd"
+scope = "declared_contrasts_only"
+claim = "evidence_bounded_contract_not_universal_portability"
+
+[evidence]
+causal_status = "no_observable_effect"
+confirmations = 2
+target_trace_status = "stable"
+absorption_boundaries = []
+essential_factors = []
+
+[[factor]]
+name = "tmpdir"
+baseline = "/tmp"
+treatment = "/var/tmp"

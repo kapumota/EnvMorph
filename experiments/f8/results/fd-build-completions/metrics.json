@@ -1,0 +1,51 @@
+{
+  "absorption_boundaries": [],
+  "availability_rate": 1.0,
+  "baseline_variant": "variant-0001",
+  "boundary_count": 0,
+  "causal_status": "no_observable_effect",
+  "confirmations": 2,
+  "envelope_decided": 2,
+  "envelope_out_of_scope": 0,
+  "envelope_status": "complete",
+  "envelope_total": 2,
+  "essential_factors": [],
+  "explore_rc": 0,
+  "failed": 0,
+  "first_observed_divergence": null,
+  "full_variant": "variant-0002",
+  "heldout_attempted": false,
+  "heldout_contract_status": "not_applicable",
+  "heldout_correctness": "not_applicable",
+  "heldout_trace_status": "not_applicable",
+  "minimal_cardinality": null,
+  "minimal_sets": [],
+  "planned": 2,
+  "state": "full_chain_evaluable",
+  "succeeded": 2,
+  "target_signature": {
+    "absorption_boundaries": [],
+    "first_observed_divergence": null,
+    "observations": [
+      {
+        "equivalence": "identical",
+        "label": "test_status",
+        "propagation": "stable"
+      },
+      {
+        "equivalence": "identical",
+        "label": "bash_completion",
+        "propagation": "stable"
+      },
+      {
+        "equivalence": "identical",
+        "label": "zsh_completion",
+        "propagation": "stable"
+      }
+    ],
+    "trace_status": "stable"
+  },
+  "trace_status": "stable",
+  "unavailable": 0,
+  "workload": "fd-build-completions"
+}

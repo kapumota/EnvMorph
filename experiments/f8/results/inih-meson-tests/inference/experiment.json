@@ -1,0 +1,1 @@
+{"experiment":"f8-inih-inference","schema_version":1,"planned":2,"succeeded":2,"unavailable":0,"failed":0,"workdir":"/home/c-lara/EnvMorph/.envmorph/f8-runtime/inih-meson-tests","command":["bash","adapter/run.sh"],"variants":[{"variant_id":"variant-0001","status":"execution_succeeded"},{"variant_id":"variant-0002","status":"execution_succeeded"}]}

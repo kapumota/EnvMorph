@@ -1,0 +1,9 @@
+{
+  "workload": "csvkit-realdata",
+  "state": "not_evaluable_f4",
+  "explore_rc": 1,
+  "baseline_variant": "variant-0001",
+  "baseline_status": "execution_failed",
+  "full_variant": "variant-0002",
+  "full_status": "execution_failed"
+}
