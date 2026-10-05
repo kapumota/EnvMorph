@@ -296,6 +296,10 @@ impl MinimalCausalEnvironment {
         self.minimal_sets.first().map(Vec::len)
     }
 
+    pub fn target_signature(&self) -> &TraceSignature {
+        &self.target_signature
+    }
+
     pub fn render_human(&self) -> String {
         let mut out = String::new();
         out.push_str(&format!("Estado MCE: {}\n", self.status.as_str()));

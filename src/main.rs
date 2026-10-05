@@ -30,6 +30,10 @@ USO
   envmorph compare-artifacts --oracle byte|text|json|csv --left FILE --right FILE [--format human|json] [--output FILE]
   envmorph analyze-propagation --trace TRACE.tsv [--left-root DIR] [--right-root DIR] [--format human|json] [--output FILE]
   envmorph minimize-environment CAUSAL.toml --trace TRACE.tsv --workdir DIR --output DIR [--format human|json] -- CMD [ARGS...]
+  envmorph derive-contract CAUSAL.toml --trace TRACE.tsv --workdir DIR --evidence DIR --output CONTRACT.toml [--format human|toml] -- CMD [ARGS...]
+                                                          deriva un contrato ambiental desde evidencia F5
+  envmorph check-contract CONTRACT.toml --environment ENVIRONMENT.toml [--format human|json] [--output FILE]
+                                                          evalúa una configuración contra evidencia contractual
                                                           minimiza factores ambientales por suficiencia observable
                                                           analiza propagación y absorción
                                                           compara artefactos sin decidir durante la ejecución
@@ -119,6 +123,207 @@ fn cmd_stage(args: &[String]) {
 fn load(arg: &str) -> model::Manifest {
     let id = store::resolve_run(arg).unwrap_or_else(|e| fail(&e));
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
+}
+
+fn cmd_derive_contract(args: &[String]) {
+    if args.is_empty() {
+        fail("derive-contract requiere un archivo TOML causal");
+    }
+
+    let spec_path = std::path::PathBuf::from(&args[0]);
+    let mut trace_path: Option<std::path::PathBuf> = None;
+    let mut evidence_dir: Option<std::path::PathBuf> = None;
+    let mut output_path: Option<std::path::PathBuf> = None;
+    let mut workdir = std::env::current_dir().unwrap_or_else(|error| {
+        fail(&format!(
+            "no se pudo obtener el directorio actual: {}",
+            error
+        ))
+    });
+    let mut format = "human".to_string();
+    let mut command = Vec::new();
+    let mut i = 1;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--" => {
+                command = args[i + 1..].to_vec();
+                break;
+            }
+            "--trace" => {
+                trace_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--trace",
+                )))
+            }
+            "--evidence" => {
+                evidence_dir = Some(std::path::PathBuf::from(take_value(
+                    args,
+                    &mut i,
+                    "--evidence",
+                )))
+            }
+            "--output" => {
+                output_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )))
+            }
+            "--workdir" => {
+                workdir = std::path::PathBuf::from(take_value(args, &mut i, "--workdir"))
+            }
+            "--format" => format = take_value(args, &mut i, "--format"),
+            other => fail(&format!(
+                "opción desconocida '{}' para derive-contract",
+                other
+            )),
+        }
+        i += 1;
+    }
+
+    if command.is_empty() {
+        fail("derive-contract requiere una orden después de --");
+    }
+    if format != "human" && format != "toml" {
+        fail("--format debe ser human o toml");
+    }
+
+    let trace_path =
+        trace_path.unwrap_or_else(|| fail("derive-contract requiere --trace TRACE.tsv"));
+    let evidence_dir =
+        evidence_dir.unwrap_or_else(|| fail("derive-contract requiere --evidence DIR"));
+    let output_path =
+        output_path.unwrap_or_else(|| fail("derive-contract requiere --output CONTRACT.toml"));
+    if output_path.exists() {
+        fail(&format!(
+            "el archivo de contrato ya existe: {}",
+            output_path.display()
+        ));
+    }
+
+    let spec = causal::CausalSpec::from_toml_path(&spec_path).unwrap_or_else(|error| fail(&error));
+    let trace_spec =
+        propagation::TraceSpec::from_tsv_path(&trace_path).unwrap_or_else(|error| fail(&error));
+    let report = causal::minimize_environment(
+        &spec,
+        &trace_spec,
+        &causal::MinimizeOptions {
+            output_dir: evidence_dir.clone(),
+            workdir,
+            command,
+        },
+    )
+    .unwrap_or_else(|error| fail(&error));
+
+    std::fs::write(
+        evidence_dir.join("mce-result.json"),
+        report.render_json().as_bytes(),
+    )
+    .unwrap_or_else(|error| fail(&format!("no se pudo guardar evidencia F5: {}", error)));
+
+    let contract = contract::EnvironmentalContract::derive(&spec, &report)
+        .unwrap_or_else(|error| fail(&error));
+    let toml = contract.render_toml();
+    if let Some(parent) = output_path.parent() {
+        if !parent.as_os_str().is_empty() {
+            std::fs::create_dir_all(parent).unwrap_or_else(|error| {
+                fail(&format!(
+                    "no se pudo crear '{}': {}",
+                    parent.display(),
+                    error
+                ))
+            });
+        }
+    }
+    std::fs::write(&output_path, toml.as_bytes()).unwrap_or_else(|error| {
+        fail(&format!(
+            "no se pudo guardar '{}': {}",
+            output_path.display(),
+            error
+        ))
+    });
+
+    if format == "toml" {
+        print!("{}", toml);
+    } else {
+        print!("{}", contract.render_human());
+        println!("Contrato guardado: {}", output_path.display());
+        println!("Evidencia F5: {}", evidence_dir.display());
+    }
+}
+
+fn cmd_check_contract(args: &[String]) {
+    if args.is_empty() {
+        fail("check-contract requiere un archivo CONTRACT.toml");
+    }
+
+    let contract_path = std::path::PathBuf::from(&args[0]);
+    let mut environment_path: Option<std::path::PathBuf> = None;
+    let mut output_path: Option<std::path::PathBuf> = None;
+    let mut format = "human".to_string();
+    let mut i = 1;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--environment" => {
+                environment_path = Some(std::path::PathBuf::from(take_value(
+                    args,
+                    &mut i,
+                    "--environment",
+                )))
+            }
+            "--output" => {
+                output_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )))
+            }
+            "--format" => format = take_value(args, &mut i, "--format"),
+            other => fail(&format!(
+                "opción desconocida '{}' para check-contract",
+                other
+            )),
+        }
+        i += 1;
+    }
+
+    if format != "human" && format != "json" {
+        fail("--format debe ser human o json");
+    }
+    let environment_path = environment_path
+        .unwrap_or_else(|| fail("check-contract requiere --environment ENVIRONMENT.toml"));
+
+    let contract = contract::EnvironmentalContract::from_toml_path(&contract_path)
+        .unwrap_or_else(|error| fail(&error));
+    let environment = contract::EnvironmentSpec::from_toml_path(&environment_path)
+        .unwrap_or_else(|error| fail(&error));
+    let evaluation = contract.evaluate(&environment);
+    let json = evaluation.render_json();
+
+    if let Some(path) = output_path {
+        if let Some(parent) = path.parent() {
+            if !parent.as_os_str().is_empty() {
+                std::fs::create_dir_all(parent).unwrap_or_else(|error| {
+                    fail(&format!(
+                        "no se pudo crear '{}': {}",
+                        parent.display(),
+                        error
+                    ))
+                });
+            }
+        }
+        std::fs::write(&path, json.as_bytes()).unwrap_or_else(|error| {
+            fail(&format!(
+                "no se pudo guardar '{}': {}",
+                path.display(),
+                error
+            ))
+        });
+    }
+
+    if format == "json" {
+        print!("{}", json);
+    } else {
+        print!("{}", evaluation.render_human());
+    }
+    std::process::exit(evaluation.status().exit_code());
 }
 
 fn cmd_minimize_environment(args: &[String]) {
@@ -514,6 +719,8 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "derive-contract" => cmd_derive_contract(rest),
+        "check-contract" => cmd_check_contract(rest),
         "minimize-environment" => cmd_minimize_environment(rest),
         "analyze-propagation" => cmd_analyze_propagation(rest),
         "compare-artifacts" => cmd_compare_artifacts(rest),
@@ -594,6 +801,7 @@ fn main() {
 
 mod capability;
 mod causal;
+mod contract;
 mod executor;
 mod experiment;
 mod oracle;

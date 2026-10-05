@@ -148,3 +148,14 @@ envmorph minimize-environment CAUSAL.toml --trace TRACE.tsv --workdir DIR --outp
 F5 está cerrado cuando la búsqueda exacta identifica todos los conjuntos de cardinalidad mínima que reproducen la firma observable de la intervención completa bajo las confirmaciones configuradas.
 
 La minimalidad está restringida a los factores declarados. Se interpreta como suficiencia operacional controlada y no como prueba de causalidad física.
+
+#### F6: Environmental Contracts
+
+F6 deriva contratos ambientales auditables desde evidencia F5 y evalúa configuraciones sin reejecutar el workload.
+
+```text
+envmorph derive-contract CAUSAL.toml --trace TRACE.tsv --workdir DIR --evidence DIR --output CONTRACT.toml -- CMD [ARGS...]
+envmorph check-contract CONTRACT.toml --environment ENVIRONMENT.toml
+```
+
+Los contratos distinguen `satisfied`, `violated`, `out_of_scope` e `invalid`. Una configuración no observada no se clasifica como segura ni como violación por inferencia.

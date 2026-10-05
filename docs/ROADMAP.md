@@ -186,3 +186,10 @@ Estado: cerrado.
 F5 ejecuta intervenciones ambientales mediante F2, deriva equivalencia con F3, consume firmas de propagación F4 y realiza búsqueda exacta por cardinalidad para encontrar todos los conjuntos mínimos de factores que reproducen la firma objetivo.
 
 La minimalidad se limita al espacio de factores declarado y expresa suficiencia operacional bajo confirmaciones controladas.
+
+
+#### F6. Environmental Contracts
+
+Estado: cerrado.
+
+F6 deriva y verifica contratos ambientales limitados por evidencia F5.
