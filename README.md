@@ -159,3 +159,13 @@ envmorph check-contract CONTRACT.toml --environment ENVIRONMENT.toml
 ```
 
 Los contratos distinguen `satisfied`, `violated`, `out_of_scope` e `invalid`. Una configuración no observada no se clasifica como segura ni como violación por inferencia.
+
+#### F7: Portability Envelopes
+
+F7 enumera el lattice finito baseline/treatment de un contrato F6 y representa las regiones `satisfied`, `violated` y `out_of_scope` sin generalizar a valores no observados.
+
+```text
+envmorph build-envelope CONTRACT.toml --output ENVELOPE.json
+```
+
+El sobre informa cobertura decidida y fronteras entre configuraciones vecinas. `complete` solo significa exhaustividad dentro del contraste finito declarado, no portabilidad universal.

@@ -33,6 +33,8 @@ USO
   envmorph derive-contract CAUSAL.toml --trace TRACE.tsv --workdir DIR --evidence DIR --output CONTRACT.toml [--format human|toml] -- CMD [ARGS...]
                                                           deriva un contrato ambiental desde evidencia F5
   envmorph check-contract CONTRACT.toml --environment ENVIRONMENT.toml [--format human|json] [--output FILE]
+  envmorph build-envelope CONTRACT.toml --output ENVELOPE.json [--format human|json]
+                                                          construye el sobre finito de portabilidad F7
                                                           evalúa una configuración contra evidencia contractual
                                                           minimiza factores ambientales por suficiencia observable
                                                           analiza propagación y absorción
@@ -123,6 +125,70 @@ fn cmd_stage(args: &[String]) {
 fn load(arg: &str) -> model::Manifest {
     let id = store::resolve_run(arg).unwrap_or_else(|e| fail(&e));
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
+}
+
+fn cmd_build_envelope(args: &[String]) {
+    if args.is_empty() {
+        fail("build-envelope requiere un contrato TOML");
+    }
+
+    let contract_path = std::path::PathBuf::from(&args[0]);
+    let mut output_path: Option<std::path::PathBuf> = None;
+    let mut format = "human".to_string();
+    let mut i = 1;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--output" => {
+                output_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )))
+            }
+            "--format" => format = take_value(args, &mut i, "--format"),
+            other => fail(&format!(
+                "opción desconocida '{}' para build-envelope",
+                other
+            )),
+        }
+        i += 1;
+    }
+
+    if format != "human" && format != "json" {
+        fail("--format debe ser human o json");
+    }
+
+    let output_path =
+        output_path.unwrap_or_else(|| fail("build-envelope requiere --output ENVELOPE.json"));
+    let contract = contract::EnvironmentalContract::from_toml_path(&contract_path)
+        .unwrap_or_else(|error| fail(&error));
+    let envelope =
+        envelope::PortabilityEnvelope::build(&contract).unwrap_or_else(|error| fail(&error));
+    let json = envelope.render_json();
+
+    if let Some(parent) = output_path.parent() {
+        if !parent.as_os_str().is_empty() {
+            std::fs::create_dir_all(parent).unwrap_or_else(|error| {
+                fail(&format!(
+                    "no se pudo crear '{}': {}",
+                    parent.display(),
+                    error
+                ))
+            });
+        }
+    }
+    std::fs::write(&output_path, json.as_bytes()).unwrap_or_else(|error| {
+        fail(&format!(
+            "no se pudo guardar '{}': {}",
+            output_path.display(),
+            error
+        ))
+    });
+
+    if format == "json" {
+        print!("{}", json);
+    } else {
+        print!("{}", envelope.render_human());
+    }
 }
 
 fn cmd_derive_contract(args: &[String]) {
@@ -721,6 +787,7 @@ fn main() {
         }
         "derive-contract" => cmd_derive_contract(rest),
         "check-contract" => cmd_check_contract(rest),
+        "build-envelope" => cmd_build_envelope(rest),
         "minimize-environment" => cmd_minimize_environment(rest),
         "analyze-propagation" => cmd_analyze_propagation(rest),
         "compare-artifacts" => cmd_compare_artifacts(rest),
@@ -802,6 +869,7 @@ fn main() {
 mod capability;
 mod causal;
 mod contract;
+mod envelope;
 mod executor;
 mod experiment;
 mod oracle;

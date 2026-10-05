@@ -193,3 +193,11 @@ La minimalidad se limita al espacio de factores declarado y expresa suficiencia 
 Estado: cerrado.
 
 F6 deriva y verifica contratos ambientales limitados por evidencia F5.
+
+
+#### F7. Portability Envelopes
+
+Estado: cerrado.
+
+F7 construye un lattice finito sobre los valores baseline/treatment declarados por F6. Cada celda reutiliza el evaluador contractual y queda clasificada como satisfied, violated u out_of_scope. El sobre registra cobertura decidida y fronteras entre celdas vecinas sin extrapolar a valores no observados.
+
