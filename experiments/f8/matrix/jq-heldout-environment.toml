@@ -1,0 +1,9 @@
+[environment]
+name = "f8-jq-heldout"
+schema_version = 1
+[[factor]]
+name = "locale"
+value = "C"
+[[factor]]
+name = "timezone"
+value = "Asia/Tokyo"

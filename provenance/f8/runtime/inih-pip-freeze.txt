@@ -1,0 +1,4 @@
+meson==1.12.1
+ninja==1.13.2
+pip==22.0.2
+setuptools==59.6.0

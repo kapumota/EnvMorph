@@ -1,0 +1,8 @@
+[causal]
+name = "f8-csvkit"
+schema_version = 1
+confirmations = 2
+[[factor]]
+name = "locale"
+baseline = "C"
+treatment = "C.UTF-8"

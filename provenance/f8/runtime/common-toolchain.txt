@@ -1,0 +1,4 @@
+python3=Python 3.10.12
+bash=GNU bash, versión 5.1.16(1)-release (x86_64-pc-linux-gnu)
+make=GNU Make 4.3
+autoreconf=autoreconf (GNU Autoconf) 2.71

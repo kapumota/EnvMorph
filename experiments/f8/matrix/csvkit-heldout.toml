@@ -1,0 +1,6 @@
+[experiment]
+name = "f8-csvkit-heldout"
+schema_version = 1
+[[factor]]
+name = "locale"
+values = ["C", "en_US.UTF-8"]

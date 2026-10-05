@@ -1,0 +1,4 @@
+meson=1.12.1
+ninja=1.13.2.git.kitware.jobserver-pipe-1
+cc=cc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+source=python_venv_frozen_by_f8_4

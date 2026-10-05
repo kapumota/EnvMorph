@@ -1,0 +1,55 @@
+[matrix]
+schema_version = 1
+phase = "F8.4"
+status = "frozen_before_external_execution"
+workloads = 4
+new_factor = "tmpdir"
+new_oracles = 0
+minimum_confirmations = 2
+negative_results_retained = true
+
+[values]
+locale_baseline = "C"
+locale_treatment = "C.UTF-8"
+locale_heldout = "en_US.UTF-8"
+timezone_baseline = "UTC"
+timezone_treatment = "America/Lima"
+timezone_heldout = "Asia/Tokyo"
+tmpdir_baseline = "/tmp"
+tmpdir_treatment = "/var/tmp"
+
+[[workload]]
+id = "csvkit-realdata"
+inference = "experiments/f8/matrix/csvkit-inference.toml"
+causal = "experiments/f8/matrix/csvkit-causal.toml"
+trace = "workloads/external/csvkit-realdata/adapter/trace.tsv"
+factors = ["locale"]
+oracles = ["csv", "text"]
+heldout = "experiments/f8/matrix/csvkit-heldout.toml"
+
+[[workload]]
+id = "jq-build-check"
+inference = "experiments/f8/matrix/jq-inference.toml"
+causal = "experiments/f8/matrix/jq-causal.toml"
+trace = "workloads/external/jq-build-check/adapter/trace.tsv"
+factors = ["locale", "timezone"]
+oracles = ["text", "json"]
+heldout = "experiments/f8/matrix/jq-heldout.toml"
+
+[[workload]]
+id = "fd-build-completions"
+inference = "experiments/f8/matrix/fd-inference.toml"
+causal = "experiments/f8/matrix/fd-causal.toml"
+trace = "workloads/external/fd-build-completions/adapter/trace.tsv"
+factors = ["tmpdir"]
+oracles = ["text"]
+heldout = ""
+
+[[workload]]
+id = "inih-meson-tests"
+inference = "experiments/f8/matrix/inih-inference.toml"
+causal = "experiments/f8/matrix/inih-causal.toml"
+trace = "workloads/external/inih-meson-tests/adapter/trace.tsv"
+factors = ["tmpdir"]
+oracles = ["text"]
+heldout = ""

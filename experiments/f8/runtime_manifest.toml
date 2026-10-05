@@ -1,0 +1,23 @@
+[runtime]
+schema_version = 1
+phase = "F8.4"
+status = "prepared_for_offline_execution"
+root = ".envmorph/f8-runtime"
+network_allowed_during_experiment = false
+preparation_script = "scripts/f8/prepare_external_runtime_f8_4.sh"
+csvkit_build_bootstrap = "wheel_downloaded_to_frozen_wheelhouse_before_build"
+inih_build_tools = "meson_1.12.1_and_ninja_1.13.2_in_frozen_venv"
+inih_adapter_binding = "runtime_copy_only_path_binding"
+
+[toolchain]
+common = "provenance/f8/runtime/common-toolchain.txt"
+csvkit_freeze = "provenance/f8/runtime/csvkit-pip-freeze.txt"
+csvkit_wheels = "provenance/f8/runtime/csvkit-wheelhouse.sha256"
+jq_oniguruma_commit = "provenance/f8/runtime/jq-oniguruma.commit"
+jq_oniguruma_files = "provenance/f8/runtime/jq-oniguruma.files.sha256"
+fd_toolchain = "provenance/f8/runtime/fd-toolchain.txt"
+fd_vendor = "provenance/f8/runtime/fd-vendor.files.sha256"
+inih_toolchain = "provenance/f8/runtime/inih-toolchain.txt"
+inih_freeze = "provenance/f8/runtime/inih-pip-freeze.txt"
+inih_wheels = "provenance/f8/runtime/inih-wheelhouse.sha256"
+inih_runtime_adapter = "provenance/f8/runtime/inih-runtime-adapter.sha256"

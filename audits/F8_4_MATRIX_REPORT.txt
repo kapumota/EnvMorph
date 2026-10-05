@@ -1,0 +1,35 @@
+F8.4 RUNTIME AND MATRIX REPORT
+
+Rama: fase8/validacion-externa
+Parent: 5d11399
+Runtime offline preparado: sí
+Preparador F8.3 preservado: scripts/f8/prepare_external_runtime.sh
+Preparador F8.4 usado: scripts/f8/prepare_external_runtime_f8_4.sh
+Corrección csvkit: wheel congelado e instalado antes de setup.py bdist_wheel
+Corrección inih: Meson 1.12.1 y Ninja 1.13.2 congelados en venv local
+Adapter inih versionado F8.3 modificado: no
+Binding runtime inih: PATH local únicamente en la copia .envmorph/f8-runtime
+Matriz ejecutada: no
+Workloads: 4
+Nuevo factor implementado: tmpdir
+Justificación: preregistrado; fd usa tempfile en su suite y inih ejecuta un workflow de build Meson/compilador con almacenamiento temporal
+Nuevos oráculos: ninguno
+
+Valores congelados:
+locale: C -> C.UTF-8
+locale held-out: en_US.UTF-8
+timezone: UTC -> America/Lima
+timezone held-out: Asia/Tokyo
+tmpdir: /tmp -> /var/tmp
+
+Matrices de inferencia:
+- csvkit: locale, 2 variantes
+- jq: locale x timezone, 4 variantes
+- fd: tmpdir, 2 variantes
+- inih: tmpdir, 2 variantes
+
+Held-out:
+- jq: timezone Asia/Tokyo con locale controlado, reservado hasta después de derivar F6
+- csvkit: en_US.UTF-8
+
+Siguiente gate: F8.5 ejecución confirmatoria F2-F7, sin reajustar la matriz.

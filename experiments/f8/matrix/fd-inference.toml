@@ -1,0 +1,6 @@
+[experiment]
+name = "f8-fd-inference"
+schema_version = 1
+[[factor]]
+name = "tmpdir"
+values = ["/tmp", "/var/tmp"]

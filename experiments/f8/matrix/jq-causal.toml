@@ -1,0 +1,12 @@
+[causal]
+name = "f8-jq"
+schema_version = 1
+confirmations = 2
+[[factor]]
+name = "locale"
+baseline = "C"
+treatment = "C.UTF-8"
+[[factor]]
+name = "timezone"
+baseline = "UTC"
+treatment = "America/Lima"

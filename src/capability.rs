@@ -161,6 +161,9 @@ pub fn resolve_variant(variant: &EnvironmentVariant) -> Result<ResolvedEnvironme
             "timezone" => {
                 variables.push(("TZ".to_string(), value.as_str().to_string()));
             }
+            "tmpdir" => {
+                variables.push(("TMPDIR".to_string(), value.as_str().to_string()));
+            }
             "awk_implementation" => {
                 if capability.is_available() {
                     if let Some(path) = capability.resolved() {
@@ -226,11 +229,38 @@ fn probe_factor(factor: &str, value: &FactorValue) -> Result<EnvironmentCapabili
     match factor {
         "locale" => Ok(probe_locale(value)),
         "timezone" => Ok(probe_timezone(value)),
+        "tmpdir" => Ok(probe_tmpdir(value)),
         "awk_implementation" => Ok(probe_awk(value)),
         _ => Err(format!(
             "factor ambiental no soportado por F2.1: {}",
             factor
         )),
+    }
+}
+
+fn probe_tmpdir(value: &FactorValue) -> EnvironmentCapability {
+    let path = Path::new(value.as_str());
+    if !path.is_absolute() {
+        return EnvironmentCapability::unavailable(
+            "tmpdir",
+            value,
+            "TMPDIR debe ser una ruta absoluta",
+        );
+    }
+
+    match fs::metadata(path) {
+        Ok(metadata) if metadata.is_dir() => EnvironmentCapability::available(
+            "tmpdir",
+            value,
+            Some(path.display().to_string()),
+            None,
+        ),
+        Ok(_) => EnvironmentCapability::unavailable("tmpdir", value, "TMPDIR no es un directorio"),
+        Err(error) => EnvironmentCapability::unavailable(
+            "tmpdir",
+            value,
+            format!("TMPDIR no disponible: {}", error),
+        ),
     }
 }
 

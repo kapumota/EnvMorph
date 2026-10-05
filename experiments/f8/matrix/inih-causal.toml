@@ -1,0 +1,8 @@
+[causal]
+name = "f8-inih"
+schema_version = 1
+confirmations = 2
+[[factor]]
+name = "tmpdir"
+baseline = "/tmp"
+treatment = "/var/tmp"
