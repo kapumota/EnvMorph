@@ -1,0 +1,28 @@
+ENVMORPH F9.0 PROTOCOL REPORT
+
+Rama: fase9/hermeticidad-conductual
+Parent: be705a9
+Parent esperado: be705a9
+F8 preservado por hashes: sí
+F8 reinterpretado: no
+Backend implementado: no
+Backend seleccionado: no
+Ptrace asumido: no
+Métrica escalar Behavioral Hermeticity Gap congelada: no
+
+Prior art inicial:
+- Bazel hermeticity
+- Nix sandboxing
+- RepTrace ASE 2019
+- Zheng, Adams, Hassan, hermeticidad Bazel
+- Granat et al., build requisites mediante tracing
+- Reproducible Builds
+- AgentGuard-FastPath, auditoría de reutilización parcial
+
+Decisión AgentGuard-FastPath:
+- reutilización potencial de componentes técnicos: sí
+- reutilización directa del monitor como backend F9: no
+- enforcement permitido durante observación F9: no
+
+Siguiente gate:
+F9.1 selección y validación del backend de observación antes de ejecutar experimentos de relevancia conductual.

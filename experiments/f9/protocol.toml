@@ -1,0 +1,71 @@
+[f9]
+schema_version = 1
+name = "behavioral-hermeticity"
+status = "protocol_frozen_before_backend"
+parent_f8 = "be705a9"
+f8_interpretation = "scientifically_negative"
+backend_selected = false
+ptrace_assumed = false
+scalar_gap_metric_frozen = false
+
+[objective]
+primary = "separate_observed_dependencies_from_behaviorally_relevant_dependencies"
+preserve_f8 = true
+posthoc_factor_expansion = false
+
+[research_questions]
+rq1 = "observed_environmental_dependencies"
+rq2 = "behaviorally_relevant_dependencies_under_controlled_intervention"
+rq3 = "observed_only_dependencies"
+rq4 = "explain_stable_f8_workloads_without_reinterpreting_f8"
+rq5 = "observer_coverage_and_cost"
+
+[backend_gate]
+phase = "F9.1"
+candidates = ["ptrace_or_strace", "ebpf", "library_interposition_complement"]
+selection_before_behavioral_experiments = true
+observer_only_required = true
+enforcement_allowed = false
+
+[backend_gate.criteria]
+coverage = true
+process_tree = true
+path_fidelity = true
+argument_visibility = true
+privilege_requirements = true
+overhead = true
+observer_effect = true
+deterministic_event_format = true
+f2_compatibility = true
+upstream_source_modification = false
+
+[corpus]
+carry_over_f8 = true
+selected_workloads = 4
+replacement_by_prior_result = false
+additional_corpus_requires_new_frozen_selection = true
+
+[confirmation]
+minimum_consistent_confirmations = 2
+baseline_stability_required = true
+oracle_frozen_before_intervention = true
+dependency_evidence_before_intervention = true
+
+[result_states]
+values = [
+  "behaviorally_relevant",
+  "observed_only",
+  "unresolved",
+  "unavailable",
+  "out_of_scope",
+  "observer_failure",
+  "execution_failed"
+]
+
+[claims]
+universal_hermeticity = false
+complete_dependency_observation = false
+physical_causality = false
+ptrace_novelty = false
+ebpf_novelty = false
+sandbox_replacement = false
