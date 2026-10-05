@@ -1,171 +1,61 @@
 ### EnvMorph
 
-EnvMorph es una herramienta experimental en Rust para estudiar bajo qué variaciones del entorno un workflow Unix conserva su comportamiento, cuáles lo alteran y qué condiciones ambientales mínimas son necesarias para reproducirlo.
+EnvMorph es un prototipo de investigación en Rust para estudiar sensibilidad ambiental en workflows Unix heredados. Su pregunta central es: dado un workflow y un conjunto explícito de contrastes ambientales, qué cambios alteran el comportamiento observable, dónde aparece una divergencia, cómo se propaga o se absorbe y qué evidencia mínima permite formular un contrato ambiental delimitado.
 
-#### Estado
+#### Estado actual
 
-La Fase 0 está cerrada como baseline técnico verificable.
+F0 a F7 están cerradas. F8, External Corpus and Validation, es la siguiente fase y es bloqueante para sostener empíricamente el Paper 1. F9, Behavioral Hermeticity, queda fuera del camino crítico del Paper 1 y se trata como una extensión posterior condicionada a una revisión específica de novedad y viabilidad.
 
-El núcleo heredado de FlowAttest conserva registro de ejecuciones, manifests, snapshots, comparación, replay, grafos e informes. El `literature-pipeline` se conserva como primer workload heredado y como corpus inicial para experimentos controlados.
+#### Cadena implementada
 
-El baseline F0 tiene:
+La cadena activa separa responsabilidades:
 
-- 25 tests unitarios Rust aprobados
-- 37 checks de integración aprobados
-- 19 tests del `literature-pipeline` aprobados
-- replay endurecido contra rutas absolutas no mapeadas y traversal con `..`
-- workload canónico preservado byte a byte
+- `plan`, `capabilities` y `explore` modelan, resuelven y ejecutan variantes ambientales.
+- `compare-artifacts` aplica oráculos explícitos de byte, texto, JSON y CSV.
+- `analyze-propagation` clasifica aparición, propagación y absorción de diferencias observables.
+- `minimize-environment` busca por cardinalidad todos los conjuntos ambientales mínimos que reproducen la firma observable configurada.
+- `derive-contract` y `check-contract` producen y evalúan contratos ambientales delimitados por evidencia.
+- `build-envelope` enumera el lattice finito baseline/treatment de un contrato y registra cobertura decidida y fronteras entre celdas vecinas.
 
-F1 incorpora un modelo ambiental tipado, especificaciones experimentales TOML versionadas y `envmorph plan` para construir matrices deterministas de variantes. F1 todavía no ejecuta esas variantes.
+La semántica distingue ejecución, comparación, equivalencia, propagación, suficiencia operacional, contrato y envelope. Un resultado `unavailable`, `missing`, `error`, `execution_failed` u `out_of_scope` no se transforma silenciosamente en evidencia negativa.
 
-#### Objetivo end-to-end
+#### Alcance científico
 
-El producto final debe cubrir una cadena completa:
+EnvMorph no afirma causalidad física, portabilidad universal ni hermeticidad global. La búsqueda causal de F5 es exacta solo dentro del conjunto de factores declarado. Los contratos F6 y envelopes F7 conservan el alcance de los contrastes observados.
 
-```text
-baseline
-  |
-  v
-plan de variantes ambientales
-  |
-  v
-ejecuciones controladas
-  |
-  v
-oráculos de equivalencia
-  |
-  v
-propagación y absorción
-  |
-  v
-minimización causal
-  |
-  v
-inferencia de contrato
-  |
-  v
-portability envelope
-  |
-  v
-validación con envmorph check
-```
+Variar entornos, comparar artefactos y minimizar cambios no se presentan por sí solos como contribuciones novedosas. El posicionamiento actual se centra en la composición de trazado de divergencia y absorción por etapa, conjuntos ambientales mínimos, contratos delimitados por evidencia y envelopes finitos, sujetos a validación externa en F8.
 
-#### Alcance actual
+#### Limitación experimental actual
 
-Después de F1, todavía no se implementan:
+Hasta F7, el único workload canónico es `literature-pipeline`, heredado de FlowAttest y mantenido como fixture histórico. Por ello, F1 a F7 constituyen validación interna del mecanismo, no evidencia suficiente de generalización. F8 debe evaluar entre tres y cinco workloads externos seleccionados mediante un protocolo fijado antes de ejecutar experimentos.
 
-- environmental metamorphic testing
-- portability envelopes
-- environmental contracts
-- equivalencia estructural o semántica general
-- minimal causal environment
-- descubrimiento transparente de dependencias ambientales
+#### Protocolo pre-F8
 
-Estas capacidades se incorporarán por fases y deberán producir evidencia reproducible antes de sostener conclusiones científicas.
+El protocolo congelado está en:
 
-#### Principio de trabajo
+- `docs/F8_PROTOCOL.md`
+- `experiments/f8/protocol.toml`
+- `docs/PRIOR_ART.md`
+- `docs/PAPER_SCOPE.md`
+- `provenance/F8_PROTOCOL_FILES.sha256`
 
-EnvMorph no se plantea como otro sistema genérico de provenance ni como un workflow manager.
+Cualquier cambio posterior a estos archivos debe registrarse como enmienda de protocolo y no puede reescribir retrospectivamente resultados ya observados.
 
-La investigación se centra en dependencias ambientales conductualmente relevantes, interacciones entre factores, propagación, absorción y condiciones mínimas de portabilidad.
+#### Fixture histórico
 
-Los resultados experimentales anteriores de FlowAttest se preservan como material histórico, pero no se presentan como evidencia científica de EnvMorph.
+`workloads/literature-pipeline/source/` es un snapshot histórico inmutable. Su contenido, estilo y documentación interna se preservan por procedencia y están cubiertos por `provenance/LITERATURE_PIPELINE_FILES.sha256`. No representan el estilo editorial actual de EnvMorph.
 
-#### Roadmap
+Las adaptaciones de compatibilidad para replay se realizan sobre copias temporales, nunca sobre el fixture canónico.
 
-El plan técnico y científico está en `docs/ROADMAP.md`.
-
-Las líneas de publicación y sus gates de evidencia están en `docs/PUBLICATIONS.md`.
-
-#### F2.1: capacidades ambientales
-
-F2.1 incorpora resolución de capacidades ambientales sin ejecutar el workflow.
+#### Construcción y pruebas
 
 ```text
-envmorph capabilities experiments/f1/literature-pipeline-plan.toml
+cargo test
+cargo build --release
 ```
 
-La resolución distingue una capacidad disponible de una no disponible. Una herramienta, locale o zona horaria ausente no se interpreta como fallo conductual del workflow.
+Los gates de fase verifican además integración, workloads y hashes de procedencia. El cierre de una fase no equivale a validación externa de sus claims.
 
-#### F2: ejecución ambiental end-to-end
+#### Próximo objetivo
 
-F2 está cerrado como cadena de ejecución ambiental end-to-end.
-
-```text
-envmorph explore EXPERIMENT.toml --output DIR --workdir DIR -- CMD [ARGS...]
-```
-
-`explore` planifica variantes, resuelve capacidades, ejecuta únicamente las variantes disponibles y conserva un bundle por campaña.
-
-Una capacidad ausente se registra como `unavailable`. Una ejecución iniciada que termina con código distinto de cero se registra como `execution_failed`. Estas categorías no se mezclan.
-
-El bundle contiene `experiment.json`, un directorio por variante, `manifest.json`, `stdout.txt`, `stderr.txt`, una copia de trabajo y `hashes.sha256`.
-
-F2 todavía no decide si dos ejecuciones son equivalentes. Esa responsabilidad comienza en F3.
-
-#### F3: equivalencia de artefactos
-
-F3 está cerrado como capa de equivalencia separada de la ejecución.
-
-```text
-envmorph compare-artifacts --oracle byte --left FILE --right FILE
-envmorph compare-artifacts --oracle text --left FILE --right FILE --normalize-line-endings
-envmorph compare-artifacts --oracle json --left FILE --right FILE --format json
-envmorph compare-artifacts --oracle csv --left FILE --right FILE --output comparison.json --format json
-```
-
-La ejecución F2 produce artefactos. F3 los compara mediante un oráculo explícito. El ejecutor no decide equivalencia.
-
-Los resultados comunes son `identical`, `equivalent`, `different`, `missing` y `error`.
-
-`ByteOracle` exige identidad byte a byte. `TextOracle` solo aplica normalizaciones solicitadas explícitamente. `JsonOracle` ignora el orden de claves de objetos, conserva el orden de arrays y mantiene todos los campos significativos. `CsvOracle` compara filas, columnas y celdas, con orden de filas significativo por defecto.
-
-La salida humana y la salida JSON registran oráculo, artefacto izquierdo, artefacto derecho, resultado, razón y metadatos relevantes.
-
-#### F4: propagación y absorción
-
-F4 está cerrado como análisis de propagación y absorción observable sobre resultados de equivalencia producidos por F3.
-
-```text
-envmorph analyze-propagation --trace TRACE.tsv --left-root VARIANT_A --right-root VARIANT_B
-envmorph analyze-propagation --trace TRACE.tsv --left-root VARIANT_A --right-root VARIANT_B --format json --output trace.json
-```
-
-El archivo TSV declara una secuencia ordenada de observaciones con `label`, `oracle`, `left_artifact`, `right_artifact` y `options`.
-
-F4 distingue `stable`, `divergence_start`, `propagated`, `absorbed` y `unresolved`. Un `missing` o `error` de F3 rompe la continuidad del trazado y evita afirmar propagación a través de una observación no resuelta.
-
-`divergence_start` identifica únicamente el primer punto observable de un segmento de diferencia. No constituye una afirmación causal. La minimización causal comienza en F5.
-
-#### F5: Minimal Causal Environment
-
-F5 minimiza cambios ambientales sobre evidencia producida por F2, F3 y F4.
-
-```text
-envmorph minimize-environment CAUSAL.toml --trace TRACE.tsv --workdir DIR --output DIR -- CMD [ARGS...]
-```
-
-F5 está cerrado cuando la búsqueda exacta identifica todos los conjuntos de cardinalidad mínima que reproducen la firma observable de la intervención completa bajo las confirmaciones configuradas.
-
-La minimalidad está restringida a los factores declarados. Se interpreta como suficiencia operacional controlada y no como prueba de causalidad física.
-
-#### F6: Environmental Contracts
-
-F6 deriva contratos ambientales auditables desde evidencia F5 y evalúa configuraciones sin reejecutar el workload.
-
-```text
-envmorph derive-contract CAUSAL.toml --trace TRACE.tsv --workdir DIR --evidence DIR --output CONTRACT.toml -- CMD [ARGS...]
-envmorph check-contract CONTRACT.toml --environment ENVIRONMENT.toml
-```
-
-Los contratos distinguen `satisfied`, `violated`, `out_of_scope` e `invalid`. Una configuración no observada no se clasifica como segura ni como violación por inferencia.
-
-#### F7: Portability Envelopes
-
-F7 enumera el lattice finito baseline/treatment de un contrato F6 y representa las regiones `satisfied`, `violated` y `out_of_scope` sin generalizar a valores no observados.
-
-```text
-envmorph build-envelope CONTRACT.toml --output ENVELOPE.json
-```
-
-El sobre informa cobertura decidida y fronteras entre configuraciones vecinas. `complete` solo significa exhaustividad dentro del contraste finito declarado, no portabilidad universal.
+F8 debe intentar falsar, no confirmar por construcción, los claims de F1 a F7 mediante workloads externos, resultados positivos y negativos, factores activados por necesidad del corpus y validación held-out de contratos.

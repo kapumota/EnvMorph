@@ -1,203 +1,77 @@
-### Roadmap técnico y científico
+### Roadmap de EnvMorph
 
-#### Principio
+#### Principio de cierre
 
-EnvMorph se desarrolla como un único software end-to-end.
+Una fase cerrada significa que su implementación, semántica y gates internos están completos. No implica por sí sola validez externa. F8 es el primer gate explícito de generalización empírica.
 
-Las capacidades se incorporan por fases y cada paper debe utilizar evidencia generada por ese mismo sistema.
-
-#### F0. Baseline técnico
+#### F0. Baseline técnico y documental
 
 Estado: cerrado.
 
-Incluye migración desde FlowAttest, workload heredado, replay endurecido, gates reproducibles y procedencia estable.
+Congela procedencia, fixture canónico, replay y baseline técnico sin redefinir el workload heredado.
 
-#### F1. Modelo ambiental
-
-Estado: cerrado en F1.3.
-
-Objetivo: representar factores, valores y variantes ambientales de forma explícita.
-
-Primer alcance:
-
-- locale
-- timezone
-- implementación AWK
-
-Entregable mínimo:
-
-```text
-envmorph plan experiment.toml
-```
-
-El plan debe ser determinista y todavía no necesita ejecutar la matriz.
-
-#### F2. Exploración end-to-end
+#### F1. Modelo ambiental y planificación
 
 Estado: cerrado.
 
-F2 resuelve disponibilidad real de locale, timezone e implementación AWK, ejecuta variantes disponibles en workspaces separados y conserva un bundle reproducible por campaña.
+Modela factores, especificaciones TOML y planificación determinista de variantes.
 
-Entregables:
-
-```text
-envmorph capabilities EXPERIMENT.toml
-envmorph explore EXPERIMENT.toml --output DIR --workdir DIR -- CMD [ARGS...]
-```
-
-Una variante no disponible y una ejecución fallida son estados diferentes.
-
-#### F3. Oráculos de equivalencia
+#### F2. Ejecución ambiental
 
 Estado: cerrado.
 
-F3 separa explícitamente ejecución, comparación y equivalencia.
+Resuelve capacidades reales, ejecuta variantes en workspaces separados y distingue indisponibilidad de fallo de ejecución.
 
-Entregables:
+#### F3. Equivalencia de artefactos
 
-```text
-ByteOracle
-TextOracle
-JsonOracle
-CsvOracle
-envmorph compare-artifacts
-```
+Estado: cerrado.
 
-Resultados comunes:
-
-```text
-identical
-equivalent
-different
-missing
-error
-```
-
-La salida puede ser humana o JSON y puede persistirse con `--output`. Los oráculos operan sobre artefactos ya producidos por F2 y no modifican el ejecutor.
-
+Separa ejecución de equivalencia y aporta oráculos explícitos para byte, texto, JSON y CSV.
 
 #### F4. Propagación y absorción
 
 Estado: cerrado.
 
-F4 consume resultados de equivalencia F3 y construye trazas ordenadas de diferencias observables.
-
-Entregables:
-
-```text
-PropagationAnalyzer
-PropagationTrace
-PropagationReport
-envmorph analyze-propagation
-```
-
-Estados por observación:
-
-```text
-stable
-divergence_start
-propagated
-absorbed
-unresolved
-```
-
-Estados globales del trazado:
-
-```text
-stable
-absorbed
-persistent
-unresolved
-```
-
-La primera divergencia es un inicio observable, no una inferencia causal. `missing` y `error` interrumpen la continuidad. F4 no implementa minimización causal.
-
-#### F5. Entorno causal mínimo
-
-Estado: siguiente fase.
-
-Objetivo: minimizar el conjunto de factores necesario para reproducir una divergencia.
-
-La primera implementación debe favorecer minimización por subconjuntos y memoization antes que técnicas más complejas.
-
-#### F6. Contratos ambientales
-
-Objetivo: inferir un contrato compacto a partir de ejecuciones observadas y validarlo sobre variantes no usadas durante la inferencia.
-
-Entregables:
-
-```text
-envmorph infer
-envmorph check envmorph.toml -- ./pipeline.sh
-```
-
-F6 constituye el primer MVP científico completo.
-
-#### F7. Portability envelopes
-
-Objetivo: caracterizar regiones del espacio ambiental donde el workflow conserva el comportamiento definido por sus oráculos.
-
-Debe incluir interacciones entre factores y no limitarse a análisis univariado.
-
-#### F8. Corpus externo
-
-Objetivo: evaluar EnvMorph sobre workloads que no hayan sido escritos para el proyecto.
-
-Prioridades:
-
-- workflows Unix reales
-- pipelines de build
-- ETL
-- scientific workflows
-- automatización CI
-- bugs históricos documentados
-
-F8 convierte el sistema en una plataforma experimental end-to-end con evidencia externa.
-
-#### F9. Hermeticidad conductual
-
-Objetivo: distinguir dependencia ambiental observada de dependencia conductualmente relevante.
-
-La observación transparente mediante ptrace u otras técnicas solo se incorporará si sirve a esta pregunta y después de auditar cualquier reutilización de AgentGuard-FastPath.
-
-#### Definición de software fundamental
-
-EnvMorph se considera end-to-end fundamental cuando integra, al menos:
-
-```text
-baseline
-plan
-explore
-equivalence
-propagation
-causal minimization
-contract inference
-contract check
-portability envelope
-external workloads
-reproducible experiment bundle
-```
-
+Localiza la primera divergencia observable y clasifica continuidad, propagación y absorción sin atribuir causalidad física.
 
 #### F5. Minimal Causal Environment
 
 Estado: cerrado.
 
-F5 ejecuta intervenciones ambientales mediante F2, deriva equivalencia con F3, consume firmas de propagación F4 y realiza búsqueda exacta por cardinalidad para encontrar todos los conjuntos mínimos de factores que reproducen la firma objetivo.
-
-La minimalidad se limita al espacio de factores declarado y expresa suficiencia operacional bajo confirmaciones controladas.
-
+Realiza búsqueda exacta por cardinalidad dentro del conjunto declarado y reporta todos los conjuntos mínimos que reproducen la firma F4. La interpretación es suficiencia operacional delimitada.
 
 #### F6. Environmental Contracts
 
 Estado: cerrado.
 
-F6 deriva y verifica contratos ambientales limitados por evidencia F5.
-
+Convierte evidencia F1 a F5 en contratos versionables con estados `satisfied`, `violated`, `out_of_scope` e `invalid`, sin extrapolar a valores no observados.
 
 #### F7. Portability Envelopes
 
 Estado: cerrado.
 
-F7 construye un lattice finito sobre los valores baseline/treatment declarados por F6. Cada celda reutiliza el evaluador contractual y queda clasificada como satisfied, violated u out_of_scope. El sobre registra cobertura decidida y fronteras entre celdas vecinas sin extrapolar a valores no observados.
+Enumera el producto cartesiano baseline/treatment de F6, registra cobertura decidida y fronteras entre celdas vecinas. Un envelope completo solo es exhaustivo dentro del contraste finito declarado.
 
+#### F8. External Corpus and Validation
+
+Estado: siguiente fase y bloqueante para Paper 1.
+
+Debe validar F2 a F7 sobre entre tres y cinco workloads externos, independientes de EnvMorph, seleccionados mediante `docs/F8_PROTOCOL.md` antes de observar resultados. F8 debe conservar casos positivos, negativos, indisponibles y fuera de alcance.
+
+La extensión de factores y oráculos solo se permite cuando una necesidad del corpus seleccionado la justifique y quede registrada antes de ejecutar la matriz experimental afectada.
+
+#### F9. Behavioral Hermeticity
+
+Estado: extensión posterior, fuera del camino crítico de Paper 1.
+
+Puede estudiar dependencias ambientales no declaradas mediante observación de sistema, potencialmente con tracing de llamadas al sistema. No debe comenzar hasta cerrar F8 y realizar una revisión específica frente a trabajo de hermeticidad y localización causal basada en tracing.
+
+#### Relación provisional con publicaciones
+
+Paper 1 se apoya principalmente en F2 a F6 y requiere F8 como validación externa. F7 puede aparecer como análisis complementario, pero no debe ser condición para defender el claim central de contratos ambientales.
+
+Paper 2 puede estudiar envelopes, interacciones y cobertura en espacios ambientales más ricos.
+
+Paper 3 puede convertirse en un estudio empírico de sensibilidad ambiental si F8 produce un corpus suficientemente diverso y reproducible.
+
+Paper 4 queda condicionado a que F9 demuestre novedad separable respecto de tracing, hermeticidad de builds y localización causal existente.

@@ -1,0 +1,65 @@
+[protocol]
+name = "envmorph-f8-external-validation"
+schema_version = 1
+status = "frozen_before_execution"
+target_workloads = 4
+min_workloads = 3
+max_workloads = 5
+minimum_confirmations = 2
+retain_negative_results = true
+selection_must_be_result_blind = true
+held_out_validation_when_possible = true
+f9_on_critical_path = false
+
+[corpus]
+requires_external_authorship = true
+requires_public_source = true
+requires_pinnable_revision = true
+requires_reproducible_preparation = true
+requires_offline_execution_after_setup = true
+requires_observable_artifact = true
+canonical_internal_fixture_counts_as_external = false
+
+[factor_policy]
+extend_only_when_selected_corpus_requires = true
+candidate_factors = [
+  "locale",
+  "lc_all_vs_lang",
+  "timezone",
+  "awk_implementation",
+  "shell_implementation",
+  "path_tool_resolution",
+  "umask",
+  "tmpdir",
+  "file_ordering",
+  "sed_implementation",
+  "sort_implementation",
+  "grep_implementation",
+  "date_implementation",
+]
+
+[oracle_policy]
+initial_oracles = ["byte", "text", "json", "csv"]
+profiles_must_be_explicit = true
+profiles_must_be_versioned = true
+post_hoc_profiles_are_exploratory = true
+candidate_extensions = [
+  "numeric_tolerance",
+  "ignored_json_paths",
+  "unordered_json_collections",
+  "ignored_csv_columns",
+  "unordered_csv_rows",
+  "timestamp_normalization",
+]
+
+[reporting]
+publish_identical = true
+publish_equivalent = true
+publish_different = true
+publish_unavailable = true
+publish_execution_failed = true
+publish_missing = true
+publish_error = true
+publish_unresolved = true
+publish_out_of_scope = true
+publish_failed_predictions = true
