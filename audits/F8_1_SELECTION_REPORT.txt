@@ -1,0 +1,27 @@
+F8.1 SELECTION REPORT
+
+Repositorio: /home/c-lara/EnvMorph
+Baseline pre-F8: cad211e12c30f88c8f0d12a1f9b6e1cdb34cec14
+Rama: fase8/validacion-externa
+
+Preregistro: PASS
+Fixture histórico: intacto
+Selección result-blind: sí
+EnvMorph ejecutado para seleccionar: no
+Workloads seleccionados: 4
+Desviación de tamaño preregistrado: no
+
+Corpus:
+- csvkit-realdata, wireservice/csvkit 2.2.0, bdd6e7e25b52cb52073c1a19dd0210cd85894871
+- jq-build-check, jqlang/jq jq-1.8.2, 34f7186b86743a083a589741b6cea95293524108
+- fd-build-completions, sharkdp/fd v10.5.0, 4f81778774463bf414a184cbe6d5219ad2229646
+- inih-meson-tests, benhoyt/inih r62, 26254ee9de7681f8825433415443e7116ff24b98
+
+Factores nuevos activados: ninguno
+Oráculos nuevos añadidos: ninguno
+Matriz experimental ejecutada: no
+F9 o ptrace: no
+
+Hash de selección:
+9644c7906ac9e3b929634bc4c60f6348eb1e022a071d03b9049ced698abe435d  docs/F8_CORPUS_SELECTION.md
+f34e8e13d2512992034dd82a3debfdc5dda207d88d76100ab362acbe81009109  experiments/f8/corpus_selection.toml

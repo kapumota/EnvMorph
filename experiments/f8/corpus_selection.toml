@@ -1,0 +1,101 @@
+[selection]
+schema_version = 1
+phase = "F8.1"
+status = "frozen_before_envmorph_execution"
+recorded_on = "2026-10-05"
+target_workloads = 4
+selected_workloads = 4
+result_blind = true
+envmorph_executed_for_selection = false
+new_factors_activated = false
+new_oracles_added = false
+protocol = "docs/F8_PROTOCOL.md"
+protocol_hash_manifest = "provenance/F8_PROTOCOL_FILES.sha256"
+
+[[workloads]]
+id = "csvkit-realdata"
+project = "wireservice/csvkit"
+repository = "https://github.com/wireservice/csvkit"
+tag = "2.2.0"
+commit = "bdd6e7e25b52cb52073c1a19dd0210cd85894871"
+license = "MIT"
+license_files = ["COPYING"]
+languages = ["Python"]
+tools = ["python3", "pip", "in2csv", "csvcut", "csvlook", "shell"]
+workflow_type = "etl_tabular"
+prepare = "python3 -m venv .venv && . .venv/bin/activate && python -m pip install ."
+run = "mkdir -p out && in2csv examples/realdata/ne_1033_data.xlsx > out/data.csv && csvcut -c county,item_name,quantity out/data.csv > out/selected.csv && csvlook out/selected.csv > out/selected.txt"
+inputs = ["examples/realdata/ne_1033_data.xlsx"]
+outputs = ["out/data.csv", "out/selected.csv", "out/selected.txt", "stdout", "stderr", "exit_status"]
+candidate_factors = ["locale", "lc_all_vs_lang", "path_tool_resolution"]
+candidate_oracles = ["csv", "text"]
+viability = "high"
+included = true
+selection_basis = "Pipeline ETL real documentado por upstream, con etapas distinguibles y artefactos CSV y texto."
+factor_status = "candidate_only"
+
+[[workloads]]
+id = "jq-build-check"
+project = "jqlang/jq"
+repository = "https://github.com/jqlang/jq"
+tag = "jq-1.8.2"
+commit = "34f7186b86743a083a589741b6cea95293524108"
+license = "MIT_with_upstream_third_party_notices"
+license_files = ["COPYING"]
+languages = ["C"]
+tools = ["git", "autoconf", "automake", "libtool", "make", "cc", "shell"]
+workflow_type = "build_and_test_json_tool"
+prepare = "git submodule update --init && autoreconf -i && ./configure --with-oniguruma=builtin"
+run = "mkdir -p out && make -j2 > out/build.stdout 2> out/build.stderr && make check > out/check.stdout 2> out/check.stderr && cp jq out/jq"
+inputs = ["source_tree", "upstream_test_suite"]
+outputs = ["out/jq", "out/build.stdout", "out/build.stderr", "out/check.stdout", "out/check.stderr", "exit_status"]
+candidate_factors = ["shell_implementation", "path_tool_resolution", "tmpdir", "umask", "locale"]
+candidate_oracles = ["byte", "text"]
+viability = "high"
+included = true
+selection_basis = "Build Unix de una herramienta real de transformación JSON con tests upstream y varios observables."
+factor_status = "candidate_only"
+
+[[workloads]]
+id = "fd-build-completions"
+project = "sharkdp/fd"
+repository = "https://github.com/sharkdp/fd"
+tag = "v10.5.0"
+commit = "4f81778774463bf414a184cbe6d5219ad2229646"
+license = "MIT OR Apache-2.0"
+license_files = ["LICENSE-MIT", "LICENSE-APACHE"]
+languages = ["Rust"]
+tools = ["rustc>=1.90.0", "cargo", "shell"]
+workflow_type = "build_test_and_completion_generation"
+prepare = "cargo fetch --locked"
+run = "mkdir -p out && cargo build --locked --offline > out/build.stdout 2> out/build.stderr && cargo test --locked --offline > out/test.stdout 2> out/test.stderr && target/debug/fd --gen-completions bash > out/fd.bash && target/debug/fd --gen-completions zsh > out/_fd && target/debug/fd --gen-completions fish > out/fd.fish"
+inputs = ["source_tree", "Cargo.lock"]
+outputs = ["out/fd.bash", "out/_fd", "out/fd.fish", "out/build.stdout", "out/build.stderr", "out/test.stdout", "out/test.stderr", "target/debug/fd", "exit_status"]
+candidate_factors = ["path_tool_resolution", "tmpdir", "umask", "shell_implementation"]
+candidate_oracles = ["byte", "text"]
+viability = "high_if_rust_1_90_available"
+included = true
+selection_basis = "Workflow Rust con lockfile, build, tests y varios artefactos textuales generados."
+factor_status = "candidate_only"
+
+[[workloads]]
+id = "inih-meson-tests"
+project = "benhoyt/inih"
+repository = "https://github.com/benhoyt/inih"
+tag = "r62"
+commit = "26254ee9de7681f8825433415443e7116ff24b98"
+license = "BSD-3-Clause"
+license_files = ["LICENSE.txt"]
+languages = ["C", "C++"]
+tools = ["meson>=0.56.0", "ninja", "cc", "c++"]
+workflow_type = "build_and_test_ini_parser"
+prepare = "meson setup build -Dtests=true -Dwith_INIReader=true"
+run = "mkdir -p out && meson compile -C build > out/build.stdout 2> out/build.stderr && meson test -C build --print-errorlogs > out/test.stdout 2> out/test.stderr"
+inputs = ["source_tree", "upstream_test_fixtures", "upstream_test_baselines"]
+outputs = ["build_artifacts", "out/build.stdout", "out/build.stderr", "out/test.stdout", "out/test.stderr", "exit_status"]
+candidate_factors = ["path_tool_resolution", "tmpdir", "umask", "shell_implementation"]
+candidate_oracles = ["byte", "text"]
+viability = "very_high"
+included = true
+selection_basis = "Build C/C++ pequeño y repetible con tests y baselines upstream."
+factor_status = "candidate_only"
