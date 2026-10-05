@@ -1,0 +1,21 @@
+{
+  "cross_source_total_order_claimed": false,
+  "dependencies": 8,
+  "duplicate_events_removed": 0,
+  "f8_corpus_executed": false,
+  "fixture_normalization": "pass",
+  "live_ground_truth": {
+    "fixture_success": true,
+    "getenv_present": true,
+    "missing_enoent": true
+  },
+  "normalized_events": 8,
+  "phase": "F9.2",
+  "raw_manifest_sha256": "2752d651e2bd1a81b845f09e1564981a6bb4e1bc4964146332e1572587712728",
+  "schema_version": 1,
+  "sources": [
+    "ld_preload_getenv",
+    "ptrace"
+  ],
+  "status": "pass"
+}

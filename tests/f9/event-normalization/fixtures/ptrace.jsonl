@@ -1,0 +1,5 @@
+{"errno":0,"kind":"file_open","pid":100,"ppid":50,"resource":"/tmp/f9-work/fixture.txt","result":"success","return_value":3,"seq":1,"syscall":"openat"}
+{"errno":0,"kind":"file_open","pid":100,"ppid":50,"resource":"/tmp/f9-work/fixture.txt","result":"success","return_value":4,"seq":2,"syscall":"openat"}
+{"errno":0,"kind":"file_open","pid":100,"ppid":50,"resource":"/tmp/f9-work/fixture.txt","result":"success","return_value":4,"seq":2,"syscall":"openat"}
+{"errno":2,"kind":"file_open","pid":100,"ppid":50,"resource":"/tmp/f9-work/missing.txt","result":"error","return_value":-2,"seq":3,"syscall":"openat"}
+{"errno":0,"kind":"exec","pid":101,"ppid":100,"resource":"/usr/bin/cat","result":"success","return_value":0,"seq":1,"syscall":"execve"}

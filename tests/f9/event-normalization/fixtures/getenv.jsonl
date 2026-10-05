@@ -1,0 +1,2 @@
+{"kind":"getenv","name":"F9_GROUND_TRUTH","pid":100,"ppid":50,"present":true,"seq":1}
+{"kind":"getenv","name":"F9_MISSING","pid":100,"ppid":50,"present":false,"seq":2}

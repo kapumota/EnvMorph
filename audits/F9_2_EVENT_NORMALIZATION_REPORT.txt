@@ -1,0 +1,42 @@
+ENVMORPH F9.2 EVENT NORMALIZATION REPORT
+
+Estado: PASS
+Parent: ca44d6b
+
+Schema:
+f9.dependency_event.v1
+
+Fuentes normalizadas:
+- ptrace
+- ld_preload_getenv
+
+Fixture normalization:
+PASS
+
+Live micro-workload:
+PASS
+
+Ground truth requerido:
+- file fixture success
+- missing file ENOENT
+- getenv F9_GROUND_TRUTH present
+
+Determinismo sobre misma captura:
+PASS
+
+Deduplicación:
+- duplicados exactos de captura: eliminados
+- accesos legítimos con secuencias diferentes: preservados
+- agregación por dependency_key: habilitada
+
+Orden causal global entre fuentes:
+NO reclamado
+
+Path semantics:
+lexical normalization only
+
+Corpus F8 ejecutado:
+NO
+
+Siguiente gate:
+F9.3 grafo proceso-dependencia-recurso sobre micro-workloads.
