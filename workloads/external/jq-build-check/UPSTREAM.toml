@@ -1,0 +1,17 @@
+[upstream]
+schema_version = 1
+workload_id = "jq-build-check"
+repository = "https://github.com/jqlang/jq"
+tag = "jq-1.8.2"
+commit = "34f7186b86743a083a589741b6cea95293524108"
+snapshot_method = "git_fetch_exact_commit_then_git_archive"
+source_directory = "source"
+source_tracked_by_envmorph = false
+source_files = 393
+source_hash_manifest = "provenance/f8/jq-build-check.files.sha256"
+source_hash_manifest_sha256 = "b8d3356ae01d759f187398c119bc26a941911780c8da95e35116e5d7a6172fc7"
+license_directory = "license"
+upstream_source_modified = false
+envmorph_adapter_present = false
+matrix_executed = false
+dependency_freeze_status = "pending_f8_3"

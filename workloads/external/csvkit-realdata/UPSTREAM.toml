@@ -1,0 +1,17 @@
+[upstream]
+schema_version = 1
+workload_id = "csvkit-realdata"
+repository = "https://github.com/wireservice/csvkit"
+tag = "2.2.0"
+commit = "bdd6e7e25b52cb52073c1a19dd0210cd85894871"
+snapshot_method = "git_fetch_exact_commit_then_git_archive"
+source_directory = "source"
+source_tracked_by_envmorph = false
+source_files = 211
+source_hash_manifest = "provenance/f8/csvkit-realdata.files.sha256"
+source_hash_manifest_sha256 = "b138f69e6b6566dab2285715f201acea95ce7ea896585ef93d22e161243ef889"
+license_directory = "license"
+upstream_source_modified = false
+envmorph_adapter_present = false
+matrix_executed = false
+dependency_freeze_status = "pending_f8_3"

@@ -1,0 +1,17 @@
+[upstream]
+schema_version = 1
+workload_id = "fd-build-completions"
+repository = "https://github.com/sharkdp/fd"
+tag = "v10.5.0"
+commit = "4f81778774463bf414a184cbe6d5219ad2229646"
+snapshot_method = "git_fetch_exact_commit_then_git_archive"
+source_directory = "source"
+source_tracked_by_envmorph = false
+source_files = 59
+source_hash_manifest = "provenance/f8/fd-build-completions.files.sha256"
+source_hash_manifest_sha256 = "caf0f41fb9247e3a7102e6cb3d091e60d16de98df7a0506b70c9bdac9d6d0038"
+license_directory = "license"
+upstream_source_modified = false
+envmorph_adapter_present = false
+matrix_executed = false
+dependency_freeze_status = "pending_f8_3"

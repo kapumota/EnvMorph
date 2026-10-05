@@ -1,0 +1,56 @@
+[corpus]
+schema_version = 1
+phase = "F8.2"
+status = "frozen_before_adapter_and_matrix"
+workloads = 4
+upstream_sources_modified = false
+envmorph_matrix_executed = false
+dependency_freeze_status = "pending_f8_3"
+source_snapshots_are_local_and_ignored = true
+tracked_provenance_is_sufficient_to_reacquire_exact_primary_revisions = true
+
+[[workloads]]
+id = "csvkit-realdata"
+repository = "https://github.com/wireservice/csvkit"
+tag = "2.2.0"
+commit = "bdd6e7e25b52cb52073c1a19dd0210cd85894871"
+license = "MIT"
+source_path = "workloads/external/csvkit-realdata/source"
+upstream_metadata = "workloads/external/csvkit-realdata/UPSTREAM.toml"
+hash_manifest = "provenance/f8/csvkit-realdata.files.sha256"
+adapter_status = "not_created"
+
+[[workloads]]
+id = "jq-build-check"
+repository = "https://github.com/jqlang/jq"
+tag = "jq-1.8.2"
+commit = "34f7186b86743a083a589741b6cea95293524108"
+license = "MIT_with_upstream_third_party_notices"
+source_path = "workloads/external/jq-build-check/source"
+upstream_metadata = "workloads/external/jq-build-check/UPSTREAM.toml"
+hash_manifest = "provenance/f8/jq-build-check.files.sha256"
+adapter_status = "not_created"
+submodule_materialization = "pending_f8_3_if_required"
+
+[[workloads]]
+id = "fd-build-completions"
+repository = "https://github.com/sharkdp/fd"
+tag = "v10.5.0"
+commit = "4f81778774463bf414a184cbe6d5219ad2229646"
+license = "MIT OR Apache-2.0"
+source_path = "workloads/external/fd-build-completions/source"
+upstream_metadata = "workloads/external/fd-build-completions/UPSTREAM.toml"
+hash_manifest = "provenance/f8/fd-build-completions.files.sha256"
+adapter_status = "not_created"
+cargo_dependency_materialization = "pending_f8_3"
+
+[[workloads]]
+id = "inih-meson-tests"
+repository = "https://github.com/benhoyt/inih"
+tag = "r62"
+commit = "26254ee9de7681f8825433415443e7116ff24b98"
+license = "BSD-3-Clause"
+source_path = "workloads/external/inih-meson-tests/source"
+upstream_metadata = "workloads/external/inih-meson-tests/UPSTREAM.toml"
+hash_manifest = "provenance/f8/inih-meson-tests.files.sha256"
+adapter_status = "not_created"

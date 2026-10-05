@@ -1,0 +1,17 @@
+[upstream]
+schema_version = 1
+workload_id = "inih-meson-tests"
+repository = "https://github.com/benhoyt/inih"
+tag = "r62"
+commit = "26254ee9de7681f8825433415443e7116ff24b98"
+snapshot_method = "git_fetch_exact_commit_then_git_archive"
+source_directory = "source"
+source_tracked_by_envmorph = false
+source_files = 61
+source_hash_manifest = "provenance/f8/inih-meson-tests.files.sha256"
+source_hash_manifest_sha256 = "6eb06a8f9e3d080df3b24141b3108a2d65e53b120acc23f7371172918ecf5f87"
+license_directory = "license"
+upstream_source_modified = false
+envmorph_adapter_present = false
+matrix_executed = false
+dependency_freeze_status = "pending_f8_3"
