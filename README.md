@@ -121,3 +121,18 @@ Los resultados comunes son `identical`, `equivalent`, `different`, `missing` y `
 `ByteOracle` exige identidad byte a byte. `TextOracle` solo aplica normalizaciones solicitadas explícitamente. `JsonOracle` ignora el orden de claves de objetos, conserva el orden de arrays y mantiene todos los campos significativos. `CsvOracle` compara filas, columnas y celdas, con orden de filas significativo por defecto.
 
 La salida humana y la salida JSON registran oráculo, artefacto izquierdo, artefacto derecho, resultado, razón y metadatos relevantes.
+
+#### F4: propagación y absorción
+
+F4 está cerrado como análisis de propagación y absorción observable sobre resultados de equivalencia producidos por F3.
+
+```text
+envmorph analyze-propagation --trace TRACE.tsv --left-root VARIANT_A --right-root VARIANT_B
+envmorph analyze-propagation --trace TRACE.tsv --left-root VARIANT_A --right-root VARIANT_B --format json --output trace.json
+```
+
+El archivo TSV declara una secuencia ordenada de observaciones con `label`, `oracle`, `left_artifact`, `right_artifact` y `options`.
+
+F4 distingue `stable`, `divergence_start`, `propagated`, `absorbed` y `unresolved`. Un `missing` o `error` de F3 rompe la continuidad del trazado y evita afirmar propagación a través de una observación no resuelta.
+
+`divergence_start` identifica únicamente el primer punto observable de un segmento de diferencia. No constituye una afirmación causal. La minimización causal comienza en F5.

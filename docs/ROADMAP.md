@@ -78,16 +78,43 @@ La salida puede ser humana o JSON y puede persistirse con `--output`. Los orácu
 
 #### F4. Propagación y absorción
 
-Objetivo: medir cómo una perturbación ambiental atraviesa etapas y dónde deja de ser observable.
+Estado: cerrado.
 
-Conceptos:
+F4 consume resultados de equivalencia F3 y construye trazas ordenadas de diferencias observables.
 
-- first divergence
-- propagation depth
-- blast radius
-- absorption boundary
+Entregables:
+
+```text
+PropagationAnalyzer
+PropagationTrace
+PropagationReport
+envmorph analyze-propagation
+```
+
+Estados por observación:
+
+```text
+stable
+divergence_start
+propagated
+absorbed
+unresolved
+```
+
+Estados globales del trazado:
+
+```text
+stable
+absorbed
+persistent
+unresolved
+```
+
+La primera divergencia es un inicio observable, no una inferencia causal. `missing` y `error` interrumpen la continuidad. F4 no implementa minimización causal.
 
 #### F5. Entorno causal mínimo
+
+Estado: siguiente fase.
 
 Objetivo: minimizar el conjunto de factores necesario para reproducir una divergencia.
 

@@ -28,6 +28,8 @@ USO
   envmorph capabilities EXPERIMENT.toml                  inspecciona capacidades ambientales
   envmorph explore EXPERIMENT.toml [--output DIR] [--workdir DIR] -- CMD [ARGS...]
   envmorph compare-artifacts --oracle byte|text|json|csv --left FILE --right FILE [--format human|json] [--output FILE]
+  envmorph analyze-propagation --trace TRACE.tsv [--left-root DIR] [--right-root DIR] [--format human|json] [--output FILE]
+                                                          analiza propagación y absorción
                                                           compara artefactos sin decidir durante la ejecución
                                                           ejecuta variantes y crea un bundle
   envmorph diff    A B [--json]                           localiza la primera divergencia
@@ -115,6 +117,87 @@ fn cmd_stage(args: &[String]) {
 fn load(arg: &str) -> model::Manifest {
     let id = store::resolve_run(arg).unwrap_or_else(|e| fail(&e));
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
+}
+
+fn cmd_analyze_propagation(args: &[String]) {
+    let mut trace_path: Option<std::path::PathBuf> = None;
+    let mut left_root: Option<std::path::PathBuf> = None;
+    let mut right_root: Option<std::path::PathBuf> = None;
+    let mut output: Option<std::path::PathBuf> = None;
+    let mut format = "human".to_string();
+    let mut i = 0;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--trace" => {
+                trace_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--trace",
+                )));
+            }
+            "--left-root" => {
+                left_root = Some(std::path::PathBuf::from(take_value(
+                    args,
+                    &mut i,
+                    "--left-root",
+                )));
+            }
+            "--right-root" => {
+                right_root = Some(std::path::PathBuf::from(take_value(
+                    args,
+                    &mut i,
+                    "--right-root",
+                )));
+            }
+            "--format" => {
+                format = take_value(args, &mut i, "--format");
+            }
+            "--output" => {
+                output = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )));
+            }
+            other => fail(&format!(
+                "opción desconocida '{}' para analyze-propagation",
+                other
+            )),
+        }
+
+        i += 1;
+    }
+
+    let trace_path =
+        trace_path.unwrap_or_else(|| fail("analyze-propagation requiere --trace ARCHIVO.tsv"));
+
+    if format != "human" && format != "json" {
+        fail("--format debe ser human o json");
+    }
+
+    let spec =
+        propagation::TraceSpec::from_tsv_path(&trace_path).unwrap_or_else(|error| fail(&error));
+    let observations =
+        propagation::evaluate_trace(&spec, left_root.as_deref(), right_root.as_deref());
+    let trace = propagation::PropagationAnalyzer::analyze(observations);
+    let report = propagation::PropagationReport::new(trace);
+
+    let rendered = if format == "json" {
+        report.render_json()
+    } else {
+        report.render_human()
+    };
+
+    print!("{}", rendered);
+
+    if let Some(path) = output {
+        std::fs::write(&path, rendered.as_bytes()).unwrap_or_else(|error| {
+            fail(&format!(
+                "no se pudo guardar el trazado en '{}': {}",
+                path.display(),
+                error
+            ))
+        });
+    }
+
+    std::process::exit(report.trace().status().exit_code());
 }
 
 fn cmd_compare_artifacts(args: &[String]) {
@@ -337,6 +420,7 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "analyze-propagation" => cmd_analyze_propagation(rest),
         "compare-artifacts" => cmd_compare_artifacts(rest),
         "explore" => cmd_explore(rest),
         "capabilities" => cmd_capabilities(rest),
@@ -417,3 +501,4 @@ mod capability;
 mod executor;
 mod experiment;
 mod oracle;
+mod propagation;
