@@ -29,6 +29,8 @@ USO
   envmorph explore EXPERIMENT.toml [--output DIR] [--workdir DIR] -- CMD [ARGS...]
   envmorph compare-artifacts --oracle byte|text|json|csv --left FILE --right FILE [--format human|json] [--output FILE]
   envmorph analyze-propagation --trace TRACE.tsv [--left-root DIR] [--right-root DIR] [--format human|json] [--output FILE]
+  envmorph minimize-environment CAUSAL.toml --trace TRACE.tsv --workdir DIR --output DIR [--format human|json] -- CMD [ARGS...]
+                                                          minimiza factores ambientales por suficiencia observable
                                                           analiza propagación y absorción
                                                           compara artefactos sin decidir durante la ejecución
                                                           ejecuta variantes y crea un bundle
@@ -117,6 +119,98 @@ fn cmd_stage(args: &[String]) {
 fn load(arg: &str) -> model::Manifest {
     let id = store::resolve_run(arg).unwrap_or_else(|e| fail(&e));
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
+}
+
+fn cmd_minimize_environment(args: &[String]) {
+    if args.is_empty() {
+        fail("minimize-environment requiere un archivo TOML causal");
+    }
+
+    let spec_path = std::path::PathBuf::from(&args[0]);
+    let mut trace_path: Option<std::path::PathBuf> = None;
+    let mut output_dir: Option<std::path::PathBuf> = None;
+    let mut workdir = std::env::current_dir().unwrap_or_else(|error| {
+        fail(&format!(
+            "no se pudo obtener el directorio actual: {}",
+            error
+        ))
+    });
+    let mut format = "human".to_string();
+    let mut command = Vec::new();
+    let mut i = 1;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--" => {
+                command = args[i + 1..].to_vec();
+                break;
+            }
+            "--trace" => {
+                trace_path = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--trace",
+                )));
+            }
+            "--output" => {
+                output_dir = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )));
+            }
+            "--workdir" => {
+                workdir = std::path::PathBuf::from(take_value(args, &mut i, "--workdir"));
+            }
+            "--format" => {
+                format = take_value(args, &mut i, "--format");
+            }
+            other => fail(&format!(
+                "opción desconocida '{}' para minimize-environment",
+                other
+            )),
+        }
+        i += 1;
+    }
+
+    let trace_path =
+        trace_path.unwrap_or_else(|| fail("minimize-environment requiere --trace TRACE.tsv"));
+    let output_dir =
+        output_dir.unwrap_or_else(|| fail("minimize-environment requiere --output DIR"));
+
+    if command.is_empty() {
+        fail("minimize-environment requiere una orden después de --");
+    }
+
+    if format != "human" && format != "json" {
+        fail("--format debe ser human o json");
+    }
+
+    let spec = causal::CausalSpec::from_toml_path(&spec_path).unwrap_or_else(|error| fail(&error));
+    let trace_spec =
+        propagation::TraceSpec::from_tsv_path(&trace_path).unwrap_or_else(|error| fail(&error));
+
+    let options = causal::MinimizeOptions {
+        output_dir: output_dir.clone(),
+        workdir,
+        command,
+    };
+
+    let report = causal::minimize_environment(&spec, &trace_spec, &options)
+        .unwrap_or_else(|error| fail(&error));
+
+    let json = report.render_json();
+    std::fs::write(output_dir.join("mce-result.json"), json.as_bytes()).unwrap_or_else(|error| {
+        fail(&format!(
+            "no se pudo guardar el resultado causal en '{}': {}",
+            output_dir.join("mce-result.json").display(),
+            error
+        ))
+    });
+
+    if format == "json" {
+        print!("{}", json);
+    } else {
+        print!("{}", report.render_human());
+    }
+
+    std::process::exit(report.status().exit_code());
 }
 
 fn cmd_analyze_propagation(args: &[String]) {
@@ -420,6 +514,7 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "minimize-environment" => cmd_minimize_environment(rest),
         "analyze-propagation" => cmd_analyze_propagation(rest),
         "compare-artifacts" => cmd_compare_artifacts(rest),
         "explore" => cmd_explore(rest),
@@ -498,6 +593,7 @@ fn main() {
 }
 
 mod capability;
+mod causal;
 mod executor;
 mod experiment;
 mod oracle;

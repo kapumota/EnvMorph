@@ -136,3 +136,15 @@ El archivo TSV declara una secuencia ordenada de observaciones con `label`, `ora
 F4 distingue `stable`, `divergence_start`, `propagated`, `absorbed` y `unresolved`. Un `missing` o `error` de F3 rompe la continuidad del trazado y evita afirmar propagación a través de una observación no resuelta.
 
 `divergence_start` identifica únicamente el primer punto observable de un segmento de diferencia. No constituye una afirmación causal. La minimización causal comienza en F5.
+
+#### F5: Minimal Causal Environment
+
+F5 minimiza cambios ambientales sobre evidencia producida por F2, F3 y F4.
+
+```text
+envmorph minimize-environment CAUSAL.toml --trace TRACE.tsv --workdir DIR --output DIR -- CMD [ARGS...]
+```
+
+F5 está cerrado cuando la búsqueda exacta identifica todos los conjuntos de cardinalidad mínima que reproducen la firma observable de la intervención completa bajo las confirmaciones configuradas.
+
+La minimalidad está restringida a los factores declarados. Se interpreta como suficiencia operacional controlada y no como prueba de causalidad física.
