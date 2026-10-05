@@ -102,3 +102,22 @@ Una capacidad ausente se registra como `unavailable`. Una ejecución iniciada qu
 El bundle contiene `experiment.json`, un directorio por variante, `manifest.json`, `stdout.txt`, `stderr.txt`, una copia de trabajo y `hashes.sha256`.
 
 F2 todavía no decide si dos ejecuciones son equivalentes. Esa responsabilidad comienza en F3.
+
+#### F3: equivalencia de artefactos
+
+F3 está cerrado como capa de equivalencia separada de la ejecución.
+
+```text
+envmorph compare-artifacts --oracle byte --left FILE --right FILE
+envmorph compare-artifacts --oracle text --left FILE --right FILE --normalize-line-endings
+envmorph compare-artifacts --oracle json --left FILE --right FILE --format json
+envmorph compare-artifacts --oracle csv --left FILE --right FILE --output comparison.json --format json
+```
+
+La ejecución F2 produce artefactos. F3 los compara mediante un oráculo explícito. El ejecutor no decide equivalencia.
+
+Los resultados comunes son `identical`, `equivalent`, `different`, `missing` y `error`.
+
+`ByteOracle` exige identidad byte a byte. `TextOracle` solo aplica normalizaciones solicitadas explícitamente. `JsonOracle` ignora el orden de claves de objetos, conserva el orden de arrays y mantiene todos los campos significativos. `CsvOracle` compara filas, columnas y celdas, con orden de filas significativo por defecto.
+
+La salida humana y la salida JSON registran oráculo, artefacto izquierdo, artefacto derecho, resultado, razón y metadatos relevantes.

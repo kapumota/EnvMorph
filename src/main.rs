@@ -27,6 +27,8 @@ USO
   envmorph plan    EXPERIMENT.toml                        genera un plan ambiental determinista
   envmorph capabilities EXPERIMENT.toml                  inspecciona capacidades ambientales
   envmorph explore EXPERIMENT.toml [--output DIR] [--workdir DIR] -- CMD [ARGS...]
+  envmorph compare-artifacts --oracle byte|text|json|csv --left FILE --right FILE [--format human|json] [--output FILE]
+                                                          compara artefactos sin decidir durante la ejecución
                                                           ejecuta variantes y crea un bundle
   envmorph diff    A B [--json]                           localiza la primera divergencia
   envmorph isolate A B                                    repite etapas cuyo ejecutable difiere
@@ -113,6 +115,107 @@ fn cmd_stage(args: &[String]) {
 fn load(arg: &str) -> model::Manifest {
     let id = store::resolve_run(arg).unwrap_or_else(|e| fail(&e));
     store::load_run(&id).unwrap_or_else(|e| fail(&e))
+}
+
+fn cmd_compare_artifacts(args: &[String]) {
+    let mut oracle_name: Option<String> = None;
+    let mut left: Option<std::path::PathBuf> = None;
+    let mut right: Option<std::path::PathBuf> = None;
+    let mut output: Option<std::path::PathBuf> = None;
+    let mut format = "human".to_string();
+    let mut text_options = oracle::TextOptions::default();
+    let mut text_option_selected = false;
+    let mut i = 0;
+
+    while i < args.len() {
+        match args[i].as_str() {
+            "--oracle" => {
+                oracle_name = Some(take_value(args, &mut i, "--oracle"));
+            }
+            "--left" => {
+                left = Some(std::path::PathBuf::from(take_value(args, &mut i, "--left")));
+            }
+            "--right" => {
+                right = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--right",
+                )));
+            }
+            "--format" => {
+                format = take_value(args, &mut i, "--format");
+            }
+            "--output" => {
+                output = Some(std::path::PathBuf::from(take_value(
+                    args, &mut i, "--output",
+                )));
+            }
+            "--normalize-line-endings" => {
+                text_options.normalize_line_endings = true;
+                text_option_selected = true;
+            }
+            "--trim-trailing-whitespace" => {
+                text_options.trim_trailing_whitespace = true;
+                text_option_selected = true;
+            }
+            "--ignore-final-newline" => {
+                text_options.ignore_final_newline = true;
+                text_option_selected = true;
+            }
+            other => fail(&format!(
+                "opción desconocida '{}' para compare-artifacts",
+                other
+            )),
+        }
+
+        i += 1;
+    }
+
+    let oracle_name = oracle_name
+        .unwrap_or_else(|| fail("compare-artifacts requiere --oracle byte|text|json|csv"));
+    let left = left.unwrap_or_else(|| fail("compare-artifacts requiere --left ARCHIVO"));
+    let right = right.unwrap_or_else(|| fail("compare-artifacts requiere --right ARCHIVO"));
+
+    if format != "human" && format != "json" {
+        fail("--format debe ser human o json");
+    }
+
+    if oracle_name != "text" && text_option_selected {
+        fail("las normalizaciones de texto solo son válidas con --oracle text");
+    }
+
+    let left_ref = oracle::ArtifactRef::new(left);
+    let right_ref = oracle::ArtifactRef::new(right);
+
+    let implementation: Box<dyn oracle::EquivalenceOracle> = match oracle_name.as_str() {
+        "byte" => Box::new(oracle::ByteOracle),
+        "text" => Box::new(oracle::TextOracle::new(text_options)),
+        "json" => Box::new(oracle::JsonOracle),
+        "csv" => Box::new(oracle::CsvOracle),
+        other => fail(&format!("oráculo no soportado: {}", other)),
+    };
+
+    let result = implementation.compare(&left_ref, &right_ref);
+    let report =
+        oracle::ComparisonReport::new(implementation.name(), &left_ref, &right_ref, result);
+
+    let rendered = if format == "json" {
+        report.render_json()
+    } else {
+        report.render_human()
+    };
+
+    print!("{}", rendered);
+
+    if let Some(path) = output {
+        std::fs::write(&path, rendered.as_bytes()).unwrap_or_else(|error| {
+            fail(&format!(
+                "no se pudo guardar el resultado en '{}': {}",
+                path.display(),
+                error
+            ))
+        });
+    }
+
+    std::process::exit(report.result().status().exit_code());
 }
 
 fn cmd_explore(args: &[String]) {
@@ -234,6 +337,7 @@ fn main() {
                 .unwrap_or_else(|| fail("inspect requiere una ejecución"));
             print!("{}", report::inspect(&load(r)));
         }
+        "compare-artifacts" => cmd_compare_artifacts(rest),
         "explore" => cmd_explore(rest),
         "capabilities" => cmd_capabilities(rest),
         "plan" => cmd_plan(rest),
@@ -312,3 +416,4 @@ fn main() {
 mod capability;
 mod executor;
 mod experiment;
+mod oracle;

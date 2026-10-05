@@ -49,18 +49,32 @@ Una variante no disponible y una ejecución fallida son estados diferentes.
 
 #### F3. Oráculos de equivalencia
 
-Estado: siguiente fase.
+Estado: cerrado.
 
-Objetivo: distinguir igualdad de bytes, igualdad estructural y equivalencia semántica configurable.
+F3 separa explícitamente ejecución, comparación y equivalencia.
 
-Primeros oráculos:
+Entregables:
 
-- byte
-- texto normalizado
-- JSON
-- CSV
+```text
+ByteOracle
+TextOracle
+JsonOracle
+CsvOracle
+envmorph compare-artifacts
+```
 
-La interfaz debe permitir incorporar comparadores específicos sin acoplarlos al ejecutor.
+Resultados comunes:
+
+```text
+identical
+equivalent
+different
+missing
+error
+```
+
+La salida puede ser humana o JSON y puede persistirse con `--output`. Los oráculos operan sobre artefactos ya producidos por F2 y no modifican el ejecutor.
+
 
 #### F4. Propagación y absorción
 
