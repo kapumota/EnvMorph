@@ -1,0 +1,46 @@
+ENVMORPH F9.3 DEPENDENCY GRAPH REPORT
+
+Estado: PASS
+Parent F9.2: 3d4920a
+
+Schema:
+f9.dependency_graph.v1
+
+Fixture graph:
+PASS
+
+Live micro-workload:
+PASS
+
+Graph model:
+process -> dependency -> resource
+
+Parent relation:
+materialized only when parent and child are both observed
+
+Cross-source process convergence:
+validated
+
+Process identity:
+run_id + pid
+
+Process identity conflicts:
+0
+
+Causal graph:
+NO
+
+Cross-source total order:
+NO
+
+Behavioral relevance:
+NO
+
+Determinismo:
+PASS
+
+Corpus F8 ejecutado:
+NO
+
+Siguiente gate:
+F9.4 protocolo de intervenciones controladas sobre dependencias observadas.

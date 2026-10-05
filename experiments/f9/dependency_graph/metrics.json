@@ -1,0 +1,29 @@
+{
+  "behavioral_relevance_claimed": false,
+  "causal_graph_claimed": false,
+  "cross_source_process_nodes": 1,
+  "cross_source_total_order_claimed": false,
+  "dependency_nodes": 10,
+  "dependency_resource_edges": 10,
+  "events_total": 15,
+  "f8_corpus_executed": false,
+  "fixture_graph": "pass",
+  "live_ground_truth": {
+    "cat_resource": true,
+    "cross_source_process": true,
+    "environment_resource": true,
+    "fixture_resource": true,
+    "missing_resource": true,
+    "no_identity_conflict": true,
+    "parent_edge": true
+  },
+  "observed_dependency_edges": 15,
+  "parent_edges": 1,
+  "phase": "F9.3",
+  "process_identity_conflicts": 0,
+  "process_nodes": 2,
+  "raw_manifest_sha256": "50e17686154a09900b003c57038cbc83e0691fa1306860fee18e8d1690e4f115",
+  "resource_nodes": 10,
+  "schema_version": 1,
+  "status": "pass"
+}

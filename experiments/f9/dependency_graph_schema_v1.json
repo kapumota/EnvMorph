@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envmorph.local/schemas/f9-dependency-graph-v1.json",
+  "title": "EnvMorph F9 DependencyGraph v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "nodes",
+    "edges",
+    "metrics",
+    "claims"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "f9.dependency_graph.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "causal_graph",
+        "cross_source_total_order",
+        "behavioral_relevance"
+      ],
+      "properties": {
+        "causal_graph": {
+          "const": false
+        },
+        "cross_source_total_order": {
+          "const": false
+        },
+        "behavioral_relevance": {
+          "const": false
+        }
+      }
+    }
+  }
+}
