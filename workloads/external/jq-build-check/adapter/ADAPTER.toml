@@ -1,0 +1,22 @@
+[adapter]
+schema_version = 1
+workload_id = "jq-build-check"
+source_modified = false
+preparation_network_allowed = true
+execution_network_allowed = false
+command = "bash adapter/run.sh"
+
+[[observation]]
+label = "version"
+path = "workspace/artifacts/01_version.txt"
+oracle = "text"
+
+[[observation]]
+label = "json_transform"
+path = "workspace/artifacts/02_module_data.json"
+oracle = "json"
+
+[[observation]]
+label = "test_status"
+path = "workspace/artifacts/03_test_status.txt"
+oracle = "text"

@@ -1,0 +1,4 @@
+label	oracle	left_artifact	right_artifact	options
+xlsx_to_csv	csv	workspace/artifacts/01_data.csv	workspace/artifacts/01_data.csv	-
+column_projection	csv	workspace/artifacts/02_selected.csv	workspace/artifacts/02_selected.csv	-
+terminal_preview	text	workspace/artifacts/03_preview.txt	workspace/artifacts/03_preview.txt	-

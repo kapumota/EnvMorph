@@ -1,0 +1,17 @@
+[adapter]
+schema_version = 1
+workload_id = "inih-meson-tests"
+source_modified = false
+preparation_network_allowed = false
+execution_network_allowed = false
+command = "bash adapter/run.sh"
+
+[[observation]]
+label = "test_status"
+path = "workspace/artifacts/01_test_status.txt"
+oracle = "text"
+
+[[observation]]
+label = "upstream_unittest"
+path = "workspace/artifacts/02_unittest_multi.txt"
+oracle = "text"

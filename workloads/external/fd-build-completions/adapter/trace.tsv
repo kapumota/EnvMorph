@@ -1,0 +1,4 @@
+label	oracle	left_artifact	right_artifact	options
+test_status	text	workspace/artifacts/01_test_status.txt	workspace/artifacts/01_test_status.txt	-
+bash_completion	text	workspace/artifacts/02_fd.bash	workspace/artifacts/02_fd.bash	-
+zsh_completion	text	workspace/artifacts/03_fd.zsh	workspace/artifacts/03_fd.zsh	-

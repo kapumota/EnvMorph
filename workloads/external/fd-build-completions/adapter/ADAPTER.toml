@@ -1,0 +1,22 @@
+[adapter]
+schema_version = 1
+workload_id = "fd-build-completions"
+source_modified = false
+preparation_network_allowed = true
+execution_network_allowed = false
+command = "bash adapter/run.sh"
+
+[[observation]]
+label = "test_status"
+path = "workspace/artifacts/01_test_status.txt"
+oracle = "text"
+
+[[observation]]
+label = "bash_completion"
+path = "workspace/artifacts/02_fd.bash"
+oracle = "text"
+
+[[observation]]
+label = "zsh_completion"
+path = "workspace/artifacts/03_fd.zsh"
+oracle = "text"

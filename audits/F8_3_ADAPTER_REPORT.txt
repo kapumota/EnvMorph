@@ -1,0 +1,23 @@
+F8.3 ADAPTER REPORT
+
+Rama: fase8/validacion-externa
+Parent: 1503a87
+Workloads: 4
+Adapters: 4
+Fuentes upstream modificadas: no
+EnvMorph ejecutado sobre el corpus: no
+Matriz congelada: no
+Factores nuevos implementados: no
+Oráculos nuevos: no
+Preparación offline: script definido, ejecución diferida a F8.4
+Materializador F8.2: preservado byte-exact
+Materializador F8.3 corregido: scripts/f8/materialize_corpus_verified.sh
+Corrección: resolución de path del manifest SHA-256, sin cambio de corpus
+
+Evidencia estática:
+- csvkit: tutorial realdata y fixture XLSX upstream
+- jq: README build + make check, configure.ac usa locale/time APIs
+- fd: Cargo.lock/Cargo.toml y completions documentadas
+- inih: Meson tests y baselines upstream
+
+Siguiente gate: F8.4 preparación runtime, extensión tmpdir justificada y freeze de matriz.

@@ -1,0 +1,4 @@
+label	oracle	left_artifact	right_artifact	options
+version	text	workspace/artifacts/01_version.txt	workspace/artifacts/01_version.txt	-
+json_transform	json	workspace/artifacts/02_module_data.json	workspace/artifacts/02_module_data.json	-
+test_status	text	workspace/artifacts/03_test_status.txt	workspace/artifacts/03_test_status.txt	-

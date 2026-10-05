@@ -1,0 +1,22 @@
+[adapter]
+schema_version = 1
+workload_id = "csvkit-realdata"
+source_modified = false
+preparation_network_allowed = true
+execution_network_allowed = false
+command = "bash adapter/run.sh"
+
+[[observation]]
+label = "xlsx_to_csv"
+path = "workspace/artifacts/01_data.csv"
+oracle = "csv"
+
+[[observation]]
+label = "column_projection"
+path = "workspace/artifacts/02_selected.csv"
+oracle = "csv"
+
+[[observation]]
+label = "terminal_preview"
+path = "workspace/artifacts/03_preview.txt"
+oracle = "text"

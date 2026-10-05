@@ -1,0 +1,3 @@
+label	oracle	left_artifact	right_artifact	options
+test_status	text	workspace/artifacts/01_test_status.txt	workspace/artifacts/01_test_status.txt	-
+upstream_unittest	text	workspace/artifacts/02_unittest_multi.txt	workspace/artifacts/02_unittest_multi.txt	-

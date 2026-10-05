@@ -1,0 +1,39 @@
+[adapters]
+schema_version = 1
+phase = "F8.3"
+status = "defined_before_matrix"
+workloads = 4
+upstream_sources_modified = false
+matrix_executed = false
+new_oracles_added = false
+dependency_runtime_preparation = "deferred_to_f8_4"
+f8_2_materializer_preserved = true
+verified_materializer = "scripts/f8/materialize_corpus_verified.sh"
+
+[[workload]]
+id = "csvkit-realdata"
+command = "bash adapter/run.sh"
+trace = "workloads/external/csvkit-realdata/adapter/trace.tsv"
+observations = 3
+upstream_basis = "csvkit tutorial realdata pipeline"
+
+[[workload]]
+id = "jq-build-check"
+command = "bash adapter/run.sh"
+trace = "workloads/external/jq-build-check/adapter/trace.tsv"
+observations = 3
+upstream_basis = "README build instructions and make check"
+
+[[workload]]
+id = "fd-build-completions"
+command = "bash adapter/run.sh"
+trace = "workloads/external/fd-build-completions/adapter/trace.tsv"
+observations = 3
+upstream_basis = "Cargo project and documented completion generation"
+
+[[workload]]
+id = "inih-meson-tests"
+command = "bash adapter/run.sh"
+trace = "workloads/external/inih-meson-tests/adapter/trace.tsv"
+observations = 2
+upstream_basis = "Meson tests and upstream baselines"
