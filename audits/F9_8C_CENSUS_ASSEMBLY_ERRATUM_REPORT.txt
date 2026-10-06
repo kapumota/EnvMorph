@@ -1,0 +1,36 @@
+ENVMORPH F9.8C CENSUS ASSEMBLY ERRATUM
+
+Estado:
+POST-TREATMENT STRUCTURAL CORRECTION
+
+Harness commit:
+43608b8
+
+Treatments already executed:
+YES
+
+Observed classifications before aggregate rejection:
+fd-build-completions tmpdir -> observed_only
+inih-meson-tests tmpdir -> observed_only
+
+Rejected stage:
+F9.7 final census aggregation
+
+Correction:
+non-completed workloads use null graph/census/commit fields,
+census_frozen_before_treatment=false and candidates=[]
+
+Frozen plans:
+UNCHANGED
+
+Factors:
+UNCHANGED
+
+Oracles:
+UNCHANGED
+
+Treatments rerun:
+NO
+
+Raw evidence:
+.envmorph/f9-8c-evidence/RAW.sha256
