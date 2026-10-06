@@ -1,0 +1,14 @@
+[causal]
+name = "f9-f5-interaction"
+schema_version = 1
+confirmations = 2
+
+[[factor]]
+name = "locale"
+baseline = "C"
+treatment = "POSIX"
+
+[[factor]]
+name = "timezone"
+baseline = "UTC"
+treatment = "America/Lima"

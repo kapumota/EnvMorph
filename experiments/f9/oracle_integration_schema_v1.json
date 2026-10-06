@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envmorph.local/schemas/f9-oracle-integration-evidence-v1.json",
+  "title": "EnvMorph F9 OracleIntegrationEvidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "layer",
+    "source_status",
+    "classification",
+    "reason",
+    "evidence_level",
+    "confirmations",
+    "details",
+    "semantic_reimplementation",
+    "causal_claim",
+    "f8_corpus_executed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "f9.oracle_integration_evidence.v1"
+    },
+    "layer": {
+      "enum": ["F3", "F4", "F5"]
+    },
+    "source_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "enum": [
+        "behaviorally_relevant",
+        "observed_only",
+        "unresolved"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_level": {
+      "enum": [
+        "artifact_equivalence",
+        "propagation_trace",
+        "operational_sufficiency"
+      ]
+    },
+    "confirmations": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "details": {
+      "type": "object"
+    },
+    "semantic_reimplementation": {
+      "const": false
+    },
+    "causal_claim": {
+      "const": false
+    },
+    "f8_corpus_executed": {
+      "const": false
+    }
+  }
+}

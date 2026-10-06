@@ -1,0 +1,9 @@
+[causal]
+name = "f9-f5-no-effect"
+schema_version = 1
+confirmations = 2
+
+[[factor]]
+name = "locale"
+baseline = "C"
+treatment = "POSIX"

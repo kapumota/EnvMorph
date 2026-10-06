@@ -1,0 +1,3 @@
+label	oracle	left_artifact	right_artifact	options
+stage-a	byte	stage-a.txt	stage-a.txt	-
+stage-b	byte	stage-b.txt	stage-b.txt	-

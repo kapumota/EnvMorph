@@ -1,0 +1,46 @@
+ENVMORPH F9.6 F3-F5 INTEGRATION REPORT
+
+Estado: PASS
+Parent: f79ba1b
+
+F3:
+integrated via compare-artifacts JSON
+
+F4:
+integrated via analyze-propagation JSON
+
+F5:
+integrated via mce-result.json
+
+F3 ground truth:
+different -> behaviorally_relevant
+identical -> observed_only
+
+F4 ground truth:
+absorbed -> behaviorally_relevant
+stable -> observed_only
+
+F5 ground truth:
+minimal -> behaviorally_relevant
+no_observable_effect -> observed_only
+
+F5 minimal cardinality:
+2
+
+F5 minimal set:
+locale, timezone
+
+F5 causal scope:
+operational_sufficiency_not_physical_proof
+
+Semantic reimplementation:
+NO
+
+Causal claim:
+NO
+
+Corpus F8 ejecutado:
+NO
+
+Siguiente gate:
+F9.7 congelar métricas y reglas agregadas antes de F9.8.

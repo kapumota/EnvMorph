@@ -1,0 +1,2 @@
+label	oracle	left_artifact	right_artifact	options
+result	byte	workspace/result.txt	workspace/result.txt	-

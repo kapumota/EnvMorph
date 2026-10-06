@@ -1,0 +1,34 @@
+{
+  "causal_claim_made": false,
+  "classification_examples": {
+    "f3_different": "behaviorally_relevant",
+    "f3_same": "observed_only",
+    "f4_absorbed": "behaviorally_relevant",
+    "f4_stable": "observed_only",
+    "f5_minimal": "behaviorally_relevant",
+    "f5_no_effect": "observed_only"
+  },
+  "f8_corpus_executed": false,
+  "ground_truth": {
+    "f3_different": true,
+    "f3_same": true,
+    "f4_absorbed": true,
+    "f4_absorption_preserved": true,
+    "f4_stable": true,
+    "f5_minimal": true,
+    "f5_minimal_cardinality": true,
+    "f5_minimal_sets": true,
+    "f5_no_effect": true,
+    "f5_scope_preserved": true
+  },
+  "layers": {
+    "F3": "integrated",
+    "F4": "integrated",
+    "F5": "integrated"
+  },
+  "phase": "F9.6",
+  "raw_manifest_sha256": "ae9cfea9e9f273ea84b457007bfab497f4a205f40a85ce16d509353bcc382685",
+  "schema_version": 1,
+  "semantic_reimplementation": false,
+  "status": "pass"
+}
