@@ -1,0 +1,73 @@
+{
+  "candidate_universe": 12717,
+  "census_commit": "37a3fbf",
+  "classifications_assigned": false,
+  "eligible_candidates": 2,
+  "f8_results_consulted": false,
+  "factor_availability": {
+    "locale": {
+      "available": true,
+      "baseline": "C",
+      "binding": "LC_ALL",
+      "reason": "available",
+      "treatment": "C.UTF-8"
+    },
+    "timezone": {
+      "available": true,
+      "baseline": "UTC",
+      "binding": "TZ",
+      "reason": "available",
+      "treatment": "America/Lima"
+    },
+    "tmpdir": {
+      "available": true,
+      "baseline": "/tmp",
+      "binding": "TMPDIR",
+      "reason": "available",
+      "treatment": "/var/tmp"
+    }
+  },
+  "file_content_plans": 0,
+  "new_factors": 0,
+  "new_oracles": 0,
+  "not_intervenable_candidates": 3908,
+  "out_of_scope_candidates": 8807,
+  "per_workload": {
+    "csvkit-realdata": {
+      "eligible_candidates": 0,
+      "not_intervenable_candidates": 0,
+      "observed_candidates": 0,
+      "out_of_scope_candidates": 0,
+      "unavailable_candidates": 0
+    },
+    "fd-build-completions": {
+      "eligible_candidates": 1,
+      "not_intervenable_candidates": 2428,
+      "observed_candidates": 8643,
+      "out_of_scope_candidates": 6214,
+      "unavailable_candidates": 0
+    },
+    "inih-meson-tests": {
+      "eligible_candidates": 1,
+      "not_intervenable_candidates": 1480,
+      "observed_candidates": 4074,
+      "out_of_scope_candidates": 2593,
+      "unavailable_candidates": 0
+    },
+    "jq-build-check": {
+      "eligible_candidates": 0,
+      "not_intervenable_candidates": 0,
+      "observed_candidates": 0,
+      "out_of_scope_candidates": 0,
+      "unavailable_candidates": 0
+    }
+  },
+  "phase": "F9.8B",
+  "plan_count": 2,
+  "policy_commit": "d116cb84f7a23527e3328c3e46d52939777ce334",
+  "schema_version": "f9.external_eligibility_metrics.v1",
+  "selection_by_behavioral_outcome": false,
+  "status": "pass",
+  "treatments_executed": false,
+  "unavailable_candidates": 0
+}

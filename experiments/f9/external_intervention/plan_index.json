@@ -1,0 +1,29 @@
+{
+  "census_commit": "37a3fbf",
+  "classifications_assigned": false,
+  "plan_count": 2,
+  "plans": [
+    {
+      "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+      "factor": "tmpdir",
+      "oracle_ref": "f4-trace:workloads/external/fd-build-completions/adapter/trace.tsv",
+      "plan_file": "experiments/f9/external_intervention/plans/fd-build-completions/52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d.json",
+      "plan_id": "52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d",
+      "plan_sha256": "99165b3d7274b1a8fb63d18a1d49b9ee99cf0bbb70464ce06ac099c89503a1f5",
+      "workload_id": "fd-build-completions"
+    },
+    {
+      "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+      "factor": "tmpdir",
+      "oracle_ref": "f4-trace:workloads/external/inih-meson-tests/adapter/trace.tsv",
+      "plan_file": "experiments/f9/external_intervention/plans/inih-meson-tests/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619.json",
+      "plan_id": "a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619",
+      "plan_sha256": "94a66f9efdbd8a14da3e9561975cf89272d03909be20ced289f37219aa28b173",
+      "workload_id": "inih-meson-tests"
+    }
+  ],
+  "plans_frozen_before_treatment": true,
+  "policy_commit": "d116cb84f7a23527e3328c3e46d52939777ce334",
+  "schema_version": "f9.external_plan_index.v1",
+  "treatments_executed": false
+}

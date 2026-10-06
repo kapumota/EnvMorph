@@ -1,0 +1,17 @@
+{
+  "baseline_value": "/tmp",
+  "confirmations": 2,
+  "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+  "isolation": "workspace_copy",
+  "kind": "environment",
+  "mechanism": "environment_override",
+  "operation": "getenv",
+  "oracle_ref": "f4-trace:workloads/external/inih-meson-tests/adapter/trace.tsv",
+  "plan_id": "a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619",
+  "resource": "TMPDIR",
+  "resource_type": "environment_variable",
+  "result_blind_selection": true,
+  "schema_version": "f9.intervention_plan.v1",
+  "source_run_id": "f9-8a-inih-meson-tests",
+  "treatment_value": "/var/tmp"
+}
