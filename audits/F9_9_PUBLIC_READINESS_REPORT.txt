@@ -1,0 +1,23 @@
+ENVMORPH F9.9 PUBLIC READINESS REPORT
+
+Scientific audit: PASS
+Recommended visibility change: AFTER F9.10
+Public ready now: NO
+
+Repository checks:
+README.md: True
+LICENSE/License.md: True
+CITATION.cff: False
+SECURITY.md: False
+.envmorph ignored: True
+secret-like findings: 0
+tracked files > 10 MiB: 0
+/home/c-lara occurrences: 1327
+
+Blockers:
+- missing_CITATION
+- active_or_historical_absolute_home_paths_need_release_review
+
+Policy:
+Do not change repository visibility during F9.9.
+F9.10 will freeze the scientific state and public release surface.

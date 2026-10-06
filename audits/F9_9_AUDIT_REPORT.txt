@@ -1,0 +1,47 @@
+ENVMORPH F9.9 AUDIT REPORT
+
+Estado:
+PASS
+
+Parent:
+7fb7a16 Registrar treatments y clasificación externa F9
+
+Scientific result preserved:
+observed_candidates=12717
+eligible_candidates=2
+behaviorally_relevant=0
+observed_only=2
+decidable_candidates=2
+
+Deterministic F9.7 aggregate reproduction:
+PASS
+
+F9.4 plan revalidation:
+PASS
+
+F9.6 bridge reproduction:
+PASS
+
+Treatments executed in F9.9:
+NO
+
+Historical raw manifest debt:
+RECORDED, NOT REWRITTEN
+
+Event ID ppid asymmetry:
+RECORDED, NOT CHANGED
+
+Observer completeness claim:
+NO
+
+Physical causality claim:
+NO
+
+External prevalence claim:
+NO
+
+Universal hermeticity claim:
+NO
+
+Next gate:
+F9.10 scientific closure and release freeze
