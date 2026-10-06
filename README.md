@@ -38,14 +38,14 @@ F8 evaluó la cadena F2-F7 sobre un corpus externo seleccionado y congelado ante
 
 El cierre de F8 fue científicamente negativo:
 
-- 4 workloads seleccionados;
-- 3 de 4 workloads evaluables a través de F2-F7;
-- 3 workloads estables;
-- 0 diferencias observables;
-- 1 held-out intentado;
-- 0 predicciones held-out decididas;
-- 1 abstención `out_of_scope`;
-- sin sustitución de workloads por resultado;
+- 4 workloads seleccionados,
+- 3 de 4 workloads evaluables a través de F2-F7,
+- 3 workloads estables,
+- 0 diferencias observables,
+- 1 held-out intentado,
+- 0 predicciones held-out decididas,
+- 1 abstención `out_of_scope`,
+- sin sustitución de workloads por resultado,
 - sin reajuste post-hoc.
 
 F8 no demuestra prevalencia de sensibilidad ambiental ni generalización predictiva held-out. El resultado conserva explícitamente evidencia negativa y estados no evaluables.
@@ -92,12 +92,12 @@ Los detalles están en:
 
 EnvMorph no afirma:
 
-- observación completa de dependencias;
-- causalidad física;
-- prevalencia externa;
-- portabilidad universal;
-- hermeticidad universal;
-- una métrica escalar de brecha de hermeticidad conductual;
+- observación completa de dependencias,
+- causalidad física,
+- prevalencia externa,
+- portabilidad universal,
+- hermeticidad universal,
+- una métrica escalar de brecha de hermeticidad conductual,
 - un orden total entre fuentes de observación.
 
 La búsqueda causal de F5 es exacta únicamente dentro del conjunto de factores declarado. Los contratos F6 y envelopes F7 conservan el alcance de los contrastes observados.
@@ -116,8 +116,8 @@ Algunos manifests, auditorías, fixtures legacy y drivers científicos congelado
 
 Requisitos mínimos:
 
-- Rust estable;
-- Cargo;
+- Rust estable,
+- Cargo,
 - entorno Unix para los experimentos específicos que lo requieran.
 
 Gate público básico:
