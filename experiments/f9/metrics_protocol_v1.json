@@ -1,0 +1,71 @@
+{
+  "schema_version": "f9.metrics_protocol.v1",
+  "status": "frozen_before_external_observation",
+  "minimum_confirmations_per_variant": 2,
+  "external_corpus": [
+    "csvkit-realdata",
+    "fd-build-completions",
+    "inih-meson-tests",
+    "jq-build-check"
+  ],
+  "mandatory_pretreatment_gates": [
+    "census_matches_dependency_graph",
+    "census_and_plan_hashes_recorded",
+    "census_and_plan_commits_predate_treatments",
+    "all_candidates_accounted_for_before_treatment",
+    "one_confirmatory_plan_per_candidate",
+    "oracle_and_treatments_fixed_before_outcome"
+  ],
+  "primary_counts": [
+    "observed_candidates",
+    "eligible_candidates",
+    "not_intervenable_candidates",
+    "unavailable_candidates",
+    "out_of_scope_candidates",
+    "decidable_candidates",
+    "behaviorally_relevant",
+    "observed_only",
+    "unresolved",
+    "execution_failed",
+    "observer_failure",
+    "unavailable_interventions",
+    "out_of_scope_interventions"
+  ],
+  "primary_fractions": {
+    "decidability_among_observed": "decidable_candidates / observed_candidates",
+    "relevance_among_decidable": "behaviorally_relevant / decidable_candidates"
+  },
+  "zero_denominator_policy": "null_not_zero",
+  "observer_completeness_claimed": false,
+  "causal_claimed": false,
+  "cross_source_total_order_claimed": false,
+  "scalar_hermeticity_gap_defined": false,
+  "treatment_selection_by_observed_outcome": false,
+  "classification_map": {
+    "F3": {
+      "identical": "observed_only",
+      "equivalent": "observed_only",
+      "different": "behaviorally_relevant",
+      "missing": "unresolved",
+      "error": "unresolved"
+    },
+    "F4": {
+      "stable": "observed_only",
+      "absorbed": "behaviorally_relevant",
+      "persistent": "behaviorally_relevant",
+      "unresolved": "unresolved"
+    },
+    "F5": {
+      "minimal": "behaviorally_relevant",
+      "no_observable_effect": "observed_only"
+    },
+    "F9.5": {
+      "behaviorally_relevant": "behaviorally_relevant",
+      "observed_only": "observed_only",
+      "unresolved": "unresolved"
+    }
+  },
+  "case_exclusions_are_reported": true,
+  "within_workload_only_conclusions": true,
+  "no_claim_of_prevalence_or_predictive_generalization": true
+}

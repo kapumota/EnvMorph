@@ -1,0 +1,34 @@
+ENVMORPH F9.7 METRICS FREEZE REPORT
+
+Estado: PASS
+Parent: 3d9382b
+
+Censo F9:
+- todas las dependencias observadas del grafo deben estar incluidas
+- no se descartan dependencias por resultado
+- un plan confirmatorio por dependencia
+- censo y planes congelados antes de treatments externos
+
+Evidencia:
+- hashes SHA-256 del grafo, plan y salida de oráculo
+- validación real de planes por F9.4
+- estados F3-F5 mediante bridge F9.6
+- mínimo dos confirmaciones baseline y treatment
+
+Métricas:
+- conteos separados por estado
+- fracciones solo entre denominadores definidos
+- denominador cero => null
+- sin escalar Behavioral Hermeticity Gap
+- sin reclamo de observación completa
+
+Validación:
+- fixtures sintéticos positivos, negativos y denominador cero
+- rechazo de registros inventados y evidencia incompleta
+- determinismo sobre entrada reordenada
+
+Corpus F8:
+NO ejecutado
+
+Siguiente gate:
+F9.8A congelar censo, elegibilidad y planes para el corpus externo sin ejecutar tratamientos.

@@ -1,0 +1,21 @@
+{
+  "causal_claim_made": false,
+  "external_corpus_ids_frozen": [
+    "csvkit-realdata",
+    "fd-build-completions",
+    "inih-meson-tests",
+    "jq-build-check"
+  ],
+  "external_workloads_executed": 0,
+  "f8_corpus_executed": false,
+  "minimum_confirmations_per_variant": 2,
+  "oracle_mapping_reused_from_F9_6": true,
+  "phase": "F9.7",
+  "plan_validation_reused_from_F9_4": true,
+  "scalar_hermeticity_gap_defined": false,
+  "schema_version": 1,
+  "status": "pass",
+  "strict_graph_census_equality": true,
+  "synthetic_gate": "pass",
+  "zero_denominator_policy": "null_not_zero"
+}
