@@ -1,0 +1,40 @@
+ENVMORPH F9.8C0 EXTERNAL TREATMENT HARNESS REPORT
+
+Estado:
+FROZEN BEFORE EXTERNAL TREATMENTS
+
+Parent plans commit:
+15edeea
+
+Frozen plans expected:
+2
+
+Confirmations per variant:
+2
+
+External command:
+bash adapter/run.sh
+
+Oracle layer:
+F4 over frozen F8 trace
+
+Bridge:
+F9.6 adapt_oracle_evidence.py
+
+Metrics:
+F9.7 aggregate_f9.py
+
+New plans:
+NO
+
+New factors:
+NO
+
+New oracles:
+NO
+
+Treatments executed before harness commit:
+NO
+
+Siguiente paso:
+execute only the two frozen plans.
