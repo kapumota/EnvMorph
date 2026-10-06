@@ -1,0 +1,15 @@
+{
+  "classifications_assigned": false,
+  "eligibility_assigned": false,
+  "f8_outcomes_used_for_candidate_selection": false,
+  "observed_candidates": 12717,
+  "phase": "F9.8A",
+  "schema_version": 1,
+  "status": "pass",
+  "treatments_executed": false,
+  "workload_statuses": {
+    "completed": 2,
+    "execution_failed": 2
+  },
+  "workloads_total": 4
+}

@@ -1,0 +1,40 @@
+ENVMORPH F9.8A EXTERNAL OBSERVATION CENSUS REPORT
+
+Estado: PASS
+Effective acquisition protocol commit: 0aa6ecd
+
+Campaign policy:
+all four workloads restarted from zero
+
+Previous failed acquisition:
+.envmorph/f9-8a-failure-3db9df7-getenv-malformed
+
+Previous partial results reused for census:
+NO
+
+Corpus:
+4 workloads F8 congelados
+
+Treatments executed:
+NO
+
+Eligibility assigned:
+NO
+
+Classifications assigned:
+NO
+
+F8 results modified:
+NO
+
+Observed candidates:
+12717
+
+Workloads:
+- csvkit-realdata: status=execution_failed, observer_effect=not_evaluated, candidates=0
+- fd-build-completions: status=completed, observer_effect=preserved, candidates=8643
+- inih-meson-tests: status=completed, observer_effect=preserved, candidates=4074
+- jq-build-check: status=execution_failed, observer_effect=not_evaluated, candidates=0
+
+Siguiente gate:
+F9.8B elegibilidad y planes pre-treatment.
