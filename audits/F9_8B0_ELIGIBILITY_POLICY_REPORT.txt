@@ -1,0 +1,10 @@
+ENVMORPH F9.8B0 ELIGIBILITY POLICY REPORT
+
+Estado: FROZEN BEFORE EXTERNAL TREATMENTS
+Parent census: 37a3fbf
+New factors: NO
+New oracles: NO
+Selection by divergence: NO
+External file-content treatments: NO
+Treatments executed: NO
+Classifications assigned: NO

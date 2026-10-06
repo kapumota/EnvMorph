@@ -1,0 +1,33 @@
+{
+  "schema_version": "f9.external_eligibility_policy.v1",
+  "status": "frozen_before_external_treatments",
+  "candidate_universe": "all_f9_8a_dependency_nodes",
+  "f8_outcomes_consulted": false,
+  "behavioral_outcomes_consulted": false,
+  "new_factors_allowed": false,
+  "new_oracles_allowed": false,
+  "minimum_confirmations": 2,
+  "exact_factor_bindings": {
+    "locale": "LC_ALL",
+    "timezone": "TZ",
+    "tmpdir": "TMPDIR"
+  },
+  "rules": {
+    "exact_frozen_environment_binding": "eligible_if_values_available_else_unavailable",
+    "other_getenv": "out_of_scope",
+    "workspace_file": "out_of_scope",
+    "host_file": "not_intervenable",
+    "executable": "not_intervenable",
+    "other": "not_intervenable"
+  },
+  "external_file_replacement_plans": false,
+  "one_plan_per_eligible_dependency": true,
+  "plan_schema": "f9.intervention_plan.v1",
+  "plan_mechanism": "environment_override",
+  "plan_isolation": "workspace_copy",
+  "oracle_reference_policy": "f4_trace_from_f8_frozen_workload",
+  "observer_effect_used_to_select_eligibility": false,
+  "selection_by_divergence": false,
+  "treatments_executed_in_f9_8b": false,
+  "classifications_assigned_in_f9_8b": false
+}
