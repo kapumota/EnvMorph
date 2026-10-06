@@ -1,0 +1,37 @@
+ENVMORPH F9.8A0 RUNTIME INTEGRITY ERRATUM
+
+Estado: FROZEN BEFORE EXTERNAL OBSERVATION
+Base protocol commit: cdcd889
+
+Componente:
+fd-build-completions runtime source snapshot
+
+Diferencia:
+source/.cargo/config.toml
+
+Interpretación:
+runtime-generated cargo vendor binding, not upstream drift
+
+Other fd upstream files:
+byte-exact according to diagnostic
+
+Vendored crates:
+must remain byte-exact under F8 frozen vendor manifest
+
+External workloads executed before erratum:
+NO
+
+Treatments executed before erratum:
+NO
+
+Scientific protocol changed:
+NO
+
+Candidate rule changed:
+NO
+
+Observer backend changed:
+NO
+
+Siguiente paso:
+F9.8A1 external observation under base protocol plus this erratum.

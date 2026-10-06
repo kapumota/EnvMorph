@@ -1,0 +1,22 @@
+{
+  "schema_version": "f9.external_observation_protocol_erratum.v1",
+  "status": "frozen_before_external_observation",
+  "base_protocol_commit": "cdcd889380c7232f6665e75d941f2c60517cac07",
+  "scope": "fd_runtime_integrity_gate_only",
+  "scientific_rules_changed": false,
+  "workloads_executed_before_erratum": false,
+  "treatments_executed_before_erratum": false,
+  "reason": "fd runtime .cargo/config.toml is an intentional cargo-vendor binding produced during frozen F8 runtime preparation and must not be compared byte-exactly with the upstream source snapshot",
+  "corrected_validation": {
+    "upstream_files": "byte_exact_except_runtime_generated_dot_cargo_config",
+    "runtime_generated_config": "semantic_offline_vendor_binding",
+    "vendored_crates": "byte_exact_frozen_manifest"
+  },
+  "candidate_rule_changed": false,
+  "instrumentation_exclusions_changed": false,
+  "observer_backend_changed": false,
+  "baseline_environment_changed": false,
+  "oracle_policy_changed": false,
+  "eligibility_policy_changed": false,
+  "classification_policy_changed": false
+}
