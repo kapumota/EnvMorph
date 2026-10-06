@@ -1,0 +1,35 @@
+ENVMORPH F9.8A0 EXTERNAL OBSERVATION PROTOCOL REPORT
+
+Estado: FROZEN BEFORE EXTERNAL OBSERVATION
+Parent F9.7: 052509e
+
+Corpus:
+4 workloads F8 congelados
+
+Backend:
+agentguard-derived-ptrace-observer
+ld_preload_getenv_observer
+
+Baseline:
+valores F8 matrix_manifest.toml
+
+Observer effect:
+F4 sobre artefactos frozen F8
+
+Instrumental exclusions:
+exact identity only
+
+Treatments:
+NO
+
+Eligibility:
+NO
+
+Classification:
+NO
+
+F8 outcomes used for candidate selection:
+NO
+
+Siguiente paso:
+ejecutar observación externa F9.8A1 bajo este commit.

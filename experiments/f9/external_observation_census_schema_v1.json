@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envmorph.local/schemas/f9-external-observation-census-v1.json",
+  "title": "EnvMorph F9.8A external observation census",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign_id",
+    "observation_protocol_commit",
+    "corpus_source",
+    "treatments_executed",
+    "eligibility_assigned",
+    "classifications_assigned",
+    "f8_outcomes_used_for_candidate_selection",
+    "workloads"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "f9.external_observation_census.v1"
+    },
+    "campaign_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observation_protocol_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "corpus_source": {
+      "const": "F8_frozen_external_corpus"
+    },
+    "treatments_executed": {
+      "const": false
+    },
+    "eligibility_assigned": {
+      "const": false
+    },
+    "classifications_assigned": {
+      "const": false
+    },
+    "f8_outcomes_used_for_candidate_selection": {
+      "const": false
+    },
+    "workloads": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

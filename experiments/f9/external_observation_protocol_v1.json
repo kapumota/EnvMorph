@@ -1,0 +1,65 @@
+{
+  "schema_version": "f9.external_observation_protocol.v1",
+  "status": "frozen_before_external_observation",
+  "external_corpus": [
+    "csvkit-realdata",
+    "jq-build-check",
+    "fd-build-completions",
+    "inih-meson-tests"
+  ],
+  "runtime_source": ".envmorph/f8-runtime",
+  "runtime_policy": "copy_prepared_f8_runtime_per_run",
+  "network_during_execution": false,
+  "baseline_environment_source": "experiments/f8/matrix_manifest.toml",
+  "baseline_factor_bindings": {
+    "locale": "LC_ALL",
+    "timezone": "TZ",
+    "tmpdir": "TMPDIR"
+  },
+  "workload_baseline_factors": {
+    "csvkit-realdata": ["locale"],
+    "jq-build-check": ["locale", "timezone"],
+    "fd-build-completions": ["tmpdir"],
+    "inih-meson-tests": ["tmpdir"]
+  },
+  "observation_backend": {
+    "primary": "agentguard-derived-ptrace-observer",
+    "complement": "ld_preload_getenv_observer",
+    "ptrace_events": ["open", "openat", "creat", "execve", "execveat"],
+    "getenv_events": true
+  },
+  "path_normalization": {
+    "workspace_prefix": "@WORKSPACE@",
+    "canonicalization": "lexical_only"
+  },
+  "instrumentation_exclusions": {
+    "paths": [
+      "exact_preload_library_path",
+      "exact_getenv_log_path"
+    ],
+    "environment_variables": [
+      "LD_PRELOAD",
+      "ENVMORPH_F9_INTERPOSE_LOG"
+    ]
+  },
+  "instrumentation_exclusion_policy": "exact_identity_only",
+  "observer_effect_check": {
+    "reference": "unobserved_baseline",
+    "observed": "ptrace_plus_getenv_interposer",
+    "oracle_layer": "F4",
+    "preserved_when": "trace_status_stable",
+    "altered_when": ["absorbed", "persistent"],
+    "unresolved_when": "unresolved"
+  },
+  "candidate_rule": "all_dependency_nodes_after_exact_instrumentation_exclusions",
+  "candidate_filter_by_f8_outcome": false,
+  "eligibility_assigned_in_f9_8a": false,
+  "plans_created_in_f9_8a": false,
+  "treatments_executed_in_f9_8a": false,
+  "classifications_created_in_f9_8a": false,
+  "failed_workloads_are_retained": true,
+  "external_results_do_not_modify_f8": true,
+  "observer_completeness_claimed": false,
+  "causal_claimed": false,
+  "cross_source_total_order_claimed": false
+}
