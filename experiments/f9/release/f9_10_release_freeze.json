@@ -1,0 +1,49 @@
+{
+  "claims_not_made": [
+    "complete_dependency_observation",
+    "physical_causality",
+    "external_prevalence",
+    "universal_hermeticity",
+    "behavioral_hermeticity_gap_scalar",
+    "cross_source_total_order"
+  ],
+  "f9_9_audit_status": "pass",
+  "historical_debt": {
+    "event_id_ppid_asymmetry": "documented_not_changed",
+    "f9_2_f9_3_raw_manifest_transient_binary_issue": "documented_not_rewritten"
+  },
+  "next_state": "public_release_or_paper_packaging",
+  "package_version": "0.1.0",
+  "parent_commit": "ff8f7382cd02bd32a2d35d99e2c4f3332c1421ee",
+  "phase": "F9.10",
+  "raw_evidence_anchors": {
+    "f9_8a_raw_manifest_sha256": "d3725703adfd62c13edc66e27435e698333613c23c0ba0a363501a177487adf1",
+    "f9_8c_raw_manifest_sha256": "d30656a72afa9fb686e9b35fa27e161ff57d05d8a5f81d20f6cd14578e62245c",
+    "raw_evidence_tracked_in_repository": false
+  },
+  "release": {
+    "main_exists": true,
+    "main_fast_forward_possible": true,
+    "origin_present": true,
+    "origin_url": "git@github.com:kapumota/EnvMorph.git",
+    "public_blockers": [],
+    "public_ready_after_this_commit": true,
+    "release_created": false,
+    "tag_created": false,
+    "visibility_changed": false
+  },
+  "schema_version": "f9.release_freeze.v1",
+  "scientific_result": {
+    "behaviorally_relevant": 0,
+    "decidability_among_observed": 0.00015726979633561374,
+    "decidable_candidates": 2,
+    "eligible_candidates": 2,
+    "execution_failed": 0,
+    "observed_candidates": 12717,
+    "observed_only": 2,
+    "observer_failure": 0,
+    "relevance_among_decidable": 0.0,
+    "unresolved": 0
+  },
+  "status": "scientifically_closed"
+}

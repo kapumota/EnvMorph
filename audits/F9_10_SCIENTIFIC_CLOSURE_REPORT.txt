@@ -1,0 +1,49 @@
+ENVMORPH F9.10 SCIENTIFIC CLOSURE REPORT
+
+Estado:
+PASS
+
+Parent:
+ff8f738 Auditar reproducibilidad y amenazas F9
+
+Scientific state:
+CLOSED
+
+Scientific result changed:
+NO
+
+Treatments executed:
+NO
+
+Observed candidates:
+12717
+
+Eligible candidates:
+2
+
+Behaviorally relevant:
+0
+
+Observed only:
+2
+
+Decidable candidates:
+2
+
+Public ready after F9.10:
+YES
+
+Public blockers:
+none
+
+Visibility changed:
+NO
+
+Tag created:
+NO
+
+Release created:
+NO
+
+Next state:
+public release or paper packaging
