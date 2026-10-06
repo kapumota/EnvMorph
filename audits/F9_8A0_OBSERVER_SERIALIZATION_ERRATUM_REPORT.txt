@@ -1,0 +1,52 @@
+ENVMORPH F9.8A0 OBSERVER SERIALIZATION ERRATUM
+
+Estado:
+FROZEN AFTER PARTIAL OBSERVATION, BEFORE CAMPAIGN RESTART
+
+Parent effective protocol:
+1aad7ec
+
+Failure:
+fd-build-completions ptrace normalization UnicodeDecodeError
+
+Invalid byte observed:
+0xfe
+
+Partial external execution before erratum:
+csvkit-realdata: executed
+jq-build-check: executed
+fd-build-completions: executed, normalization failed
+inih-meson-tests: not started
+
+Partial census committed:
+NO
+
+Partial results used for candidate selection:
+NO
+
+Treatments executed:
+NO
+
+Eligibility assigned:
+NO
+
+Classifications assigned:
+NO
+
+Transport correction:
+non-ASCII path bytes escaped as JSON \u00xx
+
+Observer syscall selection changed:
+NO
+
+Path resolution changed:
+NO
+
+Campaign policy:
+restart all four workloads
+
+Failure evidence on future error:
+PRESERVE .envmorph/f9-8a-evidence
+
+Scientific candidate rule changed:
+NO

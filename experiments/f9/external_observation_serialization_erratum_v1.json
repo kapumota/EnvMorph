@@ -1,0 +1,38 @@
+{
+  "schema_version": "f9.external_observation_serialization_erratum.v1",
+  "status": "frozen_after_partial_observation_before_campaign_restart",
+  "parent_effective_protocol_commit": "1aad7ecfee2f5cfe1e6e694f91ff94728a007b22",
+  "scope": "observer_json_transport_and_failure_evidence_retention",
+  "failure_observed": {
+    "workload": "fd-build-completions",
+    "stage": "ptrace_event_normalization",
+    "exception": "UnicodeDecodeError",
+    "invalid_byte_hex": "fe"
+  },
+  "partial_external_execution_before_erratum": {
+    "csvkit-realdata": "executed",
+    "jq-build-check": "executed",
+    "fd-build-completions": "executed_then_normalization_failed",
+    "inih-meson-tests": "not_started"
+  },
+  "partial_results_committed": false,
+  "partial_census_committed": false,
+  "partial_raw_evidence_retained_by_previous_orchestrator": false,
+  "treatments_executed_before_erratum": false,
+  "eligibility_assigned_before_erratum": false,
+  "classifications_assigned_before_erratum": false,
+  "campaign_restart_policy": "restart_all_four_workloads_under_corrected_transport",
+  "partial_results_used_for_candidate_selection": false,
+  "observer_event_selection_changed": false,
+  "observer_syscalls_changed": false,
+  "path_resolution_changed": false,
+  "json_transport_changed": true,
+  "json_transport_rule": "all_non_ascii_path_bytes_are_escaped_as_u00xx_byte_preserving_latin1_projection",
+  "mapping_is_injective_over_raw_bytes": true,
+  "failure_evidence_retention_changed": true,
+  "scientific_candidate_rule_changed": false,
+  "instrumentation_exclusions_changed": false,
+  "baseline_environment_changed": false,
+  "oracle_policy_changed": false,
+  "treatment_policy_changed": false
+}
