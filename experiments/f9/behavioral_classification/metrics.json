@@ -1,0 +1,25 @@
+{
+  "causal_claim_made": false,
+  "classifications": {
+    "F9_RELEVANT": "behaviorally_relevant",
+    "F9_STABLE": "observed_only",
+    "F9_UNRESOLVED": "unresolved"
+  },
+  "confirmations_per_variant": 2,
+  "f8_corpus_executed": false,
+  "ground_truth": {
+    "behaviorally_relevant": true,
+    "observed_only": true,
+    "unresolved": true
+  },
+  "oracle": "micro:stdout",
+  "phase": "F9.5",
+  "raw_manifest_sha256": "514a51ff02edc0890348e9d3e1eafcaa6ec91f7766e4ada71cd82965e2713bba",
+  "reasons": {
+    "F9_RELEVANT": "oracle_difference_reproduced",
+    "F9_STABLE": "oracle_equivalence_reproduced",
+    "F9_UNRESOLVED": "execution_failed"
+  },
+  "schema_version": 1,
+  "status": "pass"
+}

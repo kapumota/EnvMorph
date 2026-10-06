@@ -1,0 +1,45 @@
+ENVMORPH F9.5 BEHAVIORAL CLASSIFICATION REPORT
+
+Estado: PASS
+Parent: 26eb0f8
+
+Schema:
+f9.behavioral_classification.v1
+
+Oracle:
+micro:stdout
+
+Confirmations per variant:
+2
+
+Ground truth:
+F9_RELEVANT -> behaviorally_relevant
+F9_STABLE -> observed_only
+F9_UNRESOLVED -> unresolved
+
+behaviorally_relevant rule:
+reproducible oracle difference
+
+observed_only rule:
+reproducible oracle equivalence
+
+unresolved rule exercised:
+execution_failed
+
+Result-blind intervention plans:
+PASS
+
+Observed-before-intervention:
+PASS
+
+Determinism:
+PASS
+
+Causal claim:
+NO
+
+Corpus F8 ejecutado:
+NO
+
+Siguiente gate:
+F9.6 integración con oráculos y contratos F3-F5.

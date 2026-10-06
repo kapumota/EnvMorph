@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envmorph.local/schemas/f9-behavioral-classification-v1.json",
+  "title": "EnvMorph F9 BehavioralClassification v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "dependency_key",
+    "status",
+    "reason",
+    "oracle_ref",
+    "required_confirmations",
+    "baseline_confirmations",
+    "treatment_confirmations",
+    "baseline_consistent",
+    "treatment_consistent",
+    "baseline_signature",
+    "treatment_signature",
+    "causal_claim",
+    "f8_corpus_executed"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "f9.behavioral_classification.v1"
+    },
+    "plan_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "dependency_key": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "status": {
+      "enum": [
+        "behaviorally_relevant",
+        "observed_only",
+        "unresolved"
+      ]
+    },
+    "reason": {
+      "enum": [
+        "oracle_difference_reproduced",
+        "oracle_equivalence_reproduced",
+        "insufficient_confirmations",
+        "execution_failed",
+        "within_variant_instability",
+        "unsupported_oracle"
+      ]
+    },
+    "oracle_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_confirmations": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "baseline_confirmations": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "treatment_confirmations": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "baseline_consistent": {
+      "type": "boolean"
+    },
+    "treatment_consistent": {
+      "type": "boolean"
+    },
+    "baseline_signature": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "treatment_signature": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "causal_claim": {
+      "const": false
+    },
+    "f8_corpus_executed": {
+      "const": false
+    }
+  }
+}

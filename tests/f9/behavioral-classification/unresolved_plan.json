@@ -1,0 +1,17 @@
+{
+  "baseline_value": "ok",
+  "confirmations": 2,
+  "dependency_key": "a69e4798a9e3bce8f507d12e59411b92c48b9a608b9bb059be57d547701615a7",
+  "isolation": "workspace_copy",
+  "kind": "environment",
+  "mechanism": "environment_override",
+  "operation": "getenv",
+  "oracle_ref": "micro:stdout",
+  "plan_id": "250b2ffe5b9bae8d78c292c2a962350b9b591bba213049ca20bbe00167e1fbbd",
+  "resource": "F9_UNRESOLVED",
+  "resource_type": "environment_variable",
+  "result_blind_selection": true,
+  "schema_version": "f9.intervention_plan.v1",
+  "source_run_id": "f9-5-ground-truth",
+  "treatment_value": "fail"
+}
