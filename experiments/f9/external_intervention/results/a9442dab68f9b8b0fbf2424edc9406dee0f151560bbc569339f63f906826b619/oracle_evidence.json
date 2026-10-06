@@ -1,0 +1,51 @@
+{
+  "causal_claim": false,
+  "classification": "observed_only",
+  "confirmations": 2,
+  "details": {
+    "absorption_boundaries": [],
+    "first_observed_divergence": null,
+    "observations": [
+      {
+        "equivalence": "identical",
+        "equivalence_metadata": {
+          "ignore_final_newline": "false",
+          "normalize_line_endings": "false",
+          "trim_trailing_whitespace": "false"
+        },
+        "equivalence_reason": "contenido textual id\u00e9ntico byte a byte",
+        "label": "test_status",
+        "left_artifact": ".envmorph/f9-8c-recovery-temp/views/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619/baseline/1/workspace/artifacts/01_test_status.txt",
+        "oracle": "text",
+        "position": 1,
+        "propagation": "stable",
+        "propagation_reason": "no hay una diferencia observable activa en este punto",
+        "right_artifact": ".envmorph/f9-8c-recovery-temp/views/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619/treatment/1/workspace/artifacts/01_test_status.txt"
+      },
+      {
+        "equivalence": "identical",
+        "equivalence_metadata": {
+          "ignore_final_newline": "false",
+          "normalize_line_endings": "false",
+          "trim_trailing_whitespace": "false"
+        },
+        "equivalence_reason": "contenido textual id\u00e9ntico byte a byte",
+        "label": "upstream_unittest",
+        "left_artifact": ".envmorph/f9-8c-recovery-temp/views/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619/baseline/1/workspace/artifacts/02_unittest_multi.txt",
+        "oracle": "text",
+        "position": 2,
+        "propagation": "stable",
+        "propagation_reason": "no hay una diferencia observable activa en este punto",
+        "right_artifact": ".envmorph/f9-8c-recovery-temp/views/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619/treatment/1/workspace/artifacts/02_unittest_multi.txt"
+      }
+    ],
+    "unresolved_count": 0
+  },
+  "evidence_level": "propagation_trace",
+  "f8_corpus_executed": false,
+  "layer": "F4",
+  "reason": "f4_stable_trace_reproduced",
+  "schema_version": "f9.oracle_integration_evidence.v1",
+  "semantic_reimplementation": false,
+  "source_status": "stable"
+}

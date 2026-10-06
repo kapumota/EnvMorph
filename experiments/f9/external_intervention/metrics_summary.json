@@ -1,0 +1,162 @@
+{
+  "aggregator_executed_workloads": false,
+  "campaign_id": "f9-8c-f8-external-v1",
+  "corpus_role": "external",
+  "denominator_zero_policy": "null_not_zero",
+  "external_corpus_data_consumed": true,
+  "fractions": {
+    "decidability_among_observed": 0.00015726979633561374,
+    "denominators": {
+      "decidable_candidates": 2,
+      "observed_candidates": 12717
+    },
+    "relevance_among_decidable": 0.0
+  },
+  "per_workload": [
+    {
+      "counts": {
+        "behaviorally_relevant": 0,
+        "decidable_candidates": 0,
+        "eligible_candidates": 0,
+        "execution_failed": 0,
+        "interventions_not_attempted": 0,
+        "not_intervenable_candidates": 0,
+        "observed_candidates": 0,
+        "observed_only": 0,
+        "observer_failure": 0,
+        "out_of_scope_candidates": 0,
+        "out_of_scope_interventions": 0,
+        "unavailable_candidates": 0,
+        "unavailable_interventions": 0,
+        "unresolved": 0
+      },
+      "fractions": {
+        "decidability_among_observed": null,
+        "denominators": {
+          "decidable_candidates": 0,
+          "observed_candidates": 0
+        },
+        "relevance_among_decidable": null
+      },
+      "observer_effect": "not_evaluated",
+      "workload_id": "csvkit-realdata",
+      "workload_status": "execution_failed"
+    },
+    {
+      "counts": {
+        "behaviorally_relevant": 0,
+        "decidable_candidates": 1,
+        "eligible_candidates": 1,
+        "execution_failed": 0,
+        "interventions_not_attempted": 8642,
+        "not_intervenable_candidates": 2428,
+        "observed_candidates": 8643,
+        "observed_only": 1,
+        "observer_failure": 0,
+        "out_of_scope_candidates": 6214,
+        "out_of_scope_interventions": 0,
+        "unavailable_candidates": 0,
+        "unavailable_interventions": 0,
+        "unresolved": 0
+      },
+      "fractions": {
+        "decidability_among_observed": 0.00011570056693277797,
+        "denominators": {
+          "decidable_candidates": 1,
+          "observed_candidates": 8643
+        },
+        "relevance_among_decidable": 0.0
+      },
+      "observer_effect": "preserved",
+      "workload_id": "fd-build-completions",
+      "workload_status": "completed"
+    },
+    {
+      "counts": {
+        "behaviorally_relevant": 0,
+        "decidable_candidates": 1,
+        "eligible_candidates": 1,
+        "execution_failed": 0,
+        "interventions_not_attempted": 4073,
+        "not_intervenable_candidates": 1480,
+        "observed_candidates": 4074,
+        "observed_only": 1,
+        "observer_failure": 0,
+        "out_of_scope_candidates": 2593,
+        "out_of_scope_interventions": 0,
+        "unavailable_candidates": 0,
+        "unavailable_interventions": 0,
+        "unresolved": 0
+      },
+      "fractions": {
+        "decidability_among_observed": 0.0002454590083456063,
+        "denominators": {
+          "decidable_candidates": 1,
+          "observed_candidates": 4074
+        },
+        "relevance_among_decidable": 0.0
+      },
+      "observer_effect": "preserved",
+      "workload_id": "inih-meson-tests",
+      "workload_status": "completed"
+    },
+    {
+      "counts": {
+        "behaviorally_relevant": 0,
+        "decidable_candidates": 0,
+        "eligible_candidates": 0,
+        "execution_failed": 0,
+        "interventions_not_attempted": 0,
+        "not_intervenable_candidates": 0,
+        "observed_candidates": 0,
+        "observed_only": 0,
+        "observer_failure": 0,
+        "out_of_scope_candidates": 0,
+        "out_of_scope_interventions": 0,
+        "unavailable_candidates": 0,
+        "unavailable_interventions": 0,
+        "unresolved": 0
+      },
+      "fractions": {
+        "decidability_among_observed": null,
+        "denominators": {
+          "decidable_candidates": 0,
+          "observed_candidates": 0
+        },
+        "relevance_among_decidable": null
+      },
+      "observer_effect": "not_evaluated",
+      "workload_id": "jq-build-check",
+      "workload_status": "execution_failed"
+    }
+  ],
+  "schema_version": "f9.metrics_summary.v1",
+  "scientific_claims": {
+    "behavioral_hermeticity_gap_scalar": false,
+    "cross_source_total_order": false,
+    "external_prevalence": false,
+    "observer_completeness": false,
+    "physical_causality": false
+  },
+  "totals": {
+    "behaviorally_relevant": 0,
+    "decidable_candidates": 2,
+    "eligible_candidates": 2,
+    "execution_failed": 0,
+    "interventions_not_attempted": 12715,
+    "not_intervenable_candidates": 3908,
+    "observed_candidates": 12717,
+    "observed_only": 2,
+    "observer_failure": 0,
+    "out_of_scope_candidates": 8807,
+    "out_of_scope_interventions": 0,
+    "unavailable_candidates": 0,
+    "unavailable_interventions": 0,
+    "unresolved": 0
+  },
+  "workload_statuses": {
+    "completed": 2,
+    "execution_failed": 2
+  },
+  "workloads_total": 4
+}

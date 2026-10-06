@@ -1,0 +1,13 @@
+{
+  "baseline_confirmations": 2,
+  "causal_claim": false,
+  "classification": "observed_only",
+  "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+  "plan_id": "52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d",
+  "reason": "f4_stable_trace_reproduced",
+  "schema_version": "f9.external_intervention_result.v1",
+  "semantic_signature_sha256": "75651b6fc7e16d678ed611edd97f1e6efefdbd8c0646a33d56dfd9f99fcb84da",
+  "source_status": "stable",
+  "status": "confirmed",
+  "treatment_confirmations": 2
+}

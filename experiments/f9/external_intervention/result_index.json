@@ -1,0 +1,38 @@
+{
+  "harness_commit": "43608b87ffcaaad5545c4e63b4b103ceb0a76830",
+  "plan_count": 2,
+  "plans_commit": "15edeea",
+  "recovered_from_preserved_raw_evidence": true,
+  "results": [
+    {
+      "baseline_confirmations": 2,
+      "classification": "observed_only",
+      "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+      "evidence_file": "experiments/f9/external_intervention/results/52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d/oracle_evidence.json",
+      "evidence_sha256": "394054c49aeaa618baabb32caacd545e4bd5a428c23618a96cff3f3817aa81a6",
+      "intervention_status": "confirmed",
+      "observer_effect": "preserved",
+      "plan_file": "experiments/f9/external_intervention/plans/fd-build-completions/52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d.json",
+      "plan_id": "52d148dff5d6cee12658f01e365476216b1a378c7e194272dd7e432ca342020d",
+      "plan_sha256": "99165b3d7274b1a8fb63d18a1d49b9ee99cf0bbb70464ce06ac099c89503a1f5",
+      "treatment_confirmations": 2,
+      "workload_id": "fd-build-completions"
+    },
+    {
+      "baseline_confirmations": 2,
+      "classification": "observed_only",
+      "dependency_key": "570c72ad322c39c7ec662498a120b8f9decc2ce1fa6f3e5f1f1550815900e391",
+      "evidence_file": "experiments/f9/external_intervention/results/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619/oracle_evidence.json",
+      "evidence_sha256": "7ab84da43125a4b3bc0d15cad7bdaa06801363dae5a2d21e551ac21e20bc45f4",
+      "intervention_status": "confirmed",
+      "observer_effect": "preserved",
+      "plan_file": "experiments/f9/external_intervention/plans/inih-meson-tests/a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619.json",
+      "plan_id": "a9442dab68f9b8b0fbf2424edc9406dee0f151560bbc569339f63f906826b619",
+      "plan_sha256": "94a66f9efdbd8a14da3e9561975cf89272d03909be20ced289f37219aa28b173",
+      "treatment_confirmations": 2,
+      "workload_id": "inih-meson-tests"
+    }
+  ],
+  "schema_version": "f9.external_result_index.v1",
+  "treatments_rerun": false
+}

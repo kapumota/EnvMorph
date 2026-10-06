@@ -1,0 +1,33 @@
+ENVMORPH F9.8C EXTERNAL TREATMENT REPORT
+
+Estado: PASS
+Harness commit: 43608b87ffcaaad5545c4e63b4b103ceb0a76830
+Post-treatment structural erratum: a84479f057c047f92a0063c9cbc601a19a133eb3
+Census commit: 37a3fbf
+Plans commit: 15edeea
+
+Treatments rerun during recovery: NO
+Recovered from preserved raw evidence: YES
+
+Observed candidates: 12717
+Eligible candidates: 2
+Behaviorally relevant: 0
+Observed only: 2
+Unresolved: 0
+Execution failed: 0
+Observer failure: 0
+Decidable candidates: 2
+
+Fractions:
+decidability_among_observed=0.00015726979633561374
+relevance_among_decidable=0.0
+
+New factors: 0
+New oracles: 0
+New plans after treatment: 0
+
+Physical causality claim: NO
+External prevalence claim: NO
+
+Siguiente gate:
+F9.9 auditoría final, reproducibilidad y amenazas a validez.
