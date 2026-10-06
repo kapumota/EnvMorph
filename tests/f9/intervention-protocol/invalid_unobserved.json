@@ -1,0 +1,17 @@
+{
+  "baseline_value": "alpha",
+  "confirmations": 2,
+  "dependency_key": "0000000000000000000000000000000000000000000000000000000000000000",
+  "isolation": "workspace_copy",
+  "kind": "environment",
+  "mechanism": "environment_override",
+  "operation": "getenv",
+  "oracle_ref": "micro:stdout",
+  "plan_id": "890c7567dfc5e1ca88a2d0d68d85f3d06c2f48739e064fc9e8c4dfff3029c80d",
+  "resource": "F9_GROUND_TRUTH",
+  "resource_type": "environment_variable",
+  "result_blind_selection": true,
+  "schema_version": "f9.intervention_plan.v1",
+  "source_run_id": "f9-3-fixture",
+  "treatment_value": "beta"
+}

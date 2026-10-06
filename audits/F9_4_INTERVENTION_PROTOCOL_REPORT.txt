@@ -1,0 +1,44 @@
+ENVMORPH F9.4 CONTROLLED INTERVENTION REPORT
+
+Estado: PASS
+Parent: 2cd899d
+
+Schema:
+f9.intervention_plan.v1
+
+Precondition:
+dependency must be observed in F9.3 graph
+
+Valid plans:
+2
+
+Invalid plans rejected:
+3
+
+Mechanisms validated:
+- environment_override
+- isolated_text_file_replacement
+
+Confirmations per variant:
+2
+
+Workspace isolation:
+PASS
+
+Source workspace unchanged:
+PASS
+
+Result-blind plan selection:
+REQUIRED
+
+Behavioral relevance evaluated:
+NO
+
+Causal claim:
+NO
+
+Corpus F8 ejecutado:
+NO
+
+Siguiente gate:
+F9.5 clasificación conductual sobre micro-workloads con ground truth.

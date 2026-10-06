@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envmorph.local/schemas/f9-intervention-plan-v1.json",
+  "title": "EnvMorph F9 InterventionPlan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "plan_id",
+    "source_run_id",
+    "dependency_key",
+    "kind",
+    "resource_type",
+    "resource",
+    "operation",
+    "mechanism",
+    "isolation",
+    "baseline_value",
+    "treatment_value",
+    "oracle_ref",
+    "confirmations",
+    "result_blind_selection"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "f9.intervention_plan.v1"
+    },
+    "plan_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dependency_key": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "kind": {
+      "enum": [
+        "environment",
+        "file"
+      ]
+    },
+    "resource_type": {
+      "enum": [
+        "environment_variable",
+        "path"
+      ]
+    },
+    "resource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mechanism": {
+      "enum": [
+        "environment_override",
+        "isolated_text_file_replacement"
+      ]
+    },
+    "isolation": {
+      "enum": [
+        "workspace_copy"
+      ]
+    },
+    "baseline_value": {
+      "type": "string"
+    },
+    "treatment_value": {
+      "type": "string"
+    },
+    "oracle_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confirmations": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "result_blind_selection": {
+      "const": true
+    }
+  }
+}

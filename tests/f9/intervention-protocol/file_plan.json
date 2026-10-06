@@ -1,0 +1,17 @@
+{
+  "baseline_value": "baseline-file",
+  "confirmations": 2,
+  "dependency_key": "2bcdb04578ba23803ac350c66f1fc0bcb4ce8efe4cb3d3996fc043ebc31b6356",
+  "isolation": "workspace_copy",
+  "kind": "file",
+  "mechanism": "isolated_text_file_replacement",
+  "operation": "openat",
+  "oracle_ref": "micro:stdout",
+  "plan_id": "15a538079c11f11ae0b1541857a2f01ffb7212b45371c7170116c9009de9c39b",
+  "resource": "@WORKSPACE@/fixture.txt",
+  "resource_type": "path",
+  "result_blind_selection": true,
+  "schema_version": "f9.intervention_plan.v1",
+  "source_run_id": "f9-3-fixture",
+  "treatment_value": "treatment-file"
+}

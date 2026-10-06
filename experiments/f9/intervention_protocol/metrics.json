@@ -1,0 +1,27 @@
+{
+  "behavioral_relevance_evaluated": false,
+  "causal_claim_made": false,
+  "confirmations_per_variant": 2,
+  "f8_corpus_executed": false,
+  "ground_truth": {
+    "env_baseline_applied": true,
+    "env_baseline_repeatable": true,
+    "env_treatment_applied": true,
+    "env_treatment_repeatable": true,
+    "file_baseline_applied": true,
+    "file_baseline_repeatable": true,
+    "file_treatment_applied": true,
+    "file_treatment_repeatable": true,
+    "source_workspace_unchanged": true
+  },
+  "invalid_plans_rejected": 3,
+  "mechanisms": [
+    "environment_override",
+    "isolated_text_file_replacement"
+  ],
+  "phase": "F9.4",
+  "raw_manifest_sha256": "ca62940b2d2c9cd73378f6dbcd222c6ddca7b56f37bdba527e835e6eb1d8c421",
+  "schema_version": 1,
+  "status": "pass",
+  "valid_plans": 2
+}
