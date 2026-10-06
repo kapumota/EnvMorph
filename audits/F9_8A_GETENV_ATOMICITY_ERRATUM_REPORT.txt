@@ -1,0 +1,43 @@
+ENVMORPH F9.8A GETENV ATOMICITY ERRATUM
+
+Estado:
+FROZEN AFTER FAILED ACQUISITION, BEFORE CAMPAIGN RESTART
+
+Parent:
+3db9df7
+
+Failure:
+fd-build-completions getenv.jsonl malformed JSON
+
+Diagnostic:
+audits/F9_8A_GETENV_CONCURRENCY_DIAGNOSTIC.json
+
+Root cause:
+fragmented JSON record writes under concurrency
+
+Correction:
+one logical getenv event, one append write syscall
+
+Thread sequence:
+atomic
+
+Environment values recorded:
+NO
+
+Concurrent ground truth:
+8 threads x 1000 getenv calls PASS
+
+Partial results used for candidate selection:
+NO
+
+Treatments executed:
+NO
+
+Eligibility assigned:
+NO
+
+Classifications assigned:
+NO
+
+Siguiente paso:
+reiniciar los cuatro workloads con scripts/f9/execute_external_observation_f9_8a_v4.sh

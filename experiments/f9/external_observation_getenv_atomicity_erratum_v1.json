@@ -1,0 +1,21 @@
+{
+  "schema_version": "f9.external_observation_getenv_atomicity_erratum.v1",
+  "status": "frozen_after_failed_acquisition_before_campaign_restart",
+  "parent_effective_protocol_commit": "3db9df736ef1e8d8a0112170fca4301647708494",
+  "failure_evidence": "audits/F9_8A_GETENV_CONCURRENCY_DIAGNOSTIC.json",
+  "root_cause": "one logical getenv JSON record was emitted through multiple independent write syscalls and could interleave under concurrent calls",
+  "transport_correction": "one complete JSON record per append write syscall",
+  "sequence_counter": "atomic_across_threads",
+  "environment_name_encoding": "control_and_non_ascii_bytes_as_u00xx",
+  "environment_values_recorded": false,
+  "getenv_semantics_changed": false,
+  "candidate_rule_changed": false,
+  "instrumentation_exclusions_changed": false,
+  "baseline_environment_changed": false,
+  "oracle_policy_changed": false,
+  "treatments_executed_before_erratum": false,
+  "eligibility_assigned_before_erratum": false,
+  "classifications_assigned_before_erratum": false,
+  "partial_results_used_for_candidate_selection": false,
+  "campaign_restart_policy": "restart_all_four_workloads"
+}
