@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: Rust checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar Rust estable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Verificar formato
+        run: cargo fmt --check
+
+      - name: Ejecutar pruebas
+        run: cargo test --locked
+
+      - name: Construir release
+        run: cargo build --release --locked
+
+      - name: Verificar freeze F9.10
+        run: sha256sum -c provenance/F9_10_FILES.sha256
