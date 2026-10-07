@@ -13,3 +13,7 @@
 target/
 *.tmp
 /workloads/external/*/source/
+
+# Python bytecode y caches generados
+__pycache__/
+*.py[cod]
