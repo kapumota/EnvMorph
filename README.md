@@ -8,15 +8,12 @@ EnvMorph es un prototipo de investigación en Rust para estudiar sensibilidad am
 
 #### Estado actual
 
-F0 a F9 están cerradas.
+F0 a F10 están cerradas.
 
-La versión `v0.1.0` es la primera versión científica pública y corresponde al congelamiento científico F9.10:
+La versión `v0.1.0` conserva el congelamiento científico F9.10. 
 
-```text
-29cc796 Cerrar científicamente F9 y congelar release
-```
+F10 es trabajo científico posterior y no modifica ni reinterpreta F8 o F9.
 
-F9.9 cerró la auditoría final de reproducibilidad. F9.10 no modificó resultados científicos, planes, factores, oráculos ni treatments externos.
 
 #### Cadena implementada
 
@@ -88,23 +85,47 @@ Los detalles están en:
 - `experiments/f9/external_intervention/metrics_summary.json`
 - `provenance/F9_10_FILES.sha256`
 
+
 #### Alcance científico
 
 EnvMorph no afirma:
 
-- observación completa de dependencias,
+- observación completa de dependencias,#### F10: validación de sensibilidad externa
+
+F10-MVP introduce un benchmark separado de controles externos `known-positive`
+seleccionados a partir de evidencia upstream previa a la ejecución de EnvMorph.
+
+Se congelaron tres controles:
+
+- GNU coreutils 9.4, `date`, factor `TZ`,
+- GNU coreutils 9.4, `ls`, factor `QUOTING_STYLE`,
+- CPython 3.12.3, factor `PYTHONIOENCODING`.
+
+Los tres completaron el funnel de observación, normalización, intervención,
+evaluación por oráculo y clasificación:
+
+```text
+known_positive = 3
+observed = 3
+normalized = 3
+intervenable = 3
+eligible = 3
+oracle_decidable = 3
+behaviorally_relevant = 3
+end_to_end_sensitivity = 1.0
 - causalidad física,
 - prevalencia externa,
 - portabilidad universal,
 - hermeticidad universal,
 - una métrica escalar de brecha de hermeticidad conductual,
 - un orden total entre fuentes de observación.
+```
 
 La búsqueda causal de F5 es exacta únicamente dentro del conjunto de factores declarado. Los contratos F6 y envelopes F7 conservan el alcance de los contrastes observados.
 
 Variar entornos, comparar artefactos, observar dependencias y minimizar cambios no se presentan por sí solos como contribuciones novedosas. El posicionamiento se centra en la composición de trazado de divergencia y absorción por etapa, conjuntos ambientales mínimos, contratos delimitados por evidencia, envelopes finitos y clasificación conductual mediante intervenciones controladas.
 
-#### Fixture histórico
+####  Fixture histórico
 
 `workloads/literature-pipeline/source/` es un snapshot histórico inmutable. Su contenido, estilo y documentación interna se preservan por procedencia y están cubiertos por `provenance/LITERATURE_PIPELINE_FILES.sha256`.
 

@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "044f31a7179832d4534991c7d51010a356fec94c",
+  "scientific_freeze": "29cc7961766f783ee4d642f3acf446fb6f9bdb27",
+  "selection_frozen_before_execution": true,
+  "candidates": [
+    {
+      "workload_id": "date-tz",
+      "upstream_project": "GNU coreutils",
+      "upstream_version": "9.4",
+      "upstream_commit_or_tag": "v9.4",
+      "evidence_url": "https://github.com/coreutils/coreutils/blob/v9.4/doc/coreutils.texi",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "TZ",
+      "baseline_value": "UTC0",
+      "treatment_value": "EST5",
+      "expected_observable_difference": {
+        "baseline": "1970-01-01 00:00:00 +0000\n",
+        "treatment": "1969-12-31 19:00:00 -0500\n",
+        "encoding": "utf-8"
+      },
+      "oracle": "F3 byte sobre stdout, salida exacta upstream y dos confirmaciones por variante",
+      "selection_rationale": "Zona horaria documentada, sin depender de tzdata.",
+      "selected": true,
+      "selected_before_envmorph_result": true,
+      "command": [
+        "/usr/bin/date",
+        "--date=@0",
+        "+%Y-%m-%d %H:%M:%S %z"
+      ],
+      "estimated_reproducibility": "alta",
+      "estimated_setup_cost": "bajo",
+      "risk": "Dependencia de binario dinámico y cobertura getenv",
+      "license": "GPL-3.0-or-later"
+    },
+    {
+      "workload_id": "ls-quoting",
+      "upstream_project": "GNU coreutils",
+      "upstream_version": "9.4",
+      "upstream_commit_or_tag": "v9.4",
+      "evidence_url": "https://github.com/coreutils/coreutils/blob/v9.4/doc/coreutils.texi",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "QUOTING_STYLE",
+      "baseline_value": "literal",
+      "treatment_value": "c",
+      "expected_observable_difference": {
+        "baseline": "a b\n",
+        "treatment": "\"a b\"\n",
+        "encoding": "utf-8"
+      },
+      "oracle": "F3 byte sobre stdout, salida exacta upstream y dos confirmaciones por variante",
+      "selection_rationale": "Formato determinista, no requiere locales instalados.",
+      "selected": true,
+      "selected_before_envmorph_result": true,
+      "command": [
+        "/usr/bin/ls",
+        "-1",
+        "--color=never",
+        "--",
+        "a b"
+      ],
+      "estimated_reproducibility": "alta",
+      "estimated_setup_cost": "bajo",
+      "risk": "Dependencia de binario dinámico y cobertura getenv",
+      "license": "GPL-3.0-or-later"
+    },
+    {
+      "workload_id": "python-encoding",
+      "upstream_project": "CPython",
+      "upstream_version": "3.12.3",
+      "upstream_commit_or_tag": "v3.12.3",
+      "evidence_url": "https://github.com/python/cpython/blob/v3.12.3/Doc/using/cmdline.rst",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "PYTHONIOENCODING",
+      "baseline_value": "utf-8",
+      "treatment_value": "latin-1",
+      "expected_observable_difference": {
+        "baseline": "c3a90a",
+        "treatment": "e90a",
+        "encoding": "hex"
+      },
+      "oracle": "F3 byte sobre stdout, salida exacta upstream y dos confirmaciones por variante",
+      "selection_rationale": "Segundo proyecto, codificación gestionada por el intérprete upstream.",
+      "selected": true,
+      "selected_before_envmorph_result": true,
+      "command": [
+        "/usr/bin/python3",
+        "-S",
+        "-c",
+        "print(chr(233))"
+      ],
+      "estimated_reproducibility": "alta",
+      "estimated_setup_cost": "bajo",
+      "risk": "Dependencia de binario dinámico y cobertura getenv",
+      "license": "PSF-2.0"
+    },
+    {
+      "workload_id": "sort-locale",
+      "upstream_project": "GNU coreutils",
+      "upstream_version": "9.4",
+      "upstream_commit_or_tag": "v9.4",
+      "evidence_url": "https://github.com/coreutils/coreutils/blob/v9.4/doc/coreutils.texi",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "LC_ALL",
+      "baseline_value": "C",
+      "treatment_value": "de_DE.UTF-8",
+      "expected_observable_difference": {
+        "description": "Requiere locale externo y congelar corpus de ordenación."
+      },
+      "oracle": "Pendiente de concretar, candidato no seleccionado",
+      "selection_rationale": "Requiere locale externo y congelar corpus de ordenación.",
+      "selected": false,
+      "selected_before_envmorph_result": false,
+      "command": null,
+      "estimated_reproducibility": "media",
+      "estimated_setup_cost": "bajo",
+      "risk": "Requiere locale externo y congelar corpus de ordenación.",
+      "license": "GPL-3.0-or-later"
+    },
+    {
+      "workload_id": "mktemp-dir",
+      "upstream_project": "GNU coreutils",
+      "upstream_version": "9.4",
+      "upstream_commit_or_tag": "v9.4",
+      "evidence_url": "https://github.com/coreutils/coreutils/blob/v9.4/doc/coreutils.texi",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "TMPDIR",
+      "baseline_value": "/tmp/f10-a",
+      "treatment_value": "/tmp/f10-b",
+      "expected_observable_difference": {
+        "description": "Ruta padre diferente, sufijo aleatorio exige normalización."
+      },
+      "oracle": "Pendiente de concretar, candidato no seleccionado",
+      "selection_rationale": "Ruta padre diferente, sufijo aleatorio exige normalización.",
+      "selected": false,
+      "selected_before_envmorph_result": false,
+      "command": null,
+      "estimated_reproducibility": "media",
+      "estimated_setup_cost": "bajo",
+      "risk": "Ruta padre diferente, sufijo aleatorio exige normalización.",
+      "license": "GPL-3.0-or-later"
+    },
+    {
+      "workload_id": "python-seed",
+      "upstream_project": "CPython",
+      "upstream_version": "3.12.3",
+      "upstream_commit_or_tag": "v3.12.3",
+      "evidence_url": "https://github.com/python/cpython/blob/v3.12.3/Doc/using/cmdline.rst",
+      "evidence_type": "official_documentation",
+      "environmental_factor": "PYTHONHASHSEED",
+      "baseline_value": "0",
+      "treatment_value": "1",
+      "expected_observable_difference": {
+        "description": "Hash depende de plataforma, menor fuerza de un oráculo exacto portable."
+      },
+      "oracle": "Pendiente de concretar, candidato no seleccionado",
+      "selection_rationale": "Hash depende de plataforma, menor fuerza de un oráculo exacto portable.",
+      "selected": false,
+      "selected_before_envmorph_result": false,
+      "command": null,
+      "estimated_reproducibility": "media",
+      "estimated_setup_cost": "bajo",
+      "risk": "Hash depende de plataforma, menor fuerza de un oráculo exacto portable.",
+      "license": "PSF-2.0"
+    }
+  ]
+}

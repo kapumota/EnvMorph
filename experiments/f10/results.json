@@ -1,0 +1,95 @@
+{
+  "benchmark_sha256": "59db7a371740870eda0b50a08a39826e276409cc91b42bcfd48fc7f798a2dff9",
+  "decision": "GO",
+  "metrics": {
+    "attempted_interventions": 3,
+    "benchmark_control_count": 3,
+    "eligibility_recall": 1.0,
+    "end_to_end_sensitivity": 1.0,
+    "intervenability_recall": 1.0,
+    "intervention_success_rate": 1.0,
+    "known_positive_count": 3,
+    "normalization_recall": 1.0,
+    "observation_recall": 1.0,
+    "oracle_decidability": 1.0,
+    "successful_interventions": 3
+  },
+  "results": [
+    {
+      "diagnosis": "Control completado",
+      "evidence": {
+        "behaviorally_relevant": "Dos confirmaciones F3 interpretadas por puente F9.6",
+        "eligible": "eligibility.json, validación F9.4",
+        "intervenable": "plan.json: environment_override",
+        "known_positive": "ground_truth.json y documentación preregistrada",
+        "normalized": "events.jsonl",
+        "observed": "getenv.jsonl",
+        "oracle_decidable": "f3_*.json, oracle_*.json y expectativas congeladas",
+        "treatment_executed": "baseline_*.json, treatment_*.json y capturas con hashes coincidentes"
+      },
+      "stages": {
+        "behaviorally_relevant": "PASS",
+        "eligible": "PASS",
+        "intervenable": "PASS",
+        "known_positive": "PASS",
+        "normalized": "PASS",
+        "observed": "PASS",
+        "oracle_decidable": "PASS",
+        "treatment_executed": "PASS"
+      },
+      "treatment_attempted": true,
+      "workload_id": "date-tz"
+    },
+    {
+      "diagnosis": "Control completado",
+      "evidence": {
+        "behaviorally_relevant": "Dos confirmaciones F3 interpretadas por puente F9.6",
+        "eligible": "eligibility.json, validación F9.4",
+        "intervenable": "plan.json: environment_override",
+        "known_positive": "ground_truth.json y documentación preregistrada",
+        "normalized": "events.jsonl",
+        "observed": "getenv.jsonl",
+        "oracle_decidable": "f3_*.json, oracle_*.json y expectativas congeladas",
+        "treatment_executed": "baseline_*.json, treatment_*.json y capturas con hashes coincidentes"
+      },
+      "stages": {
+        "behaviorally_relevant": "PASS",
+        "eligible": "PASS",
+        "intervenable": "PASS",
+        "known_positive": "PASS",
+        "normalized": "PASS",
+        "observed": "PASS",
+        "oracle_decidable": "PASS",
+        "treatment_executed": "PASS"
+      },
+      "treatment_attempted": true,
+      "workload_id": "ls-quoting"
+    },
+    {
+      "diagnosis": "Control completado",
+      "evidence": {
+        "behaviorally_relevant": "Dos confirmaciones F3 interpretadas por puente F9.6",
+        "eligible": "eligibility.json, validación F9.4",
+        "intervenable": "plan.json: environment_override",
+        "known_positive": "ground_truth.json y documentación preregistrada",
+        "normalized": "events.jsonl",
+        "observed": "getenv.jsonl",
+        "oracle_decidable": "f3_*.json, oracle_*.json y expectativas congeladas",
+        "treatment_executed": "baseline_*.json, treatment_*.json y capturas con hashes coincidentes"
+      },
+      "stages": {
+        "behaviorally_relevant": "PASS",
+        "eligible": "PASS",
+        "intervenable": "PASS",
+        "known_positive": "PASS",
+        "normalized": "PASS",
+        "observed": "PASS",
+        "oracle_decidable": "PASS",
+        "treatment_executed": "PASS"
+      },
+      "treatment_attempted": true,
+      "workload_id": "python-encoding"
+    }
+  ],
+  "scope": "Sensibilidad descriptiva en tres controles documentados, no prevalencia poblacional"
+}
