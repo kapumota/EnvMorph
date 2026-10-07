@@ -2,6 +2,7 @@
 name = "envmorph"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.85"
 description = "Infraestructura experimental para pruebas metamórficas ambientales de workflows Unix"
 license = "MIT"
 

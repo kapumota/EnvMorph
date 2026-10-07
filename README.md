@@ -4,105 +4,103 @@
 [![Release](https://img.shields.io/github/v/release/kapumota/EnvMorph)](https://github.com/kapumota/EnvMorph/releases)
 [![License](https://img.shields.io/github/license/kapumota/EnvMorph)](LICENSE)
 
-EnvMorph es un prototipo de investigación en Rust para estudiar sensibilidad ambiental, portabilidad y hermeticidad conductual en workflows Unix. Su pregunta central es: dado un workflow y un conjunto explícito de contrastes ambientales, qué cambios alteran el comportamiento observable, dónde aparece una divergencia, cómo se propaga o se absorbe y qué evidencia permite formular contratos ambientales delimitados.
+EnvMorph es un prototipo de investigación para estudiar sensibilidad ambiental,
+portabilidad y hermeticidad conductual en workflows Unix mediante contrastes
+ambientales explícitos y evidencia reproducible.
 
 #### Estado actual
 
-F0 a F10 están cerradas.
+F0 a F10 están cerradas como fases experimentales.
 
-La versión `v0.1.0` conserva el congelamiento científico F9.10. 
+La versión `v0.1.0` conserva el congelamiento científico F9.10:
 
-F10 es trabajo científico posterior y no modifica ni reinterpreta F8 o F9.
+```text
+29cc796 Cerrar científicamente F9 y congelar release
+```
 
+F10 es trabajo científico posterior a `v0.1.0` y no modifica ni reinterpreta
+los resultados congelados de F8 o F9.
 
-#### Cadena implementada
+#### Arquitectura del artefacto
 
-La cadena activa separa responsabilidades:
+EnvMorph es actualmente un artefacto híbrido:
 
-- `plan`, `capabilities` y `explore` modelan, resuelven y ejecutan variantes ambientales.
-- `compare-artifacts` aplica oráculos explícitos de byte, texto, JSON y CSV.
-- `analyze-propagation` clasifica aparición, propagación y absorción de diferencias observables.
-- `minimize-environment` busca por cardinalidad todos los conjuntos ambientales mínimos que reproducen la firma observable configurada.
-- `derive-contract` y `check-contract` producen y evalúan contratos ambientales delimitados por evidencia.
-- `build-envelope` enumera el lattice finito baseline/treatment de un contrato y registra cobertura decidida y fronteras entre celdas vecinas.
-- F9 añade observación de dependencias, normalización de eventos, grafos de dependencias observadas, intervenciones controladas y clasificación conductual.
+```text
+Rust core F0-F7
++
+Python/C experimental harness F9
++
+Python/shell reproduction harness F10
+```
 
-La semántica distingue ejecución, comparación, equivalencia, propagación, suficiencia operacional, contrato, envelope, observación y relevancia conductual. Un resultado `unavailable`, `missing`, `error`, `execution_failed`, `unresolved` u `out_of_scope` no se transforma silenciosamente en evidencia negativa.
+El CLI Rust no expone todavía la cadena completa F9/F10. La frontera exacta
+está documentada en `docs/ARTIFACT_BOUNDARY.md`.
 
-#### F8: validación externa
+#### F8: validación externa result-blind
 
-F8 evaluó la cadena F2-F7 sobre un corpus externo seleccionado y congelado antes de observar resultados.
+F8 seleccionó cuatro workloads externos antes de observar resultados EnvMorph.
 
-El cierre de F8 fue científicamente negativo:
+Resultado:
 
-- 4 workloads seleccionados,
-- 3 de 4 workloads evaluables a través de F2-F7,
-- 3 workloads estables,
-- 0 diferencias observables,
-- 1 held-out intentado,
-- 0 predicciones held-out decididas,
-- 1 abstención `out_of_scope`,
-- sin sustitución de workloads por resultado,
-- sin reajuste post-hoc.
+- 4 workloads seleccionados;
+- 3 de 4 evaluables a través de F2-F7;
+- 3 workloads estables;
+- 0 diferencias observables;
+- 1 held-out intentado;
+- 0 predicciones held-out decididas;
+- 1 abstención `out_of_scope`;
+- sin sustitución de workloads por resultado;
+- sin retuning post-hoc.
 
-F8 no demuestra prevalencia de sensibilidad ambiental ni generalización predictiva held-out. El resultado conserva explícitamente evidencia negativa y estados no evaluables.
+F8 es un resultado científicamente negativo. No demuestra ausencia universal
+de sensibilidad ni capacidad predictiva held-out.
 
-Los detalles están en:
+Detalles:
 
 - `docs/F8_RESULTS.md`
 - `docs/F8_THREATS_TO_VALIDITY.md`
 - `audits/F8_FINAL_REPORT.txt`
-- `provenance/F8_FINAL_FILES.sha256`
 
-#### F9: hermeticidad conductual
+#### F9: observación e intervención
 
-F9 extiende la infraestructura con observación de dependencias e intervenciones controladas sobre dependencias observadas.
+F9 combina un backend ptrace para operaciones de archivo y ejecución con una
+fuente complementaria basada en interposición dinámica de `getenv`.
 
-El resultado externo congelado en F9.10 es:
+Resultado externo congelado:
 
 ```text
 observed_candidates = 12717
 eligible_candidates = 2
 behaviorally_relevant = 0
 observed_only = 2
-unresolved = 0
-execution_failed = 0
-observer_failure = 0
 decidable_candidates = 2
-decidability_among_observed = 0.00015726979633561374
-relevance_among_decidable = 0.0
 ```
 
-Las dos dependencias externas elegibles fueron clasificadas como `observed_only` bajo las intervenciones prerregistradas y los observables F4 congelados.
+La baja elegibilidad no implica que las dependencias restantes sean
+conductualmente irrelevantes.
 
-Este resultado está limitado al corpus externo, los valores de factores y los observables congelados. No implica que las restantes dependencias observadas sean conductualmente irrelevantes.
+La observación no es completa. En particular, el hook `getenv` no cubre todas
+las formas de acceso a variables ambientales, y el backend ptrace observa
+recursos del sistema, no necesariamente la variable ambiental que originó una
+decisión dentro de libc.
 
-Los detalles están en:
+Detalles:
 
 - `docs/F9_SCIENTIFIC_CLOSURE.md`
 - `docs/F9_REPRODUCIBILITY_AUDIT.md`
 - `docs/F9_THREATS_TO_VALIDITY.md`
-- `experiments/f9/external_intervention/metrics_summary.json`
-- `provenance/F9_10_FILES.sha256`
+- `docs/ARTIFACT_BOUNDARY.md`
 
+#### F10: validación de sensibilidad externa
 
-#### Alcance científico
+F10-MVP introduce tres controles externos `known-positive` seleccionados antes
+de observar el resultado de EnvMorph:
 
-EnvMorph no afirma:
-
-- observación completa de dependencias,#### F10: validación de sensibilidad externa
-
-F10-MVP introduce un benchmark separado de controles externos `known-positive`
-seleccionados a partir de evidencia upstream previa a la ejecución de EnvMorph.
-
-Se congelaron tres controles:
-
-- GNU coreutils 9.4, `date`, factor `TZ`,
-- GNU coreutils 9.4, `ls`, factor `QUOTING_STYLE`,
+- GNU coreutils 9.4, `date`, factor `TZ`;
+- GNU coreutils 9.4, `ls`, factor `QUOTING_STYLE`;
 - CPython 3.12.3, factor `PYTHONIOENCODING`.
 
-Los tres completaron el funnel de observación, normalización, intervención,
-evaluación por oráculo y clasificación:
+Los tres completaron el funnel:
 
 ```text
 known_positive = 3
@@ -113,33 +111,34 @@ eligible = 3
 oracle_decidable = 3
 behaviorally_relevant = 3
 end_to_end_sensitivity = 1.0
-- causalidad física,
-- prevalencia externa,
-- portabilidad universal,
-- hermeticidad universal,
-- una métrica escalar de brecha de hermeticidad conductual,
-- un orden total entre fuentes de observación.
 ```
 
-La búsqueda causal de F5 es exacta únicamente dentro del conjunto de factores declarado. Los contratos F6 y envelopes F7 conservan el alcance de los contrastes observados.
+Este 3/3 es una validación de sensibilidad sobre controles positivos, no una
+estimación general de recall. F10-MVP no contiene controles negativos y no
+estima especificidad.
 
-Variar entornos, comparar artefactos, observar dependencias y minimizar cambios no se presentan por sí solos como contribuciones novedosas. El posicionamiento se centra en la composición de trazado de divergencia y absorción por etapa, conjuntos ambientales mínimos, contratos delimitados por evidencia, envelopes finitos y clasificación conductual mediante intervenciones controladas.
+F10 incorpora reproducción nativa y una ruta Docker basada en Ubuntu 24.04.
 
-####  Fixture histórico
+Detalles:
 
-`workloads/literature-pipeline/source/` es un snapshot histórico inmutable. Su contenido, estilo y documentación interna se preservan por procedencia y están cubiertos por `provenance/LITERATURE_PIPELINE_FILES.sha256`.
+- `docs/F10_PROTOCOL.md`
+- `docs/F10_RESULTS.md`
+- `experiments/f10/benchmark.json`
+- `experiments/f10/results.json`
+- `reproduce/README.md`
 
-Las adaptaciones de compatibilidad se realizan sobre copias temporales, nunca sobre el fixture canónico.
+#### Requisitos de Rust
 
-Algunos manifests, auditorías, fixtures legacy y drivers científicos congelados conservan rutas absolutas del host experimental original. Son artefactos históricos y no representan requisitos de ejecución del repositorio público.
+El crate declara:
 
-#### Construcción y pruebas
+```text
+rust-version = 1.85
+```
 
-Requisitos mínimos:
+El lockfile usa formato v4 y la dependencia `toml 1.1.6` declara Rust 1.85 como
+mínimo.
 
-- Rust estable,
-- Cargo,
-- entorno Unix para los experimentos específicos que lo requieran.
+#### Reproducibilidad
 
 Gate público básico:
 
@@ -150,28 +149,45 @@ cargo build --release --locked
 sha256sum -c provenance/F9_10_FILES.sha256
 ```
 
-El workflow de GitHub Actions ejecuta el mismo gate sobre `ubuntu-latest`.
+Reproducción F10:
 
-Los warnings de código no utilizado no cambian el resultado de los tests ni del build y se conservan en `v0.1.0` como deuda de ingeniería posterior al congelamiento científico.
+```bash
+bash reproduce/f10-docker.sh /tmp/envmorph-f10-run
+```
 
-#### Reproducibilidad y evidencia
+La evidencia cruda histórica de F8/F9 no está íntegramente incluida en el
+repositorio público. Los artefactos congelados conservan hashes y procedencia,
+pero no se afirma regeneración completa de F8/F9 desde un clone público.
 
-El repositorio público incluye protocolos, resultados versionados, auditorías y manifests SHA-256.
+#### Alcance científico
 
-La evidencia cruda de adquisición almacenada bajo `.envmorph` no forma parte del repositorio Git. Los hashes disponibles de esa evidencia se conservan como anclas de procedencia donde corresponde.
+EnvMorph no afirma:
 
-Después de la publicación de `v0.1.0`, el repositorio fue clonado desde GitHub en un directorio limpio y volvió a superar formato, tests, build release y verificación de `provenance/F9_10_FILES.sha256`.
+- observación completa de dependencias;
+- causalidad física;
+- recall poblacional de 1.0;
+- especificidad demostrada por F10;
+- prevalencia externa;
+- representatividad del software Unix;
+- portabilidad universal;
+- hermeticidad universal;
+- validación held-out positiva de contratos externos.
+
+#### Estado editorial
+
+El repositorio puede usarse para comenzar la redacción de papers.
+
+El Paper 1 definido actualmente en `docs/PAPER_SCOPE.md` no está todavía listo
+para envío porque su gate held-out no tiene una predicción decidida y F10 no es
+una validación held-out de un contrato F6.
+
+El estado exacto y el trabajo mínimo restante están en:
+
+- `docs/PAPER_READINESS.md`
 
 #### Citación
 
 El repositorio incluye `CITATION.cff`.
 
-Si utiliza EnvMorph en trabajo académico, cite el software mediante la información publicada por GitHub en la sección `Cite this repository`.
-
-#### Desarrollo posterior a v0.1.0
-
-`v0.1.0` conserva el estado científico congelado de F9.10.
-
-Los cambios posteriores en `main` se consideran release engineering, documentación o trabajo nuevo. No reescriben retrospectivamente resultados de F8 o F9.
-
-Nuevos experimentos o claims científicos deben introducir un protocolo nuevo, una nueva fase o una nueva versión claramente separada del freeze `v0.1.0`.
+Si utiliza EnvMorph en trabajo académico, cite el software mediante la
+información publicada por GitHub en la sección `Cite this repository`.
