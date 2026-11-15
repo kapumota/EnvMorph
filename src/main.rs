@@ -325,6 +325,7 @@ fn cmd_check_contract(args: &[String]) {
     let mut environment_path: Option<std::path::PathBuf> = None;
     let mut output_path: Option<std::path::PathBuf> = None;
     let mut format = "human".to_string();
+    let mut expected_sha256: Option<String> = None;
     let mut i = 1;
 
     while i < args.len() {
@@ -342,6 +343,12 @@ fn cmd_check_contract(args: &[String]) {
                 )))
             }
             "--format" => format = take_value(args, &mut i, "--format"),
+            "--expected-sha256" => {
+                if expected_sha256.is_some() {
+                    fail("--expected-sha256 no puede repetirse");
+                }
+                expected_sha256 = Some(take_value(args, &mut i, "--expected-sha256"));
+            }
             other => fail(&format!(
                 "opción desconocida '{}' para check-contract",
                 other
@@ -356,8 +363,22 @@ fn cmd_check_contract(args: &[String]) {
     let environment_path = environment_path
         .unwrap_or_else(|| fail("check-contract requiere --environment ENVIRONMENT.toml"));
 
-    let contract = contract::EnvironmentalContract::from_toml_path(&contract_path)
-        .unwrap_or_else(|error| fail(&error));
+    let contract = if let Some(expected) = expected_sha256.as_deref() {
+        // S2A: leer una sola vez, comprobar integridad y parsear los mismos bytes.
+        let bytes = std::fs::read(&contract_path)
+            .unwrap_or_else(|error| fail(&format!("no se pudo leer contrato: {error}")));
+        if let Err(error) = s2a_verify_contract_digest(&bytes, expected) {
+            eprintln!("envmorph: {error}");
+            std::process::exit(3);
+        }
+        let content =
+            std::str::from_utf8(&bytes).unwrap_or_else(|_| fail("contrato no es UTF-8 válido"));
+        contract::EnvironmentalContract::from_toml_str(content).unwrap_or_else(|error| fail(&error))
+    } else {
+        // Compatibilidad con F6-v1: este modo NO verifica procedencia.
+        contract::EnvironmentalContract::from_toml_path(&contract_path)
+            .unwrap_or_else(|error| fail(&error))
+    };
     let environment = contract::EnvironmentSpec::from_toml_path(&environment_path)
         .unwrap_or_else(|error| fail(&error));
     let evaluation = contract.evaluate(&environment);
@@ -390,6 +411,17 @@ fn cmd_check_contract(args: &[String]) {
         print!("{}", evaluation.render_human());
     }
     std::process::exit(evaluation.status().exit_code());
+}
+
+fn s2a_verify_contract_digest(content: &[u8], expected: &str) -> Result<(), String> {
+    if expected.len() != 64 || !expected.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+        return Err("la huella confiable debe contener 64 dígitos hexadecimales".into());
+    }
+    let actual = hash::hash_bytes(content);
+    if actual != expected.to_ascii_lowercase() {
+        return Err("integridad contractual no coincide con la huella confiable".into());
+    }
+    Ok(())
 }
 
 fn cmd_minimize_environment(args: &[String]) {
@@ -874,3 +906,31 @@ mod executor;
 mod experiment;
 mod oracle;
 mod propagation;
+
+#[cfg(test)]
+mod s2a_contract_integrity_tests {
+    use super::s2a_verify_contract_digest;
+
+    const ABC_SHA256: &str = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
+
+    #[test]
+    fn pinned_digest_accepts_original_bytes() {
+        assert!(s2a_verify_contract_digest(b"abc", ABC_SHA256).is_ok());
+    }
+
+    #[test]
+    fn pinned_digest_rejects_mutated_bytes() {
+        assert!(s2a_verify_contract_digest(b"abd", ABC_SHA256).is_err());
+    }
+
+    #[test]
+    fn pinned_digest_rejects_invalid_fingerprint() {
+        assert!(s2a_verify_contract_digest(b"abc", "abc").is_err());
+        assert!(s2a_verify_contract_digest(b"abc", &"z".repeat(64)).is_err());
+    }
+
+    #[test]
+    fn pinned_digest_accepts_uppercase_hex() {
+        assert!(s2a_verify_contract_digest(b"abc", &ABC_SHA256.to_ascii_uppercase()).is_ok());
+    }
+}

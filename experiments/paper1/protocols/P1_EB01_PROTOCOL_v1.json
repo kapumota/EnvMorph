@@ -1,0 +1,368 @@
+{
+  "protocol_id": "P1-EB-01",
+  "version": "1.0-freeze-candidate",
+  "state": "READY_FOR_PRE_OUTCOME_FREEZE",
+  "original_candidate_count": 6,
+  "selection_rule": "Conservar C1-C6 sin eliminar negativos, fallos ni abstenciones",
+  "evidence_limitation": "Controles documentados de dos proyectos; no muestra representativa ni held-out ambiental",
+  "rust_commit_prefix": "6316444",
+  "rust_branch": "research/s1a-factor-integration",
+  "docker_image": "envmorph-p1-ubuntu2404-locales:local",
+  "docker_image_id": "sha256:186135f0bc9b1847963cd198c5e363748e7da1d61be9fc1e4e972cc710ab9dd3",
+  "coreutils_version": "9.4",
+  "cpython_version": "3.12.3",
+  "constraints": {
+    "network": "none",
+    "random_seed_for_run_order": 20261115,
+    "timezone": "UTC0",
+    "locale_default": "C",
+    "n_repetitions": 2,
+    "factor_levels": 2,
+    "holdout_input_not_used_for_F5": true,
+    "no_autotune_on_result": true,
+    "do_not_modify_F8_F9_F10": true,
+    "runtime_directories": [
+      "/tmp/p1-a",
+      "/tmp/p1-b",
+      "/tmp/p1-fixed"
+    ]
+  },
+  "references": {
+    "negative_control_validation": "Each control is run with identical factor interventions but explicit command-level override or deterministic output",
+    "independent_direct_reference": "Full 2-factor lattice for both modes, two fresh repetitions per cell, separate from F5 evidence",
+    "oracle": "Byte oracle on stdout except C5: parent directory projected and random suffix discarded before comparison by fixed wrapper",
+    "failure_handling": "Unstable, invalid, blocked, and unresolved results preserved; no silent replacement"
+  },
+  "measurement": {
+    "primary": "unsupported_decisions_among_decided_challenges",
+    "secondary": [
+      "decision_coverage",
+      "risk_given_coverage",
+      "evaluation_budget",
+      "exact_minimal_sets",
+      "negative_control_agreement",
+      "runtime_and_certificate_size"
+    ],
+    "unit_of_analysis": "case/project, not execution",
+    "primitive_direct_reference_runs": 96,
+    "f5_cost_excluded_from_96_and_measured_separately": true,
+    "abstention_is_not_accuracy": true
+  },
+  "baselines": {
+    "table_exact": "required",
+    "exhaustive_lattice": "reference",
+    "ddmin_same_oracle": "required_if_comparable",
+    "reprotest": "required_if_compatible",
+    "BugDoc": "required_if_compatible; otherwise explicit documented blocker, not inferred performance"
+  },
+  "gates": {
+    "technical": "At least 3 evaluable cases, two projects, at least one positive F5/F6, negative controls correct, zero unsupported decided contradictions",
+    "method": "Must show additional verifiable utility beyond exact table/minimization under same evidence budget; otherwise KILL methodology paper",
+    "external": "Independent real workflows and independent second-machine reproduction mandatory before strong Q1/Q2 claim"
+  },
+  "cases": [
+    {
+      "command": [
+        "/usr/bin/date",
+        "--date=@0",
+        "+%Y-%m-%d %H:%M:%S %z"
+      ],
+      "negative_command": [
+        "/usr/bin/date",
+        "-u",
+        "--date=@0",
+        "+%Y-%m-%d %H:%M:%S %z"
+      ],
+      "benign_factor": "quoting_style",
+      "expected_behavior": "known_positive_F10",
+      "reference_expected_primary_stdout_hex": {
+        "baseline": "313937302d30312d30312030303a30303a3030202b303030300a",
+        "treatment": "313936392d31322d33312031393a30303a3030202d303530300a"
+      },
+      "heldout_input": {
+        "command": [
+          "/usr/bin/date",
+          "--date=@86400",
+          "+%Y-%m-%d %H:%M:%S %z"
+        ]
+      },
+      "setup": [],
+      "oracle": "byte_stdout",
+      "id": "C1",
+      "project": "GNU coreutils",
+      "target_factor": "timezone",
+      "baseline": "UTC0",
+      "treatment": "EST5",
+      "negative_control": "date -u",
+      "version": "9.4",
+      "factor2": {
+        "factor": "quoting_style",
+        "baseline": "literal",
+        "treatment": "c"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    },
+    {
+      "command": [
+        "/usr/bin/ls",
+        "-1",
+        "--color=never",
+        "--",
+        "a b"
+      ],
+      "negative_command": [
+        "/usr/bin/ls",
+        "-1",
+        "--color=never",
+        "--quoting-style=literal",
+        "--",
+        "a b"
+      ],
+      "benign_factor": "python_io_encoding",
+      "expected_behavior": "known_positive_F10",
+      "reference_expected_primary_stdout_hex": {
+        "baseline": "6120620a",
+        "treatment": "22612062220a"
+      },
+      "heldout_input": {
+        "setup": [
+          {
+            "path": "c d",
+            "content_utf8": ""
+          }
+        ],
+        "command": [
+          "/usr/bin/ls",
+          "-1",
+          "--color=never",
+          "--",
+          "c d"
+        ]
+      },
+      "setup": [
+        {
+          "path": "a b",
+          "content_utf8": ""
+        }
+      ],
+      "oracle": "byte_stdout",
+      "id": "C2",
+      "project": "GNU coreutils",
+      "target_factor": "quoting_style",
+      "baseline": "literal",
+      "treatment": "c",
+      "negative_control": "ls --quoting-style=literal",
+      "version": "9.4",
+      "factor2": {
+        "factor": "python_io_encoding",
+        "baseline": "utf-8",
+        "treatment": "latin-1"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-S",
+        "-c",
+        "print(chr(233))"
+      ],
+      "negative_command": [
+        "/usr/bin/python3",
+        "-S",
+        "-c",
+        "import sys; sys.stdout.buffer.write(bytes.fromhex('c3a90a'))"
+      ],
+      "benign_factor": "quoting_style",
+      "expected_behavior": "known_positive_F10",
+      "reference_expected_primary_stdout_hex": {
+        "baseline": "c3a90a",
+        "treatment": "e90a"
+      },
+      "heldout_input": {
+        "command": [
+          "/usr/bin/python3",
+          "-S",
+          "-c",
+          "print(chr(241))"
+        ]
+      },
+      "setup": [],
+      "oracle": "byte_stdout",
+      "id": "C3",
+      "project": "CPython",
+      "target_factor": "python_io_encoding",
+      "baseline": "utf-8",
+      "treatment": "latin-1",
+      "negative_control": "Escritura binaria fija",
+      "version": "3.12.3",
+      "factor2": {
+        "factor": "quoting_style",
+        "baseline": "literal",
+        "treatment": "c"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    },
+    {
+      "command": [
+        "/usr/bin/sort",
+        "sort-input.txt"
+      ],
+      "negative_command": [
+        "/usr/bin/env",
+        "LC_ALL=C",
+        "/usr/bin/sort",
+        "sort-input.txt"
+      ],
+      "benign_factor": "quoting_style",
+      "expected_behavior": "unknown_do_not_tune",
+      "reference_expected_primary_stdout_hex": null,
+      "heldout_input": {
+        "setup": [
+          {
+            "path": "sort-input.txt",
+            "content_utf8": "z\nö\nb\n"
+          }
+        ]
+      },
+      "setup": [
+        {
+          "path": "sort-input.txt",
+          "content_utf8": "z\nä\na\n"
+        }
+      ],
+      "oracle": "byte_stdout",
+      "id": "C4",
+      "project": "GNU coreutils",
+      "target_factor": "locale",
+      "baseline": "C",
+      "treatment": "de_DE.UTF-8",
+      "negative_control": "LC_ALL=C explícito",
+      "version": "9.4",
+      "factor2": {
+        "factor": "quoting_style",
+        "baseline": "literal",
+        "treatment": "c"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    },
+    {
+      "command": [
+        "/bin/sh",
+        "-ceu",
+        "p=\"$(/usr/bin/mktemp -d -t case.XXXXXXXX)\"; /usr/bin/rmdir -- \"$p\"; /usr/bin/dirname -- \"$p\""
+      ],
+      "negative_command": [
+        "/bin/sh",
+        "-ceu",
+        "p=\"$(/usr/bin/mktemp -d --tmpdir=/tmp/p1-fixed case.XXXXXXXX)\"; /usr/bin/rmdir -- \"$p\"; /usr/bin/dirname -- \"$p\""
+      ],
+      "benign_factor": "quoting_style",
+      "expected_behavior": "unknown_do_not_tune",
+      "reference_expected_primary_stdout_hex": null,
+      "heldout_input": {
+        "command": [
+          "/bin/sh",
+          "-ceu",
+          "p=\"$(/usr/bin/mktemp -d -t case2.XXXXXXXX)\"; /usr/bin/rmdir -- \"$p\"; /usr/bin/dirname -- \"$p\""
+        ]
+      },
+      "setup": [],
+      "runtime_directories": [
+        "/tmp/p1-a",
+        "/tmp/p1-b",
+        "/tmp/p1-fixed"
+      ],
+      "oracle": "byte_stdout_after_predeclared_parent_projection",
+      "id": "C5",
+      "project": "GNU coreutils",
+      "target_factor": "tmpdir",
+      "baseline": "/tmp/p1-a",
+      "treatment": "/tmp/p1-b",
+      "negative_control": "--tmpdir=/tmp/p1-fixed",
+      "version": "9.4",
+      "factor2": {
+        "factor": "quoting_style",
+        "baseline": "literal",
+        "treatment": "c"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-S",
+        "-c",
+        "print(*set(('alpha','beta','gamma','delta')), sep='\\n')"
+      ],
+      "negative_command": [
+        "/usr/bin/python3",
+        "-S",
+        "-c",
+        "print(*sorted(set(('alpha','beta','gamma','delta'))), sep='\\n')"
+      ],
+      "benign_factor": "quoting_style",
+      "expected_behavior": "unknown_do_not_tune",
+      "reference_expected_primary_stdout_hex": null,
+      "heldout_input": {
+        "command": [
+          "/usr/bin/python3",
+          "-S",
+          "-c",
+          "print(*set(('delta','alpha','omega','gamma')), sep='\\n')"
+        ]
+      },
+      "setup": [],
+      "oracle": "byte_stdout",
+      "id": "C6",
+      "project": "CPython",
+      "target_factor": "python_hash_seed",
+      "baseline": "0",
+      "treatment": "1",
+      "negative_control": "sorted(set)",
+      "version": "3.12.3",
+      "factor2": {
+        "factor": "quoting_style",
+        "baseline": "literal",
+        "treatment": "c"
+      },
+      "repetitions_per_cell": 2,
+      "factor_count": 2,
+      "modes": [
+        "primary",
+        "negative"
+      ],
+      "holdout_is_new_input_not_new_environment": true
+    }
+  ]
+}

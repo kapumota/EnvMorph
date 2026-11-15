@@ -164,6 +164,15 @@ pub fn resolve_variant(variant: &EnvironmentVariant) -> Result<ResolvedEnvironme
             "tmpdir" => {
                 variables.push(("TMPDIR".to_string(), value.as_str().to_string()));
             }
+            "quoting_style" => {
+                variables.push(("QUOTING_STYLE".to_string(), value.as_str().to_string()));
+            }
+            "python_io_encoding" => {
+                variables.push(("PYTHONIOENCODING".to_string(), value.as_str().to_string()));
+            }
+            "python_hash_seed" => {
+                variables.push(("PYTHONHASHSEED".to_string(), value.as_str().to_string()));
+            }
             "awk_implementation" => {
                 if capability.is_available() {
                     if let Some(path) = capability.resolved() {
@@ -230,11 +239,52 @@ fn probe_factor(factor: &str, value: &FactorValue) -> Result<EnvironmentCapabili
         "locale" => Ok(probe_locale(value)),
         "timezone" => Ok(probe_timezone(value)),
         "tmpdir" => Ok(probe_tmpdir(value)),
+        "quoting_style" => Ok(probe_quoting_style(value)),
+        "python_io_encoding" => Ok(probe_python_io_encoding(value)),
+        "python_hash_seed" => Ok(probe_python_hash_seed(value)),
         "awk_implementation" => Ok(probe_awk(value)),
         _ => Err(format!(
             "factor ambiental no soportado por F2.1: {}",
             factor
         )),
+    }
+}
+
+// S1A: dominio pequeño congelado para pruebas externas, no override arbitrario.
+fn probe_quoting_style(value: &FactorValue) -> EnvironmentCapability {
+    if matches!(value.as_str(), "literal" | "c") {
+        EnvironmentCapability::available("quoting_style", value, None, None)
+    } else {
+        EnvironmentCapability::unavailable(
+            "quoting_style",
+            value,
+            "valor no admitido en el protocolo S1A",
+        )
+    }
+}
+
+fn probe_python_io_encoding(value: &FactorValue) -> EnvironmentCapability {
+    if matches!(value.as_str(), "utf-8" | "latin-1") {
+        EnvironmentCapability::available("python_io_encoding", value, None, None)
+    } else {
+        EnvironmentCapability::unavailable(
+            "python_io_encoding",
+            value,
+            "valor no admitido en el protocolo S1A",
+        )
+    }
+}
+
+// P1: solo los valores congelados 0/1, sin admitir un override genérico.
+fn probe_python_hash_seed(value: &FactorValue) -> EnvironmentCapability {
+    if matches!(value.as_str(), "0" | "1") {
+        EnvironmentCapability::available("python_hash_seed", value, None, None)
+    } else {
+        EnvironmentCapability::unavailable(
+            "python_hash_seed",
+            value,
+            "valor fuera del protocolo P1-EB-01",
+        )
     }
 }
 
@@ -310,6 +360,16 @@ fn probe_locale(value: &FactorValue) -> EnvironmentCapability {
 }
 
 fn probe_timezone(value: &FactorValue) -> EnvironmentCapability {
+    // P1: reglas POSIX predefinidas que no son nombres de archivos zoneinfo.
+    // No se amplía el parser POSIX ni se aceptan entradas arbitrarias.
+    if matches!(value.as_str(), "UTC0" | "EST5") {
+        return EnvironmentCapability::available(
+            "timezone",
+            value,
+            None,
+            Some("regla POSIX TZ acotada al protocolo P1-EB-01".to_string()),
+        );
+    }
     if !valid_timezone_id(value.as_str()) {
         return EnvironmentCapability::unavailable(
             "timezone",
@@ -472,6 +532,70 @@ mod tests {
         assert!(!valid_tool_name("../gawk"));
         assert!(valid_tool_name("gawk"));
         assert!(valid_tool_name("mawk"));
+    }
+
+    #[test]
+    fn quoting_style_sets_correct_variable_and_rejects_unlisted_value() {
+        let variant =
+            EnvironmentVariant::new(1, vec![("quoting_style".to_string(), value("literal"))])
+                .unwrap();
+        let resolved = resolve_variant(&variant).unwrap();
+        assert!(resolved.is_available());
+        assert_eq!(
+            resolved.variables(),
+            &[("QUOTING_STYLE".to_string(), "literal".to_string())]
+        );
+        let disallowed = probe_factor("quoting_style", &value("unknown")).unwrap();
+        assert_eq!(disallowed.status(), &CapabilityStatus::Unavailable);
+    }
+
+    #[test]
+    fn python_encoding_sets_correct_variable_and_rejects_unlisted_value() {
+        let variant = EnvironmentVariant::new(
+            1,
+            vec![("python_io_encoding".to_string(), value("latin-1"))],
+        )
+        .unwrap();
+        let resolved = resolve_variant(&variant).unwrap();
+        assert!(resolved.is_available());
+        assert_eq!(
+            resolved.variables(),
+            &[("PYTHONIOENCODING".to_string(), "latin-1".to_string())]
+        );
+        let disallowed = probe_factor("python_io_encoding", &value("ascii")).unwrap();
+        assert_eq!(disallowed.status(), &CapabilityStatus::Unavailable);
+    }
+
+    #[test]
+    fn p1_posix_timezone_values_are_available() {
+        let baseline = probe_factor("timezone", &value("UTC0")).unwrap();
+        let treatment = probe_factor("timezone", &value("EST5")).unwrap();
+        assert!(baseline.is_available());
+        assert!(treatment.is_available());
+        let resolved = resolve_variant(
+            &EnvironmentVariant::new(1, vec![("timezone".into(), value("EST5"))]).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(resolved.variables(), &[("TZ".into(), "EST5".into())]);
+    }
+
+    #[test]
+    fn p1_python_hash_seed_is_restricted_and_mapped() {
+        let resolved = resolve_variant(
+            &EnvironmentVariant::new(1, vec![("python_hash_seed".into(), value("1"))]).unwrap(),
+        )
+        .unwrap();
+        assert!(resolved.is_available());
+        assert_eq!(
+            resolved.variables(),
+            &[("PYTHONHASHSEED".into(), "1".into())]
+        );
+        assert_eq!(
+            probe_factor("python_hash_seed", &value("random"))
+                .unwrap()
+                .status(),
+            &CapabilityStatus::Unavailable
+        );
     }
 
     #[test]

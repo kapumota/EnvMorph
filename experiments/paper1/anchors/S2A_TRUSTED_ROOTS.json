@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "24d99d9b9046d13e48406640dd4c68301addcfbd",
+  "cases": {
+    "ls": {
+      "contract_sha256": "9f1c9b14cb53d8c049937ec74712bae3e649c35a145a5eef24553a5c89894ae7",
+      "mce_result_sha256": "70d16902c152cdea660ee1c3c1293e129568ccb9027c23e851ba8696a5794ee7",
+      "mutated_contract_sha256_for_negative_test": "7f56c9f15ba832a8a892aa051bc95f3fa5708d1a6ea3d4276429e0ca8190c9b9"
+    },
+    "python": {
+      "contract_sha256": "9efb784c7e4b8733a36958bf34ef051323afeee53f2cc2785577d860a6b46957",
+      "mce_result_sha256": "d086ca3cd56f666ba98d46f1245031b2270bc216a4d1d39841b05981acf915e7",
+      "mutated_contract_sha256_for_negative_test": "467deed9dee11e32ca4cc99a8e97dc1520488330aedf2cfbb4e50e2d47bcfa0f"
+    }
+  },
+  "s1b_sha256sums_sha256": "6134ff84223e373a06055e7b2ec4e828285755d5e3b98da4b7be3be08adaef8c",
+  "s1c_diagnostico_sha256": "007c2202c93072c0c14c472656cd4151983b09297b29109e885a8f8e5748b929",
+  "schema": "envmorph_s2a_local_trust_anchor_v1",
+  "warning": "No es una firma ni prueba de validez causal. Conservar fuera del paquete evaluado y fijar en Git."
+}
