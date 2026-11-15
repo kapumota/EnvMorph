@@ -164,6 +164,12 @@ pub fn resolve_variant(variant: &EnvironmentVariant) -> Result<ResolvedEnvironme
             "tmpdir" => {
                 variables.push(("TMPDIR".to_string(), value.as_str().to_string()));
             }
+            "quoting_style" => {
+                variables.push(("QUOTING_STYLE".to_string(), value.as_str().to_string()));
+            }
+            "python_io_encoding" => {
+                variables.push(("PYTHONIOENCODING".to_string(), value.as_str().to_string()));
+            }
             "awk_implementation" => {
                 if capability.is_available() {
                     if let Some(path) = capability.resolved() {
@@ -230,11 +236,38 @@ fn probe_factor(factor: &str, value: &FactorValue) -> Result<EnvironmentCapabili
         "locale" => Ok(probe_locale(value)),
         "timezone" => Ok(probe_timezone(value)),
         "tmpdir" => Ok(probe_tmpdir(value)),
+        "quoting_style" => Ok(probe_quoting_style(value)),
+        "python_io_encoding" => Ok(probe_python_io_encoding(value)),
         "awk_implementation" => Ok(probe_awk(value)),
         _ => Err(format!(
             "factor ambiental no soportado por F2.1: {}",
             factor
         )),
+    }
+}
+
+// S1A: dominio pequeño congelado para pruebas externas, no override arbitrario.
+fn probe_quoting_style(value: &FactorValue) -> EnvironmentCapability {
+    if matches!(value.as_str(), "literal" | "c") {
+        EnvironmentCapability::available("quoting_style", value, None, None)
+    } else {
+        EnvironmentCapability::unavailable(
+            "quoting_style",
+            value,
+            "valor no admitido en el protocolo S1A",
+        )
+    }
+}
+
+fn probe_python_io_encoding(value: &FactorValue) -> EnvironmentCapability {
+    if matches!(value.as_str(), "utf-8" | "latin-1") {
+        EnvironmentCapability::available("python_io_encoding", value, None, None)
+    } else {
+        EnvironmentCapability::unavailable(
+            "python_io_encoding",
+            value,
+            "valor no admitido en el protocolo S1A",
+        )
     }
 }
 
@@ -472,6 +505,38 @@ mod tests {
         assert!(!valid_tool_name("../gawk"));
         assert!(valid_tool_name("gawk"));
         assert!(valid_tool_name("mawk"));
+    }
+
+    #[test]
+    fn quoting_style_sets_correct_variable_and_rejects_unlisted_value() {
+        let variant =
+            EnvironmentVariant::new(1, vec![("quoting_style".to_string(), value("literal"))])
+                .unwrap();
+        let resolved = resolve_variant(&variant).unwrap();
+        assert!(resolved.is_available());
+        assert_eq!(
+            resolved.variables(),
+            &[("QUOTING_STYLE".to_string(), "literal".to_string())]
+        );
+        let disallowed = probe_factor("quoting_style", &value("unknown")).unwrap();
+        assert_eq!(disallowed.status(), &CapabilityStatus::Unavailable);
+    }
+
+    #[test]
+    fn python_encoding_sets_correct_variable_and_rejects_unlisted_value() {
+        let variant = EnvironmentVariant::new(
+            1,
+            vec![("python_io_encoding".to_string(), value("latin-1"))],
+        )
+        .unwrap();
+        let resolved = resolve_variant(&variant).unwrap();
+        assert!(resolved.is_available());
+        assert_eq!(
+            resolved.variables(),
+            &[("PYTHONIOENCODING".to_string(), "latin-1".to_string())]
+        );
+        let disallowed = probe_factor("python_io_encoding", &value("ascii")).unwrap();
+        assert_eq!(disallowed.status(), &CapabilityStatus::Unavailable);
     }
 
     #[test]
