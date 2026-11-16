@@ -39,3 +39,65 @@ jobs:
 
       - name: Verificar freeze F9.10
         run: sha256sum -c provenance/F9_10_FILES.sha256
+
+      - name: Regresión XOR con binario Rust real (datos sintéticos)
+        run: |
+          python3 experiments/m3/retrospective/m3_stress.py \
+            --rust-binary target/release/envmorph-f6v2 \
+            --output "$RUNNER_TEMP/pr5-xor"
+
+
+  python:
+    name: Python M3/M4 checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verificar sintaxis, integridad y autopruebas
+        run: |
+          python -m py_compile \
+            experiments/m3/retrospective/m3_replay.py \
+            experiments/m3/retrospective/m3_stress.py \
+            tools/m4/interventions/m4_interventions.py
+          python experiments/m3/retrospective/m3_replay.py --selftest
+          ( cd tools/m4/interventions && sha256sum -c SHA256SUMS )
+          python tools/m4/interventions/m4_interventions.py selftest
+
+      - name: Materializar dos brazos en carpeta aislada (solo ejemplo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          trap 'rm -rf "$work"' EXIT
+          script=tools/m4/interventions/m4_interventions.py
+          python "$script" prepare \
+            --spec tools/m4/interventions/examples/SPEC.json \
+            --workspace tools/m4/interventions/examples/toy_workspace \
+            --fixtures tools/m4/interventions/examples/fixtures \
+            --output "$work/preflight"
+          sha="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["spec_sha256"])' "$work/preflight/M4_G2_PREFLIGHT.json")"
+          python "$script" materialize \
+            --spec tools/m4/interventions/examples/SPEC.json \
+            --workspace tools/m4/interventions/examples/toy_workspace \
+            --fixtures tools/m4/interventions/examples/fixtures \
+            --output "$work/variants" \
+            --expected-spec-sha256 "$sha" \
+            --ack-development-only
+          python - "$work/variants" <<'PYTHON'
+          import json
+          import pathlib
+          import sys
+          root = pathlib.Path(sys.argv[1])
+          manifest = json.loads((root / "M4_G2_MANIFEST.json").read_text())
+          assert manifest["execution_status"] == "NOT_EXECUTED"
+          assert (root / "baseline/input.txt").read_bytes() != (root / "treatment/input.txt").read_bytes()
+          print("PR5_CI_M4_MATERIALIZATION=PASS")
+          PYTHON

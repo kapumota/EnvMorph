@@ -1,0 +1,22 @@
+{
+  "schema_version": "m4.typed_interventions.v1",
+  "campaign_id": "m4_g2_example",
+  "workflow_id": "toy_file_and_locale",
+  "factors": [
+    {
+      "id": "locale",
+      "kind": "environment_override",
+      "variable": "LC_ALL",
+      "baseline": "C",
+      "treatment": "C.UTF-8"
+    },
+    {
+      "id": "input",
+      "kind": "workspace_file_replace",
+      "target": "input.txt",
+      "baseline_sha256": "2430ffa1a5d45b923bb2f811e0400283953768c1eb7667e844754a9eaccaffcd",
+      "fixture": "treatment.txt",
+      "treatment_sha256": "3f9c736155d96cf4e649890d6a14b70c162874c4662772ca56481377fbb2fa36"
+    }
+  ]
+}
