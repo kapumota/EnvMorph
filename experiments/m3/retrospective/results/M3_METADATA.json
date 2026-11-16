@@ -1,0 +1,45 @@
+{
+  "status": "EXPLORATORY_RETROSPECTIVE_NO_CONFIRMATORY_CLAIM",
+  "source_archive_sha256": "9ba4652dbb6ee098a43c288bda699b7f9e86572383c13126ed397f90d1e13288",
+  "source_git_commit": "99f89f9a66cf24a6afa59ea8114ee3a6600a4510",
+  "source_protocol_sha256": "da5151445aec76926a9f61fa5ce5cff2591653deaf7d1c834f147bbbf7f36624",
+  "rust_binary_sha256": "f25967ebf1dce7d3c11638c857be6e9e4adf638e7778c37eba36c7a4251e842d",
+  "m3_script_sha256": "10482e2c5c56362877f9835f8b44346379ad6f7df65e9761050484281ac4acf1",
+  "created_at_utc": "2026-11-16T01:35:17.271592+00:00",
+  "policy_seed": 20261115,
+  "nonrandom_policies": [
+    "lexicographic",
+    "pairwise",
+    "rust_suggested",
+    "greedy_coverage"
+  ],
+  "random_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "budgets_executions_per_workflow": [
+    2,
+    4,
+    6,
+    8
+  ],
+  "case_count": 6,
+  "workflow_modes": 2,
+  "project_count": 2,
+  "reference_direct_runs": 96,
+  "reference_cells": 48,
+  "rust_report_invocations": 432,
+  "confirmed_direct_per_query": 2,
+  "baseline_is_charged": true,
+  "oracle_leakage_policy": "La política recibe solo las etiquetas ya observadas y el reporte Rust previo",
+  "limits": [
+    "dos factores por workflow",
+    "dos proyectos",
+    "piloto conocido previamente",
+    "model_supported depende de la realizabilidad de H",
+    "SHA-256 verifica bytes, no autenticidad ni independencia de ejecuciones"
+  ]
+}

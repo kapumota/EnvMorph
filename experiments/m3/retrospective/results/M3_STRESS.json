@@ -1,0 +1,9 @@
+{
+  "status": "SYNTHETIC_ADVERSARIAL_TEST_NOT_PAPER_EVIDENCE",
+  "early_query_count": 2,
+  "early_wrong_conditional_prediction": "010 -> false (real XOR -> true)",
+  "early_model_inconsistent": false,
+  "final_model_inconsistent": true,
+  "full_observation_count": 8,
+  "warning": "La inconsistencia posterior NO revoca automáticamente una inferencia falsa ya emitida."
+}
