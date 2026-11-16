@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import shutil
 import sys
 import tempfile
@@ -21,6 +22,8 @@ DENY_ENV = {
     "GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM", "IFS", "HOME",
 }
 KINDS = {"environment_override", "workspace_file_replace"}
+MAX_TREE_ENTRIES = 50_000
+MAX_TREE_BYTES = 2 * 1024 * 1024 * 1024  # 2 GiB, límite conservador de desarrollo.
 
 
 class PlanError(ValueError):
@@ -74,6 +77,53 @@ def checked_file(root: Path, relative: Path, label: str) -> Path:
     if not current.is_file():
         fail(f"{label}: archivo requerido inexistente")
     return current
+
+
+def audit_regular_tree(root: Path, label: str) -> dict:
+    """Inventario determinista de un árbol local, sin seguir enlaces ni archivos especiales.
+
+    Este control es de preparación. No garantiza seguridad frente a cambios
+    concurrentes: no equivale a openat2 ni a un sandbox de ejecución.
+    """
+    if root.is_symlink() or not root.is_dir():
+        fail(f"{label}: directorio no válido")
+    root = root.resolve(strict=True)
+    entries = []
+    total_bytes = 0
+    total_entries = 0
+
+    def walk_error(error: OSError) -> None:
+        fail(f"{label}: fallo al recorrer el árbol: {error}")
+
+    for parent, directories, filenames in os.walk(
+        root, topdown=True, followlinks=False, onerror=walk_error
+    ):
+        for name in sorted(directories + filenames):
+            path = Path(parent) / name
+            rel = path.relative_to(root).as_posix()
+            try:
+                info = path.lstat()
+            except OSError as error:
+                fail(f"{label}: ruta desaparecida {rel}: {error}")
+            total_entries += 1
+            if total_entries > MAX_TREE_ENTRIES:
+                fail(f"{label}: límite de entradas del árbol superado")
+            if stat.S_ISLNK(info.st_mode):
+                fail(f"{label}: enlace simbólico no autorizado: {rel}")
+            if stat.S_ISDIR(info.st_mode):
+                entries.append([rel, "directory"])
+            elif stat.S_ISREG(info.st_mode):
+                total_bytes += info.st_size
+                if total_bytes > MAX_TREE_BYTES:
+                    fail(f"{label}: límite de bytes del árbol superado")
+                entries.append([rel, "file", file_digest(path)])
+            else:
+                fail(f"{label}: tipo de archivo no autorizado: {rel}")
+    return {
+        "entries": total_entries,
+        "bytes": total_bytes,
+        "sha256": digest(canonical_json(entries)),
+    }
 
 
 def schema_check(spec: dict) -> None:
@@ -139,6 +189,9 @@ def validate(spec: dict, workspace: Path, fixtures: Path) -> dict:
         fail("workspace no existe o es enlace simbólico")
     if fixtures.is_symlink() or not fixtures.is_dir():
         fail("fixtures no existe o es enlace simbólico")
+    # El plan se ata al contenido completo, no solo a los factores seleccionados.
+    workspace_tree = audit_regular_tree(workspace, "workspace")
+    fixtures_tree = audit_regular_tree(fixtures, "fixtures")
     evidence = []
     for factor in spec["factors"]:
         entry = {"id": factor["id"], "kind": factor["kind"]}
@@ -166,6 +219,8 @@ def validate(spec: dict, workspace: Path, fixtures: Path) -> dict:
         "workflow_id": spec["workflow_id"],
         "spec_sha256": digest(canonical_json(spec)),
         "factor_count": len(evidence),
+        "workspace_tree": workspace_tree,
+        "fixtures_tree": fixtures_tree,
         "factors": evidence,
         "execution_status": "NOT_EXECUTED",
         "causal_decision": "NOT_EVALUATED",
@@ -174,14 +229,19 @@ def validate(spec: dict, workspace: Path, fixtures: Path) -> dict:
 
 
 def ensure_output_location(output: Path, workspace: Path, fixtures: Path) -> None:
-    if output.exists():
+    if output.exists() or output.is_symlink():
         fail("la salida ya existe, no se sobreescriben expedientes")
-    resolved = output.absolute()
-    for protected in (workspace.absolute(), fixtures.absolute()):
+    if not output.parent.is_dir() or output.parent.is_symlink():
+        fail("el directorio padre de salida debe existir y no ser enlace simbólico")
+    try:
+        # Resolver también los enlaces simbólicos de directorios antecesores.
+        resolved = output.parent.resolve(strict=True) / output.name
+        protected_roots = (workspace.resolve(strict=True), fixtures.resolve(strict=True))
+    except OSError as error:
+        fail(f"no se pudo resolver una ruta de forma segura: {error}")
+    for protected in protected_roots:
         if resolved == protected or resolved.is_relative_to(protected) or protected.is_relative_to(resolved):
             fail("la salida no puede contener ni ser parte del workspace o de fixtures")
-    if not output.parent.exists() or output.parent.is_symlink():
-        fail("el directorio padre de salida debe existir y no ser enlace simbólico")
 
 
 def prepare(spec_path: Path, workspace: Path, fixtures: Path, output: Path) -> dict:
@@ -205,7 +265,10 @@ def materialize(spec_path: Path, workspace: Path, fixtures: Path, output: Path,
     try:
         for arm in ("baseline", "treatment"):
             dest = output / arm
-            shutil.copytree(workspace, dest, symlinks=True)
+            shutil.copytree(workspace, dest, symlinks=False)
+            copy_tree = audit_regular_tree(dest, "copia_materializada")
+            if copy_tree != preflight["workspace_tree"]:
+                fail("la copia no coincide con la huella integral del workspace")
             environment = {}
             for factor in spec["factors"]:
                 if factor["kind"] == "environment_override":
@@ -218,6 +281,11 @@ def materialize(spec_path: Path, workspace: Path, fixtures: Path, output: Path,
                         fail("falló la comprobación posterior de la sustitución")
             # El manifiesto se guarda fuera del workspace copiado.
             arms[arm] = {"workspace": arm, "environment_overrides": environment}
+        # Comprobar nuevamente origen y fixtures después de las copias.
+        if audit_regular_tree(workspace, "workspace") != preflight["workspace_tree"]:
+            fail("el origen cambió durante la materialización")
+        if audit_regular_tree(fixtures, "fixtures") != preflight["fixtures_tree"]:
+            fail("los fixtures cambiaron durante la materialización")
         manifest = dict(preflight)
         manifest["materialized_arms"] = arms
         manifest["execution_status"] = "NOT_EXECUTED"
@@ -261,6 +329,8 @@ def selftest() -> None:
         assert result["materialized_arms"]["baseline"]["environment_overrides"]["LC_ALL"] == "C"
         assert result["materialized_arms"]["treatment"]["environment_overrides"]["LC_ALL"] == "C.UTF-8"
         assert result["execution_status"] == "NOT_EXECUTED"
+        assert result["workspace_tree"]["sha256"] == audit_regular_tree(workspace, "workspace")["sha256"]
+        assert result["materialized_arms"]["baseline"]["workspace"] == "baseline"
         # Casos adversariales.
         def rejects(obj: dict, ws=workspace, fx=fixture_root):
             try:
@@ -277,6 +347,25 @@ def selftest() -> None:
         (workspace / "link.txt").symlink_to(root / "outside")
         candidate = copy.deepcopy(spec); candidate["factors"][1]["target"] = "link.txt"; rejects(candidate)
         (workspace / "link.txt").unlink()
+        # No basta con verificar solamente los objetivos declarados.
+        (workspace / "unused_link.txt").symlink_to(root / "outside")
+        rejects(spec)
+        (workspace / "unused_link.txt").unlink()
+        print("M4_G2_UNSELECTED_SYMLINK=REJECTED")
+        # Una ruta de salida con un enlace simbólico antecesor no puede
+        # eludir el control de contención ni escribir dentro del origen.
+        (workspace / "nested").mkdir()
+        alias = root / "alias_to_workspace"
+        alias.symlink_to(workspace, target_is_directory=True)
+        escaped = alias / "nested" / "output"
+        try:
+            ensure_output_location(escaped, workspace, fixture_root)
+        except PlanError:
+            pass
+        else:
+            raise AssertionError("un alias simbólico eludió la protección del workspace")
+        assert not (workspace / "nested" / "output").exists()
+        print("M4_G2_ALIAS_OUTPUT=REJECTED")
         (fixture_root / "candidate.txt").write_bytes(b"alterado\n")
         rejects(spec)
         print("M4_G2_SELFTEST=PASS")

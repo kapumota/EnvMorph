@@ -176,6 +176,7 @@ fn render_report(
     let mut inferred = 0usize;
     let mut undecided = 0usize;
     let mut candidate: Option<(usize, usize)> = None;
+    let mut model_check_candidate: Option<usize> = None;
     let mut cells = Vec::new();
     for assignment in 0..(1usize << dimension) {
         let key = assignment_string(assignment, dimension);
@@ -211,8 +212,13 @@ fn render_report(
                 undecided += 1;
             }
             let score = positive.min(negative);
-            if candidate.map(|(_, best)| score > best).unwrap_or(true) {
+            // La consulta informativa exige discrepancia real entre hipótesis.
+            if score > 0 && candidate.map(|(_, best)| score > best).unwrap_or(true) {
                 candidate = Some((assignment, score));
+            }
+            // Consulta separada de contraste/falsación, nunca ganancia informativa.
+            if model_check_candidate.is_none() {
+                model_check_candidate = Some(assignment);
             }
             if positive == 0 || negative == 0 {
                 (
@@ -240,6 +246,15 @@ fn render_report(
             ),
         ]));
     }
+    let (selection_reason, model_check) = if candidate.is_some() {
+        ("hypothesis_disagreement", None)
+    } else if !consistent {
+        ("model_inconsistent", None)
+    } else if let Some(index) = model_check_candidate {
+        ("no_disagreement_in_H_model_check_only", Some(index))
+    } else {
+        ("no_eligible_configuration", None)
+    };
     Json::obj(vec![
         ("schema_version", json_number(1)),
         ("method", Json::str("F6-v2-experimental")),
@@ -256,6 +271,9 @@ fn render_report(
         ("model_warning", Json::str("model_supported es condicional a la realizabilidad de H; no es evidencia de ejecución ni garantía universal")),
         ("trust_warning", Json::str("el hash externo ancla los bytes, pero no prueba la autenticidad de la ejecución ni la independencia física de las repeticiones")),
         ("suggested_next_assignment", candidate.map(|(index, _)| Json::str(assignment_string(index, dimension))).unwrap_or(Json::Null)),
+        ("selection_reason", Json::str(selection_reason)),
+        ("disagreement_score", candidate.map(|(_, score)| json_number(score)).unwrap_or(Json::Null)),
+        ("suggested_model_check_assignment", model_check.map(|index| Json::str(assignment_string(index, dimension))).unwrap_or(Json::Null)),
         ("cells", Json::Arr(cells)),
     ])
 }
@@ -418,6 +436,47 @@ mod tests {
             run_ids: vec!["first".into(), "second".into()],
             stdout_hashes: vec!["a".into(), "b".into()],
         }
+    }
+
+    #[test]
+    fn no_disagreement_does_not_claim_information_gain() {
+        // Siete negativos eliminan toda conjunción de como máximo dos literales.
+        let mut evidence = BTreeMap::new();
+        for assignment in 0usize..7 {
+            evidence.insert(assignment, proof(false));
+        }
+        let remaining = version_space(3, &evidence);
+        assert_eq!(remaining.len(), 1);
+        let report = render_report(3, &"a".repeat(64), 14, &evidence, &[]);
+        assert_eq!(
+            report.get("selection_reason").unwrap().as_str(),
+            Some("no_disagreement_in_H_model_check_only")
+        );
+        assert_eq!(report.get("suggested_next_assignment"), Some(&Json::Null));
+        assert_eq!(
+            report
+                .get("suggested_model_check_assignment")
+                .unwrap()
+                .as_str(),
+            Some("111")
+        );
+    }
+
+    #[test]
+    fn informative_query_must_have_disagreement() {
+        let mut evidence = BTreeMap::new();
+        evidence.insert(0usize, proof(false));
+        let report = render_report(3, &"a".repeat(64), 2, &evidence, &[]);
+        assert_eq!(
+            report.get("selection_reason").unwrap().as_str(),
+            Some("hypothesis_disagreement")
+        );
+        assert!(report
+            .get("suggested_next_assignment")
+            .unwrap()
+            .as_str()
+            .is_some());
+        assert!(report.get("disagreement_score").unwrap().as_i64().unwrap() > 0);
     }
 
     #[test]
