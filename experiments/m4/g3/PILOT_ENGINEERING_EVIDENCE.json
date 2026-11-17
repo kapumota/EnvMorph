@@ -1,0 +1,55 @@
+{
+  "cross_arm_same_artifacts": true,
+  "executions": [
+    {
+      "arm": "baseline",
+      "artifact_sha256": {
+        "artifacts/01_test_status.txt": "8cda067b4a916d89271772f1cd4d2ee8ccbc1570c2dd8c05ff133d715c3d0a22",
+        "artifacts/02_unittest_multi.txt": "b51d778e28c66e922f6aab74bf592e6ad90a556b3f4c560c8c04359adb5a2c53"
+      },
+      "exit_code": 0,
+      "repetition": 1,
+      "tmpdir": "/tmp"
+    },
+    {
+      "arm": "baseline",
+      "artifact_sha256": {
+        "artifacts/01_test_status.txt": "8cda067b4a916d89271772f1cd4d2ee8ccbc1570c2dd8c05ff133d715c3d0a22",
+        "artifacts/02_unittest_multi.txt": "b51d778e28c66e922f6aab74bf592e6ad90a556b3f4c560c8c04359adb5a2c53"
+      },
+      "exit_code": 0,
+      "repetition": 2,
+      "tmpdir": "/tmp"
+    },
+    {
+      "arm": "treatment",
+      "artifact_sha256": {
+        "artifacts/01_test_status.txt": "8cda067b4a916d89271772f1cd4d2ee8ccbc1570c2dd8c05ff133d715c3d0a22",
+        "artifacts/02_unittest_multi.txt": "b51d778e28c66e922f6aab74bf592e6ad90a556b3f4c560c8c04359adb5a2c53"
+      },
+      "exit_code": 0,
+      "repetition": 1,
+      "tmpdir": "/var/tmp"
+    },
+    {
+      "arm": "treatment",
+      "artifact_sha256": {
+        "artifacts/01_test_status.txt": "8cda067b4a916d89271772f1cd4d2ee8ccbc1570c2dd8c05ff133d715c3d0a22",
+        "artifacts/02_unittest_multi.txt": "b51d778e28c66e922f6aab74bf592e6ad90a556b3f4c560c8c04359adb5a2c53"
+      },
+      "exit_code": 0,
+      "repetition": 2,
+      "tmpdir": "/var/tmp"
+    }
+  ],
+  "f6_contract_integrated": false,
+  "f9_observer_integrated": false,
+  "image": "envmorph-g3-inih-cpp:local",
+  "image_id": "sha256:a5e86426893c4445148cfffa05b0600c0653650f92e927a944b1588236c71f39",
+  "independent_reproduction": "DEFERRED",
+  "pilot_summary_sha256": "9cdc6fd0207c6ff25ca097ac25f8cd17ef2540410a1e50961f817ef682627207",
+  "schema": "g3.engineering_evidence.v1",
+  "scientific_confirmatory": false,
+  "source_commit": "c53be087309628545737b0d807a669593e4fe6c9",
+  "within_arm_reproducible": true
+}

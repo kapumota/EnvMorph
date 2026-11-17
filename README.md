@@ -127,6 +127,27 @@ Detalles:
 - `experiments/f10/results.json`
 - `reproduce/README.md`
 
+#### M2–M4 y piloto de ingeniería G3 (2026-11)
+
+M2 incorpora un prototipo experimental de F6-v2 en Rust. M3 verifica su
+comportamiento mediante replay retrospectivo de P1-EB-01, sin demostrar
+superioridad frente a una tabla exacta con igual presupuesto. M4-G2 es un
+planificador y materializador Python, no un ejecutor ni un sandbox.
+
+M4-G3 ha completado un **piloto de ingeniería**, no una campaña prospectiva
+confirmatoria: el workflow externo congelado `inih-meson-tests` obtuvo cuatro
+ejecuciones correctas (dos baseline, dos treatment) y ocho artefactos
+verificados. Las cuatro comparaciones F3 de sus artefactos resultaron
+`identical` y el puente F9.6 emitió `observed_only` a nivel F3.
+**El observador F9 no está integrado en ese piloto, y F6-v2 no fue evaluado.**
+No se ha demostrado mejora de cobertura, generalización ni predicción held-out.
+
+- Estado, código y evidencias: `docs/M4_G3_STATUS.md`.
+- Reglas de parada sin congelar: `experiments/m4/g3/STOP_RULES_DRAFT.md`.
+- Protocolo prospectivo para revisar, no ejecutar todavía:
+  `experiments/m4/g3/G3_C_PROTOCOL_REVIEW_DRAFT.md`.
+- Preparación de auditoría independiente: `audits/M4_G3_AUDIT_CHECKLIST.md`.
+
 #### Requisitos de Rust
 
 El crate declara:

@@ -65,9 +65,31 @@ Validación externa: corpus seleccionado y congelado antes de ejecutar, adapters
 
 #### F9. Behavioral Hermeticity
 
-Estado: extensión posterior, fuera del camino crítico de Paper 1.
+Estado: **cerrado experimentalmente**, con resultados externos congelados. Se
+implementó observación combinada de syscalls seleccionadas y `getenv`, más
+normalización, grafo, elegibilidad e intervención, con límites de cobertura
+explícitos. El censo F9 no representa validez externa general. Sigue siendo
+complementario, fuera del camino crítico original de Paper 1.
 
-Puede estudiar dependencias ambientales no declaradas mediante observación de sistema, potencialmente con tracing de llamadas al sistema. No debe comenzar hasta cerrar F8 y realizar una revisión específica frente a trabajo de hermeticidad y localización causal basada en tracing.
+#### F10. Controles externos de sensibilidad
+
+Estado: **cerrado**. Tres controles positivos conocidos completaron el funnel
+F9/F3 en F10. No hay controles negativos en ese benchmark ni estimación de
+sensibilidad poblacional. Ver `docs/F10_RESULTS.md`.
+
+#### M2–M4: auditoría, ingeniería y última campaña
+
+M2 F6-v2 es experimental; M3 es replay retrospectivo de P1-EB-01; M4-G2
+prepara/materializa intervenciones tipadas sin ejecución; M4-G3 ha completado
+el piloto Docker `inih` y el puente F3 → F9.6 con resultado de ingeniería
+PASS. No ha evaluado F6-v2 ni observado dependencias F9 en la nueva campaña.
+
+Pendiente: confrontar las reglas de parada DRAFT, congelar el protocolo G3-C,
+ejecutar una campaña prospectiva acotada, conservar todos los resultados,
+congelar el artefacto y solicitar auditoría científica/técnica independiente.
+No abrir fases M5/M6 por ausencia de resultados positivos.
+
+Situación verificada: `docs/M4_G3_STATUS.md`.
 
 #### Relación provisional con publicaciones
 

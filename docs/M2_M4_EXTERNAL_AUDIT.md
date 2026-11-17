@@ -1,3 +1,11 @@
+> **Nota de actualización, 2026-11-16:** este documento conserva el
+> estado histórico de revisión fechado el 2026-11-15. PR #5 ya fue fusionado
+> en `main` (`c53be08`); M4-G3 cerró un piloto de ingeniería y el puente
+> F3 → F9.6, **sin** validación prospectiva ni reproducción independiente.
+> Estado actual y frontera: `docs/M4_G3_STATUS.md`; auditoría pendiente:
+> `audits/M4_G3_AUDIT_CHECKLIST.md`. No reinterpretar los textos históricos
+> de esta página como estado vigente de ramas o PR.
+
 ### EnvMorph: expediente de auditoría externa de código y evidencia, M2–M4
 
 Fecha de referencia: 2026-11-15. Estado: **candidato a revisión externa, NO listo para publicar el Paper 1**.

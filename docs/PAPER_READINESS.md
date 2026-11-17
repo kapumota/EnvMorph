@@ -77,6 +77,22 @@ técnicamente viable:
 Si el dominio elegido no permite held-out fuerte, el claim del paper debe
 reducirse de forma explícita antes del envío.
 
+#### Actualización M4-G3, 2026-11-16
+
+La integración de ingeniería sobre `inih-meson-tests` superó cuatro
+repeticiones Docker y cuatro comparaciones F3 con adaptación F9.6, todas
+idénticas entre brazos. Estos resultados son negativos para los artefactos
+seleccionados, **no** una validación held-out, derivación contractual F5/F6,
+ni prueba de cobertura del observador F9. Se archivaron código experimental y
+expedientes resumidos con hashes; la evidencia primaria continúa fuera del
+repositorio.
+
+`MANUSCRIPT_DRAFTING=GO` se mantiene. `PAPER1_SUBMISSION=NO_GO` se mantiene
+bajo el alcance de `docs/PAPER_SCOPE.md`. Antes de cualquier reclamo nuevo se
+requiere una campaña G3-C predeclarada, comparador justo, evidencia de
+contratos/held-out decidible o reformulación explícita del claim, y auditoría
+independiente. Ver `docs/M4_G3_STATUS.md`.
+
 #### Claims permitidos ahora
 
 Permitido:
