@@ -60,3 +60,18 @@ presentarse como una estimación general de recall del observador.
 
 La contribución defendible es una cadena de evidencia delimitada por el
 mecanismo de observación y los controles declarados.
+
+#### Extensión experimental M2–M4 y límite de G3
+
+`src/bin/envmorph-f6v2.rs` implementa un prototipo separado de F6-v1 con
+oráculo actual `byte_stdout_vs_baseline_v1`, dos confirmaciones y familia de
+hipótesis restringida. `tools/m4/interventions/m4_interventions.py` prepara
+y materializa, pero **no** ejecuta ni observa. El arnés de piloto G3 se archiva
+en `tools/m4/g3/g3_pilot.py`, y requiere dependencias locales y aislamiento
+Docker; no forma parte de una interfaz de producto segura por sí sola.
+
+El piloto `inih` comparó artefactos de archivos mediante F3 y adaptó sus
+resultados por F9.6. No instrumentó F9 en G3 ni alimentó F6-v2. Los oráculos
+de archivo de F3 no son intercambiables con stdout de F6-v2 sin una definición
+de firma y validación separadas. El piloto no aumenta las métricas F8–F10 ni
+el denominador de un estudio prospectivo.

@@ -1,0 +1,23 @@
+{
+  "base_commit": "c53be087309628545737b0d807a669593e4fe6c9",
+  "bridge_evidence_path": "experiments/m4/g3/F3_F9_BRIDGE_ENGINEERING_EVIDENCE.json",
+  "bridge_evidence_sha256": "fc8300cecad1d7f6466ba5e848fd47ffa930b5635c348d91f8ec6d9aec245b24",
+  "docker_image": "envmorph-g3-inih-cpp:local",
+  "docker_image_id": "sha256:a5e86426893c4445148cfffa05b0600c0653650f92e927a944b1588236c71f39",
+  "f6_contract_evaluated": false,
+  "f9_observer_integrated": false,
+  "g3c_protocol_frozen": false,
+  "independent_second_host_reproduction": "DEFERRED",
+  "pilot_evidence_path": "experiments/m4/g3/PILOT_ENGINEERING_EVIDENCE.json",
+  "pilot_evidence_sha256": "b32fd4453881ebece286604cafdef5ccca80e617cfd36b90ba77dea6853b268b",
+  "pilot_script_path": "tools/m4/g3/g3_pilot.py",
+  "pilot_script_sha256": "522406bf47da04c81ae03feaa1b4c0757ff3c062f0e691d2c1ce62765f6475c5",
+  "raw_primary_evidence_bundled": false,
+  "schema": "g3.engineering_index.v1",
+  "scientific_confirmatory": false,
+  "source_branch": "research/m4-g3-prospective",
+  "status": "ENGINEERING_ONLY_NOT_CONFIRMATORY",
+  "stop_rules_path": "experiments/m4/g3/STOP_RULES_DRAFT.md",
+  "stop_rules_sha256": "fa235ee521e6f48c4557196a52e03fbc915ba5625af235a20f3a3e01119d5332",
+  "stop_rules_status": "DRAFT_NOT_FROZEN"
+}
