@@ -1,0 +1,23 @@
+{
+  "name": "_selftest_add",
+  "kind": "selftest",
+  "project": "_selftest_add",
+  "tool_binary": "/bin/sh",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 30,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "sh",
+        "-c",
+        "printf '%s|%s\\n' \"$TZ\" \"$LC_ALL\""
+      ]
+    }
+  ],
+  "oracle_step": "tool"
+}

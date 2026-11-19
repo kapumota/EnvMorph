@@ -1,0 +1,27 @@
+{
+  "name": "miller",
+  "kind": "campaign",
+  "project": "miller",
+  "package": "miller",
+  "version": "6.11.0-1ubuntu0.3",
+  "deb_sha256": "062181c4e3be7be97dcab2ce34e24f4e8563ad1f9b52d8bdd90dd694a394bb86",
+  "tool_binary": "/usr/bin/mlr",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 120,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "mlr",
+        "-n",
+        "put",
+        "end{print gmt2localtime(\"1970-01-01T00:00:00Z\")}"
+      ]
+    }
+  ],
+  "oracle_step": "tool"
+}

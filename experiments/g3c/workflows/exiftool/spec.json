@@ -1,0 +1,29 @@
+{
+  "name": "exiftool",
+  "kind": "campaign",
+  "project": "exiftool",
+  "package": "libimage-exiftool-perl",
+  "version": "12.76+dfsg-1",
+  "deb_sha256": "4e9c3d6c9804a4ffb19721be60f67ed9b58fb9807cc267f54223f3c05fd3c11f",
+  "tool_binary": "/usr/bin/exiftool",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 120,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "exiftool",
+        "-s",
+        "-FileModifyDate",
+        "fx/fx.txt"
+      ]
+    }
+  ],
+  "oracle_step": "tool",
+  "fixture_script": "make_fixture.sh",
+  "fixture_tree_sha256": "1f2c286d3db226b3b73e96566ff86f424158a7c31d412748ad6e4bfdfcd7693a"
+}

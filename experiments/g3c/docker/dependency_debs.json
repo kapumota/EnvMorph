@@ -1,0 +1,5 @@
+{
+  "schema": "g3c-dependency-debs-v1",
+  "nota": "Completar antes de congelar si el Ubuntu base requiere .deb adicionales. No añadir dependencias tras evaluar tratamientos.",
+  "packages": []
+}

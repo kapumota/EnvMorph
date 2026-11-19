@@ -1,0 +1,95 @@
+{
+ "applied_env_ok": true,
+ "attempt": 1,
+ "cell": "000",
+ "confirmation": 1,
+ "env_probe_sha256": "0fbc827a9faca8f05eb68adc475b209fe1a35bf7506f9d21184acc2e57e01d08",
+ "fixture_ok": true,
+ "fixture_tree_sha256": "df6fe22a3e3c5939ae9014abc0c75e8bbfbb90cff784975d6030c1d01540bc80",
+ "harness_sha256": "45ab81604fe33fa5b72e75418fe18d82c00137eba977cd454b1718c13d08e3e6",
+ "host": {
+  "python": "3.12.3",
+  "uname": "Linux vm 6.18.44-fc-v553 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64"
+ },
+ "ok": true,
+ "oracle_size": 104,
+ "oracle_stdout_sha256": "fd88331c035f3664ededf93a685c277e9b087836be343cbe9ce2388029a2c951",
+ "schema": "g3c-run-v1",
+ "spec_sha256": "c9c41603b91f87f7f8eba12bd2073eaa5c1c6b815005afb8fc6d4f8a08b0c83b",
+ "stage": "preflight",
+ "steps": [
+  {
+   "argv": [
+    "unzip",
+    "-o",
+    "-q",
+    "fx/fx.zip",
+    "-d",
+    "out"
+   ],
+   "duration_s": 0.0014,
+   "exe": "/usr/bin/unzip",
+   "id": "tool",
+   "rc": 0,
+   "role": "tool",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_size": 0,
+   "stderr_tail": "",
+   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout_size": 0,
+   "timeout": false
+  },
+  {
+   "argv": [
+    "find",
+    "out",
+    "-type",
+    "f",
+    "-printf",
+    "%p %T@\\n"
+   ],
+   "duration_s": 0.001,
+   "exe": "/usr/bin/find",
+   "id": "list",
+   "rc": 0,
+   "role": "aux",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_size": 0,
+   "stderr_tail": "",
+   "stdout_sha256": "20038f0ea92ef44c509e0bf6b69318d17b6a1117944e6965ed884d141da6aaf2",
+   "stdout_size": 104,
+   "timeout": false
+  },
+  {
+   "argv": [
+    "sort"
+   ],
+   "duration_s": 0.0023,
+   "exe": "/usr/bin/sort",
+   "id": "order",
+   "rc": 0,
+   "role": "aux",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_size": 0,
+   "stderr_tail": "",
+   "stdout_sha256": "fd88331c035f3664ededf93a685c277e9b087836be343cbe9ce2388029a2c951",
+   "stdout_size": 104,
+   "timeout": false
+  }
+ ],
+ "tool": {
+  "binary": "/usr/bin/unzip",
+  "binary_sha256": "b582f2d782989a4d0105284b8032b076222eb29a6c141b5c53b792c864199396",
+  "package_version": "6.0-28ubuntu4.1",
+  "package_version_ok": true
+ },
+ "tool_env": {
+  "HOME": "/tmp/g3c-work/ws/home",
+  "LC_ALL": "C",
+  "PATH": "/usr/bin:/bin",
+  "TMPDIR": "/tmp/g3c-work/ws/tmp/a",
+  "TZ": "UTC"
+ },
+ "utc": "2026-11-17T12:48:50+00:00",
+ "workflow": "unzip"
+}

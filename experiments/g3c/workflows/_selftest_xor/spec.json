@@ -1,0 +1,23 @@
+{
+  "name": "_selftest_xor",
+  "kind": "selftest",
+  "project": "_selftest_xor",
+  "tool_binary": "/bin/sh",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 30,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "sh",
+        "-c",
+        "if [ \"$TZ\" = UTC ] && [ \"$LC_ALL\" = C ]; then echo same; elif [ \"$TZ\" != UTC ] && [ \"$LC_ALL\" != C ]; then echo same; else echo diff; fi"
+      ]
+    }
+  ],
+  "oracle_step": "tool"
+}

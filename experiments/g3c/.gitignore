@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+results/
+campaign/BUDGET.jsonl
+campaign/BUDGET.lock
+campaign/f6v2_stage/

@@ -1,0 +1,40 @@
+{
+  "name": "patch",
+  "kind": "campaign",
+  "project": "patch",
+  "package": "patch",
+  "version": "2.7.6-7build3",
+  "deb_sha256": "fb7d78ed25c2788a607802270f3c28ac5ed6857bfb6cce9f73ad2cafac9159b3",
+  "tool_binary": "/usr/bin/patch",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 120,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "patch",
+        "-Z",
+        "-i",
+        "fx/fx.diff",
+        "fx/orig.txt"
+      ]
+    },
+    {
+      "id": "mtime",
+      "role": "aux",
+      "argv": [
+        "stat",
+        "-c",
+        "%n %Y",
+        "fx/orig.txt"
+      ]
+    }
+  ],
+  "oracle_step": "mtime",
+  "fixture_script": "make_fixture.sh",
+  "fixture_tree_sha256": "25e757adbb0ed12ffed8616cfd0e872da36ef271de864178b0f4f2cfef2071eb"
+}

@@ -1,0 +1,237 @@
+{
+ "candidatos": [
+  {
+   "citas_man": [
+    {
+     "linea": 1052,
+     "pagina": "Image::ExifTool.3pm.gz",
+     "texto": "Time zone for local date/time values.  May be set to any valid TZ string."
+    }
+   ],
+   "deb_sha256": "4e9c3d6c9804a4ffb19721be60f67ed9b58fb9807cc267f54223f3c05fd3c11f",
+   "familia_upstream": "independiente",
+   "fuerza_cita": "media",
+   "licencia_resumen": "GPL-1+ o Artistic",
+   "nombre": "exiftool",
+   "paquete_ubuntu": "libimage-exiftool-perl",
+   "upstream": "https://exiftool.org/",
+   "version": "12.76+dfsg-1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 1546,
+     "pagina": "find.1.gz",
+     "texto": ".B TZ"
+    },
+    {
+     "linea": 1413,
+     "pagina": "find.1.gz",
+     "texto": ".B LC_CTYPE"
+    }
+   ],
+   "deb_sha256": "96490acdee09245bb47ff4684dc59a7ac3b29619da868ef3e9d8323c61a02ac4",
+   "familia_upstream": "GNU",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "Debian copyright GPL-3+",
+   "nombre": "findutils",
+   "paquete_ubuntu": "findutils",
+   "upstream": "https://savannah.gnu.org/projects/findutils/",
+   "version": "4.9.0-5build1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 615,
+     "pagina": "grep.1.gz",
+     "texto": ".B LC_ALL='C'"
+    }
+   ],
+   "deb_sha256": "fc0fdc5983ea3d3579ccf335e51dec69684a0dd9bb915734999c5733add9507a",
+   "familia_upstream": "GNU",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "GPL-3+",
+   "nombre": "grep",
+   "paquete_ubuntu": "grep",
+   "upstream": "https://www.gnu.org/software/grep/",
+   "version": "3.11-4build1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 1564,
+     "pagina": "less.1.gz",
+     "texto": "is found in the LC_ALL, LC_CTYPE or LANG"
+    }
+   ],
+   "deb_sha256": "f26481c7f5e492e7536f9e75a9aa237f4772b637cdc933f356bc567e180b8a39",
+   "familia_upstream": "independiente",
+   "fuerza_cita": "media",
+   "licencia_resumen": "GPL-3+ o licencia Less",
+   "nombre": "less",
+   "paquete_ubuntu": "less",
+   "upstream": "http://www.greenwoodsoftware.com/less/",
+   "version": "590-2ubuntu2.1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 694,
+     "pagina": "mlr.1.gz",
+     "texto": "--tz {timezone}          Specify timezone, overriding `$TZ` environment"
+    },
+    {
+     "linea": 3396,
+     "pagina": "mlr.1.gz",
+     "texto": "(class=time #args=1,2) Convert from a GMT-time string to a local-time string. Consulting $TZ unless second arg"
+    }
+   ],
+   "deb_sha256": "062181c4e3be7be97dcab2ce34e24f4e8563ad1f9b52d8bdd90dd694a394bb86",
+   "familia_upstream": "independiente",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "BSD-2-Clause",
+   "nombre": "miller",
+   "paquete_ubuntu": "miller",
+   "upstream": "https://github.com/johnkerl/miller",
+   "version": "6.11.0-1ubuntu0.3"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 97,
+     "pagina": "ts.1.gz",
+     "texto": "The standard TZ environment variable controls what time zone dates"
+    }
+   ],
+   "deb_sha256": "4f61299ced896b0a1f72597ef4942db72ce55bdec743981397e2d6764b76022d",
+   "familia_upstream": "independiente",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "GPL-2+ y BSD-2-Clause",
+   "nombre": "moreutils",
+   "paquete_ubuntu": "moreutils",
+   "upstream": "https://joeyh.name/code/moreutils/",
+   "version": "0.69-1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 881,
+     "pagina": "patch.1.gz",
+     "texto": "LC_ALL=C TZ=UTC0 diff \\-Naur gcc\\-2.7 gcc\\-2.8"
+    },
+    {
+     "linea": 822,
+     "pagina": "patch.1.gz",
+     "texto": "TMPDIR, TMP, TEMP"
+    }
+   ],
+   "deb_sha256": "fb7d78ed25c2788a607802270f3c28ac5ed6857bfb6cce9f73ad2cafac9159b3",
+   "familia_upstream": "GNU",
+   "fuerza_cita": "media",
+   "licencia_resumen": "GPL-3+",
+   "nombre": "patch",
+   "paquete_ubuntu": "patch",
+   "upstream": "https://savannah.gnu.org/projects/patch/",
+   "version": "2.7.6-7build3"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 461,
+     "pagina": "tree.1.gz",
+     "texto": "LC_CTYPE\t\tLocale for filename output."
+    }
+   ],
+   "deb_sha256": "56edc302c11b1d35975ded0a38d52e98e82280b12a7a1c7a1b03e4772061731e",
+   "familia_upstream": "independiente",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "GPL-2+",
+   "nombre": "tree",
+   "paquete_ubuntu": "tree",
+   "upstream": "http://oldmanprogrammer.net/source.php?dir=projects/tree",
+   "version": "2.1.1-2ubuntu3.24.04.2"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 127,
+     "pagina": "unzip.1.gz",
+     "texto": "the TZ (timezone) environment variable must be set correctly in order for"
+    }
+   ],
+   "deb_sha256": "a505b9d491386167bd8e14e3383315a4a7d6539e4406745901ccf009a7988271",
+   "familia_upstream": "Info-ZIP",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "Info-ZIP",
+   "nombre": "unzip",
+   "paquete_ubuntu": "unzip",
+   "upstream": "https://infozip.sourceforge.net/UnZip.html",
+   "version": "6.0-28ubuntu4.1"
+  },
+  {
+   "citas_man": [
+    {
+     "linea": 895,
+     "pagina": "zip.1.gz",
+     "texto": "Note that the timezone environment variable TZ should be set according to"
+    }
+   ],
+   "deb_sha256": "30b325b542ef8e9a22a5e1e1cfce8c4f4b75db73e339e76bf405b635861f1f76",
+   "familia_upstream": "Info-ZIP",
+   "fuerza_cita": "fuerte",
+   "licencia_resumen": "Info-ZIP",
+   "nombre": "zip",
+   "paquete_ubuntu": "zip",
+   "upstream": "https://infozip.sourceforge.net/Zip.html",
+   "version": "3.0-13ubuntu0.2"
+  }
+ ],
+ "criterio_de_inclusion": "La página de manual del paquete fijado cita explícitamente TZ, LC_ALL o LC_* en relación con la salida de la herramienta, y los niveles del catálogo (dos zonas horarias; C y C.UTF-8) pueden cambiar ese comportamiento. TMPDIR solo cuenta si la cita lo relaciona con la salida.",
+ "estado": "PROVISIONAL hasta commit A",
+ "excluidos": [
+  {
+   "motivo": "usado en F10",
+   "nombre": "coreutils"
+  },
+  {
+   "motivo": "usado en F10 y P1-EB-01",
+   "nombre": "cpython"
+  },
+  {
+   "motivo": "usados en F8, G1B, G3 piloto o P1-EB-01",
+   "nombre": "jq, fd, inih, csvkit, literature-pipeline"
+  },
+  {
+   "motivo": "la cita de LANG o LC_* trata solo mensajes o conformidad, no la salida",
+   "nombre": "bc, dos2unix, sharutils"
+  },
+  {
+   "motivo": "cita LC_NUMERIC, pero C y C.UTF-8 comparten separador decimal; el factor no es probeable con el catálogo",
+   "nombre": "datamash"
+  },
+  {
+   "motivo": "solo gawkbug cita TMPDIR; la página de gawk no cita un factor del catálogo",
+   "nombre": "gawk"
+  },
+  {
+   "motivo": "TMPDIR afecta archivos temporales, no la salida",
+   "nombre": "universal-ctags"
+  },
+  {
+   "motivo": "la página de manual no cita un factor del catálogo",
+   "nombre": "sqlite3, lua5.4, perl-base, tar, sed, diffutils, make, gzip, xz-utils, zstd"
+  },
+  {
+   "motivo": "la página de manual no cita un factor del catálogo",
+   "nombre": "git, rsync, wdiff, fdupes, ncdu, logrotate, at, colordiff"
+  }
+ ],
+ "fecha_compilacion": "2026-11-16",
+ "fuente": "Archivo Ubuntu 24.04 (noble, noble-updates) servido por archive.ubuntu.com el 2026-11-16; versiones fijadas por número y SHA-256 del .deb",
+ "limites_por_familia": {
+  "GNU": 2,
+  "Info-ZIP": 1,
+  "independiente": 1
+ },
+ "version_manifiesto": "0.1"
+}
