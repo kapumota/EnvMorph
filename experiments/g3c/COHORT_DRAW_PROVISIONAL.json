@@ -1,0 +1,89 @@
+{
+ "estado": "PROVISIONAL hasta que el pool se congele en commit A",
+ "manifiesto": "pool_manifest.json",
+ "manifiesto_sha256": "743c7d2f2d326d6d1c366172542df31d24424270819297f3fc0b2cbc9805d5bc",
+ "orden_completo": [
+  {
+   "posicion": 1,
+   "nombre": "findutils",
+   "hash_orden": "06689d20c79a6b233810232f7d2c343ba6729a452b6fd6686a13022a5ffbdaa3",
+   "familia": "GNU"
+  },
+  {
+   "posicion": 2,
+   "nombre": "miller",
+   "hash_orden": "0b640057ec32c015779d33127e1a5d0c4e0ae78826700c799fab46f268a7f79f",
+   "familia": "independiente"
+  },
+  {
+   "posicion": 3,
+   "nombre": "unzip",
+   "hash_orden": "1f4eaa53f58c965731d804840da5dda166b1ec6ecbad7257cd0a9ac722c1b0d5",
+   "familia": "Info-ZIP"
+  },
+  {
+   "posicion": 4,
+   "nombre": "zip",
+   "hash_orden": "8e45e830f4d57738d7f61a76e9836d939c455a01fb1465d10fb17a6aea03a63f",
+   "familia": "Info-ZIP"
+  },
+  {
+   "posicion": 5,
+   "nombre": "exiftool",
+   "hash_orden": "920740bf44257a5f3ad9a28e590503dacb7d3abd2b91c4f95a2264cf8b2bc3f0",
+   "familia": "independiente"
+  },
+  {
+   "posicion": 6,
+   "nombre": "patch",
+   "hash_orden": "931137f62c8943c45fbf62a6ede7bf22f382acfcb98a70f253f4204a094c19c7",
+   "familia": "GNU"
+  },
+  {
+   "posicion": 7,
+   "nombre": "grep",
+   "hash_orden": "93e2dfab07086d5af93b77f1ae56f9f5bd3bcdaa7f49d5a48a09f12d480b47cc",
+   "familia": "GNU"
+  },
+  {
+   "posicion": 8,
+   "nombre": "less",
+   "hash_orden": "bb65b3c732fc23095e64d37b2fb7549f318c88d8ea4217e5dc0f358974591777",
+   "familia": "independiente"
+  },
+  {
+   "posicion": 9,
+   "nombre": "tree",
+   "hash_orden": "c8f8b04afd4fd8698acd6e375b5e3e5ab5ff76b85ced1964c47ee637f3f824cc",
+   "familia": "independiente"
+  },
+  {
+   "posicion": 10,
+   "nombre": "moreutils",
+   "hash_orden": "f975d9812cc48e050c729b53e375a5315b0f598fee300d4915ad44ff678fa7a7",
+   "familia": "independiente"
+  }
+ ],
+ "primarios": [
+  "findutils",
+  "miller",
+  "unzip",
+  "exiftool",
+  "patch"
+ ],
+ "reservas": [
+  "less",
+  "tree",
+  "moreutils"
+ ],
+ "saltados_por_limite": [
+  {
+   "nombre": "zip",
+   "motivo": "limite de familia Info-ZIP"
+  },
+  {
+   "nombre": "grep",
+   "motivo": "limite de familia GNU"
+  }
+ ]
+}
