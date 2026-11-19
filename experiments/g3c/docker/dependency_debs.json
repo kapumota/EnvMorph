@@ -1,5 +1,50 @@
 {
   "schema": "g3c-dependency-debs-v1",
-  "nota": "Completar antes de congelar si el Ubuntu base requiere .deb adicionales. No añadir dependencias tras evaluar tratamientos.",
-  "packages": []
+  "nota": "La herramienta zip es auxiliar del fixture unzip, no un sexto workflow ni un primario. Otros paquetes deben añadirse SOLO tras auditar dependencias antes del freeze.",
+  "packages": [
+    {
+      "name": "zip",
+      "version": "3.0-13ubuntu0.2",
+      "sha256": "30b325b542ef8e9a22a5e1e1cfce8c4f4b75db73e339e76bf405b635861f1f76",
+      "uso": "generacion del fixture de unzip; candidato excluido del sorteo por limite Info-ZIP"
+    },
+    {
+      "name": "libgdbm-compat4t64",
+      "version": "1.23-5.1build1",
+      "sha256": "fb8564afd7b7d74d55207070ba50339478e22d29a39ec740dc482f069ac7ee65",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    },
+    {
+      "name": "libgdbm6t64",
+      "version": "1.23-5.1build1",
+      "sha256": "18d6d74a5c038b458d95ba0c0909e0f086cd50bb9a0fee32697902724fc5645e",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    },
+    {
+      "name": "libperl5.38t64",
+      "version": "5.38.2-3.2ubuntu0.7",
+      "sha256": "134f2d9341d97b8a3582df4d646f8da19d505aa75eb42e67cefb7570c42be7cc",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    },
+    {
+      "name": "perl-base",
+      "version": "5.38.2-3.2ubuntu0.7",
+      "sha256": "38045b6be63d521ab389b2fe619f0d22ad0582191605e6108a4c51b452090265",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    },
+    {
+      "name": "perl-modules-5.38",
+      "version": "5.38.2-3.2ubuntu0.7",
+      "sha256": "8d2652aa897458aa2482be38d1d0fb26745e87450ab5b620b33180ab0078190c",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    },
+    {
+      "name": "perl",
+      "version": "5.38.2-3.2ubuntu0.7",
+      "sha256": "5e95eaa0db06b3eb4c669c033a6a9347f47c2923c8fd1297c7d9c553c4f8d153",
+      "uso": "cierre de dependencias de Perl para exiftool; previo a congelacion"
+    }
+  ],
+  "base_f10_image_id": "sha256:cc83624c2a797c314cb383a811571a97b7b6cd1e90e6e8c72bf0160862edc461",
+  "nota_cierre": "Dependencias Perl calculadas con APT firmado dentro de la imagen F10 fijada; instaladas y verificadas offline en contenedor descartable. La base debe conservarse y exportarse para reproducción independiente."
 }

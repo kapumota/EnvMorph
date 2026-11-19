@@ -1,0 +1,69 @@
+name: G3-C - CI de precongelacion
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: g3c-precongelacion-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruebas-g3c:
+    name: Integridad y pruebas G3-C (sin campana)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Descargar fuentes
+        uses: actions/checkout@v4
+
+      - name: Preparar Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verificar herramientas necesarias
+        run: |
+          set -euo pipefail
+          for herramienta in zip openssl cc find stat sort touch dpkg-deb sha256sum; do
+            command -v "$herramienta" >/dev/null || { echo "FALTA: $herramienta" >&2; exit 3; }
+          done
+
+      - name: Compilar binarios Rust
+        run: cargo build --release --locked
+
+      - name: Verificar integridad, manifest y sintaxis
+        working-directory: experiments/g3c
+        run: |
+          set -euo pipefail
+          sha256sum -c MANIFEST.sha256
+          python3 -m py_compile harness/*.py docker/verify_debs.py docker/preparar_debs.py
+          for archivo in docker/*.sh; do bash -n "$archivo"; done
+          python3 docker/preparar_debs.py plan
+          python3 draw_cohort.py pool_manifest.json "$RUNNER_TEMP/g3c-sorteo-ci.json"
+          python3 harness/g3c_harness.py check-env
+
+      - name: Ejecutar pruebas completas G3-C, con F6-v2 real
+        working-directory: experiments/g3c
+        env:
+          G3C_F6V2_BIN: ${{ github.workspace }}/target/release/envmorph-f6v2
+        run: |
+          set -euo pipefail
+          test -x "$G3C_F6V2_BIN"
+          python3 -m unittest discover -s tests -p 'test_g3c*.py' -v
+
+      - name: Confirmar exclusiones de la campana
+        run: |
+          set -euo pipefail
+          test ! -f experiments/g3c/campaign/PROTOCOL_FREEZE.json
+          test ! -f experiments/g3c/campaign/decisions.json
+          test ! -f experiments/g3c/campaign/SEALED.json
+          echo 'G3C_CI_PRECONGELACION=PASS'

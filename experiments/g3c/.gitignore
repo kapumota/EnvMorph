@@ -4,3 +4,7 @@ results/
 campaign/BUDGET.jsonl
 campaign/BUDGET.lock
 campaign/f6v2_stage/
+
+# Paquetes originales y registros de preparacion: nunca commitear binarios ni resultados.
+/debs/*.deb
+/docker/preparacion-local/
