@@ -1,0 +1,19 @@
+Evidencia de la preparacion (16 de noviembre de 2026)
+
+check-install  G3C_INSTALL=PASS
+check-env      G3C_CHECK_ENV=PASS (10 celdas)
+preflight      findutils PASS, miller PASS, unzip PASS, exiftool PASS, patch PASS
+pruebas        5 de 5 OK (python3 -m unittest discover -s tests)
+
+Digest de fixtures (workflows/*/spec.json)
+findutils 5fd7eb3b8d85a2b6e2b56a418b8a1665fe7bb11ca91a2e588a8337a3359cc08e
+unzip     df6fe22a3e3c5939ae9014abc0c75e8bbfbb90cff784975d6030c1d01540bc80
+exiftool  1f2c286d3db226b3b73e96566ff86f424158a7c31d412748ad6e4bfdfcd7693a
+patch     25e757adbb0ed12ffed8616cfd0e872da36ef271de864178b0f4f2cfef2071eb
+
+Salidas baseline observadas en el preflight (unica observacion de salidas reales)
+findutils 5 lineas con ruta, fecha UTC y tamano
+miller    1970-01-01 00:00:00
+unzip     tres rutas con epoch 1700000000, 1710000000 y 1735689600
+exiftool  FileModifyDate 2023:11:14 22:13:20+00:00
+patch     fx/orig.txt 1700035200

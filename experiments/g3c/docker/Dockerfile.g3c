@@ -1,0 +1,24 @@
+# G3-C v0.3. Construir desde la RAIZ del repositorio EnvMorph.
+# BASE_IMAGE debe ser una imagen F10 previamente construida y fijada por ID/digest.
+# Así ya incluye Python3, cc y dependencias F10 que se necesitan para verificar el bookend.
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+ENV DEBIAN_FRONTEND=noninteractive PYTHONDONTWRITEBYTECODE=1
+COPY experiments/g3c/debs/ /debs/
+COPY experiments/g3c/ /g3c/
+COPY experiments/f10/ /repo/experiments/f10/
+COPY reproduce/ /repo/reproduce/
+COPY tools/f9/ /repo/tools/f9/
+COPY target/release/envmorph /repo/target/release/envmorph
+COPY target/release/envmorph-f6v2 /repo/target/release/envmorph-f6v2
+# El build falla ante cualquier dependencia no cubierta; prohibido apt-get -f.
+RUN /bin/sh /g3c/docker/verify_debs.sh /g3c /debs \
+  && dpkg -i /debs/*.deb \
+  && dpkg --audit \
+  && command -v cc \
+  && command -v python3 \
+  && mkdir -p /g3c/results /g3c/campaign \
+  && chown -R 10001:10001 /g3c/results /g3c/campaign
+USER 10001:10001
+WORKDIR /g3c
+ENTRYPOINT ["python3"]

@@ -1,0 +1,56 @@
+{
+ "applied_env_ok": true,
+ "attempt": 1,
+ "cell": "000",
+ "confirmation": 1,
+ "env_probe_sha256": "0fbc827a9faca8f05eb68adc475b209fe1a35bf7506f9d21184acc2e57e01d08",
+ "fixture_ok": true,
+ "fixture_tree_sha256": "1f2c286d3db226b3b73e96566ff86f424158a7c31d412748ad6e4bfdfcd7693a",
+ "harness_sha256": "45ab81604fe33fa5b72e75418fe18d82c00137eba977cd454b1718c13d08e3e6",
+ "host": {
+  "python": "3.12.3",
+  "uname": "Linux vm 6.18.44-fc-v553 #1 SMP PREEMPT_DYNAMIC @0 x86_64 x86_64"
+ },
+ "ok": true,
+ "oracle_size": 60,
+ "oracle_stdout_sha256": "fbf8b716bc88db2968bc3f1db388e6bac4cbf1d3d165f53381019aed068e3484",
+ "schema": "g3c-run-v1",
+ "spec_sha256": "8b65b01d30c276cfd1020db1ad2513d119cfa55b1580faf49f92691fe39f3d1e",
+ "stage": "preflight",
+ "steps": [
+  {
+   "argv": [
+    "exiftool",
+    "-s",
+    "-FileModifyDate",
+    "fx/fx.txt"
+   ],
+   "duration_s": 0.0632,
+   "exe": "/usr/bin/exiftool",
+   "id": "tool",
+   "rc": 0,
+   "role": "tool",
+   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stderr_size": 0,
+   "stderr_tail": "",
+   "stdout_sha256": "fbf8b716bc88db2968bc3f1db388e6bac4cbf1d3d165f53381019aed068e3484",
+   "stdout_size": 60,
+   "timeout": false
+  }
+ ],
+ "tool": {
+  "binary": "/usr/bin/exiftool",
+  "binary_sha256": "3a73ca38a112f2be23ee803df18b8670c3a50e0cde109ec9374ecf4f1778b886",
+  "package_version": "12.76+dfsg-1",
+  "package_version_ok": true
+ },
+ "tool_env": {
+  "HOME": "/tmp/g3c-work/ws/home",
+  "LC_ALL": "C",
+  "PATH": "/usr/bin:/bin",
+  "TMPDIR": "/tmp/g3c-work/ws/tmp/a",
+  "TZ": "UTC"
+ },
+ "utc": "2026-11-17T12:48:50+00:00",
+ "workflow": "exiftool"
+}

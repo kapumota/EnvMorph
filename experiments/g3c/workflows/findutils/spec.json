@@ -1,0 +1,39 @@
+{
+  "name": "findutils",
+  "kind": "campaign",
+  "project": "findutils",
+  "package": "findutils",
+  "version": "4.9.0-5build1",
+  "deb_sha256": "96490acdee09245bb47ff4684dc59a7ac3b29619da868ef3e9d8323c61a02ac4",
+  "tool_binary": "/usr/bin/find",
+  "normalization": "NINGUNA",
+  "tool_success_exit": [
+    0
+  ],
+  "timeout_s": 120,
+  "steps": [
+    {
+      "id": "tool",
+      "role": "tool",
+      "argv": [
+        "find",
+        "fx",
+        "-type",
+        "f",
+        "-printf",
+        "%p|%TY-%Tm-%Td %TH:%TM|%s\\n"
+      ]
+    },
+    {
+      "id": "order",
+      "role": "aux",
+      "argv": [
+        "sort"
+      ],
+      "stdin_from": "tool"
+    }
+  ],
+  "oracle_step": "order",
+  "fixture_script": "make_fixture.sh",
+  "fixture_tree_sha256": "5fd7eb3b8d85a2b6e2b56a418b8a1665fe7bb11ca91a2e588a8337a3359cc08e"
+}
